@@ -86,9 +86,9 @@ export default {
               this.$router.push('/home')
             } else {
               let obj = {
-                 title: 'Custom Function',
-                 message: 'Click close to trigger custom function',
-                 type: 'info',
+                 title: 'ผิดพลาด',
+                 message: 'เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้งค่ะ',
+                 type: 'error',
                  onClose: this.onClose
               }
               this.$refs.simplert.openSimplert(obj)
@@ -96,11 +96,13 @@ export default {
             }
           })
       } else {
-        this.$swal({
-          type: 'error',
-          title: '<span class="title">เกิดข้อผิดพลาด!</span>',
-          html: '<span class="text grey--text">กรุณากรอกข้อมูลให้ครบถ้วนค่ะ</span>'
-        })
+        let obj = {
+           title: 'ผิดพลาด',
+           message: 'เข้าสู่ระบบไม่สำเร็จ กรุณากรอกรหัสผ่านให้ครบถ้วนค่ะ',
+           type: 'error',
+           onClose: this.onClose
+        }
+        this.$refs.simplert.openSimplert(obj)
       }
     }//login
   }
