@@ -17,7 +17,9 @@
     }
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "nuxt": "0.10.7",
+    "vue-axios": "^2.0.2",
     "vue-server-renderer": "latest",
     "vuetify": "^0.14.5"
   },

@@ -47,7 +47,7 @@ export default {
       this.$router.push('/')
       console.log("INDEX.vue>> false");
     }
-    else if(JSON.parse(localStorage.getItem("isLogin")) == true){
+    else{
       this.$store.commit('setLogin',true)
         this.$router.push('/home')
         console.log("INDEX.vue>> TRUE");
