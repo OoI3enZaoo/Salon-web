@@ -23,6 +23,8 @@
 </v-app>
 </template>
 <script>
+
+
 export default {
   // middleware :  'authenticated2',
   data: () => ({
