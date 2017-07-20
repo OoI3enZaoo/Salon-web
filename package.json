@@ -4,7 +4,6 @@
   "description": "A Vue.js project",
   "author": "OoI3enZaoO <Teerapath-Ben@hotmail.com>",
   "private": true,
-
   "scripts": {
     "postinstall": "npm run build",
     "dev": "node build/dev-server.js",
@@ -14,7 +13,8 @@
   "dependencies": {
     "vue": "^2.3.4",
     "vue-router": "^2.3.1",
-    "vuetify": "^0.14.5"
+    "vuetify": "^0.14.5",
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
