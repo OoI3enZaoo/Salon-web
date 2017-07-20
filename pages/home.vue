@@ -1,7 +1,69 @@
 <template>
   <div>
+      <v-layout row  >
+          <v-flex xs3>
+              <v-card height = "100px" class ="green white--text">
+                <v-card-text>
 
-      <h2>{{message}}  {{$store.state.toolbar}}</h2>
+                  <!-- <v-layout row>
+                        <v-flex xs3>
+                            <div class="pa-2 pl-5">
+                                <v-icon x-large dark >home</v-icon>
+                            </div>
+                        </v-flex>
+                        <v-flex xs2>
+                            <div class="pa-2 pl-5">
+                                <h4 class ="white--text">565</h4><br>
+                            </div>
+                        </v-flex>
+                          <p class ="pa-3 pt-5">สมาชิกทั้งหมด</p>
+
+                  </v-layout> -->
+    </v-card-text>
+              </v-card>
+          </v-flex>
+          <v-flex xs3>
+            <v-card height = "100px" class ="red white--text">
+
+            </v-card>
+          </v-flex>
+          <v-flex xs3>
+            <v-card height = "100px" class ="grey white--text">
+
+            </v-card>
+          </v-flex>
+          <v-flex xs3>
+            <v-card height = "100px" class ="deep-purple white--text">
+
+            </v-card>
+          </v-flex>
+      </v-layout>
+<br>
+      <v-layout row>
+          <v-flex xs8>
+              <v-card height = "300px">
+
+              </v-card>
+          </v-flex>
+          <v-flex xs4>
+            <v-card height = "300px">
+
+            </v-card>
+          </v-flex>
+
+      </v-layout>
+      <br>
+      <v-layout row>
+          <v-flex xs12>
+              <v-card height = "200px">
+
+              </v-card>
+          </v-flex>
+
+
+      </v-layout>
+
+
   </div>
 </template>
 <script>

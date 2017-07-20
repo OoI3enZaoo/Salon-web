@@ -1,8 +1,28 @@
 <template>
   <div>
   <v-app id="example-3">
-    <v-navigation-drawer v-model ="slideNav" persistent absolute v-show="this.isLogin">
-      <v-list class="show-sm-only">
+    <v-navigation-drawer v-model ="slideNav" persistent absolute height="100%" v-show="this.isLogin">
+      <v-card>
+        <v-card-media
+              class="white--text"
+              src="http://images.all-free-download.com/images/graphiclarge/nostalgic_blue_background_06_hd_pictures_169782.jpg"
+            >
+        <v-layout row>
+            <v-flex xs2>
+                <img src="https://www.thinkbusinessplan.com/img/user-icon.png"  alt="ผู้ใช้" class ="ma-4" >
+            </v-flex>
+            <v-flex xs7>
+              <br>
+              <p class ="pl-5">นายสมชาย น มงคล</p>
+              <p class ="pl-5 ">ผู้ดูแล</p>
+            </v-flex>
+      </v-layout>
+      </v-card-media>
+    </v-card>
+      <v-list class="show-sm-only" >
+
+
+
         <v-list-tile v-for="(item,i) in menuItem" :key="i" router :to="item.link" >
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>

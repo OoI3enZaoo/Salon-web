@@ -3,6 +3,7 @@
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
+         
         <v-card-media height="150px" class="primary lighten-4--text">
           <h4 style="text-align:center; margin-top: 60px;" class="white--text">ยินดีต้อนรับสู่ระบบจัดการ Salon & Academy สำหรับผู้ดูแล</h4>
         </v-card-media>
