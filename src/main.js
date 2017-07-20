@@ -7,7 +7,13 @@ import router from './router'
 import 'vuetify/dist/vuetify.min.css'
 import {store} from './store'
 import mynav from './components/navbar.vue'
+import VueSweetAlert from 'vue-sweetalert'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 Vue.use(Vuetify)
+Vue.use(VueSweetAlert)
+Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 
 Vue.component('mynav',mynav)
