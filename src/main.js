@@ -5,9 +5,9 @@ import Vuetify from 'vuetify'
 import App from './App'
 import router from './router'
 import 'vuetify/dist/vuetify.min.css'
-import VueParticles from 'vue-particles'
+
 Vue.use(Vuetify)
-Vue.use(VueParticles)
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
