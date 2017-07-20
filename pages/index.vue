@@ -20,13 +20,20 @@
       </v-card>
     </v-flex>
   </v-layout>
+  <simplert :useRadius="true"
+          :useIcon="true"
+          ref="simplert">
+</simplert>
 </v-app>
 </template>
 <script>
 
+import Simplert from 'vue2-simplert'
+
 
 export default {
   // middleware :  'authenticated2',
+   components: {Simplert},
   data: () => ({
     user: {
       username: '',
@@ -78,11 +85,13 @@ export default {
               console.log("localStorage: " + localStorage.getItem("isLogin"));
               this.$router.push('/home')
             } else {
-              this.$swal({
-                type: 'error',
-                title: '<span class="title">เกิดข้อผิดพลาด!</span>',
-                html: '<span class="text grey--text">ไม่มีผู้ใช้นี้ กรุณาลองใหม่อีกครั้งค่ะ</span>'
-              })
+              let obj = {
+                 title: 'Custom Function',
+                 message: 'Click close to trigger custom function',
+                 type: 'info',
+                 onClose: this.onClose
+              }
+              this.$refs.simplert.openSimplert(obj)
 
             }
           })
