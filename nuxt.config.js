@@ -24,5 +24,8 @@ module.exports = {
   build: {
     vendor: ['vuetify']
   },
-  plugins: ['~plugins/vuetify.js']
+  plugins: ['~plugins/vuetify.js'],
+  css: [
+    { src: '~assets/style/app.styl', lang: 'styl' }
+  ]
 }
