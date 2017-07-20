@@ -11,14 +11,17 @@
     "heroku-postbuild": "npm run build"
   },
   "config": {
-"nuxt": {
-  "host": "0.0.0.0",
-  "port": "5000"
-}
-},
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "5000"
+    }
+  },
   "dependencies": {
+    "axios": "^0.16.2",
     "nuxt": "0.10.7",
+    "vue-axios": "^2.0.2",
     "vue-server-renderer": "latest",
+    "vue-sweetalert": "^0.1.17",
     "vuetify": "^0.14.5"
   },
   "devDependencies": {
