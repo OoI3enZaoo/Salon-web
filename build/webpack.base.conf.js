@@ -25,6 +25,9 @@ module.exports = {
       '@': resolve('src')
     }
   },
+  devServer: {
+   historyApiFallback: true
+ },
   module: {
     rules: [
       {
@@ -36,10 +39,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
-      },
-      {
-        test: /\.styl$/,
-        loader: ['style-loader', 'css-loader', 'stylus-loader']
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
