@@ -2,9 +2,9 @@ module.exports = {
   /*
   ** Headers of the page
   */
-  router: {
-    middleware: 'checkAuth'
-  },
+  // router: {
+  //   middleware: 'checkAuth'
+  // },
   head: {
     title: 'starter',
     meta: [
