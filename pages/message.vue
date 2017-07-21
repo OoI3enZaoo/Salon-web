@@ -40,6 +40,7 @@
     <mainn class="flex parent">
     <sectionn>
       <template>
+          <v-list subheader>
         <v-list-tile avatar>
           <v-list-tile-avatar>
             <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png"></v-list-tile-avatar>
@@ -48,7 +49,7 @@
             <v-list-tile-sub-title><span class='grey--text text--darken-2'>สวัสดีครับผม</span> </v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
-
+</v-list>
       </template>
 
 
