@@ -1,5 +1,6 @@
 <template>
   <div>
+      <v-container fluid>
       <v-layout row  >
           <v-flex xs3>
               <v-card height = "100px" class ="green white--text">
@@ -62,8 +63,7 @@
 
 
       </v-layout>
-
-
+</v-container>
   </div>
 </template>
 <script>
@@ -78,7 +78,7 @@ export default {
   },
   mounted() {
     //do something after mounting vue instance
-    this.$store.commit('setToolbar',"Home")
+
       if(JSON.parse(localStorage.getItem("isLogin")) == false){
       console.log("falseeee");
       this.$store.commit('setLogin',false)
@@ -89,6 +89,7 @@ export default {
       console.log("trueeee");
       this.$store.commit('setLogin',true)
         this.$router.push('/home')
+        this.$store.commit('setPage',"Home")
 
     }
     console.log(localStorage.getItem("isLogin"));

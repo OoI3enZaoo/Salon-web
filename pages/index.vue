@@ -3,7 +3,7 @@
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
-         
+
         <v-card-media height="150px" class="primary lighten-4--text">
           <h4 style="text-align:center; margin-top: 60px;" class="white--text">ยินดีต้อนรับสู่ระบบจัดการ Salon & Academy สำหรับผู้ดูแล</h4>
         </v-card-media>
@@ -68,7 +68,7 @@ export default {
   methods: {
     Login() {
       if (this.user.username != '' && this.user.password != '') {
-        this.axios.get('https://salon-b177d.firebaseio.com/adminUser.json')
+        this.axios.get('https://salon-b177d.firebaseio.com/admin.json')
           .then((response) => {
             let status = false
             let res = response.data

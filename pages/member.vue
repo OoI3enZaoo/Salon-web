@@ -16,13 +16,14 @@ export default {
   }),
   mounted() {
       //do something after mounting vue instance
-        this.$store.commit('setToolbar',"Member")
+
           if(JSON.parse(localStorage.getItem("isLogin")) == false){
           this.$store.commit('setLogin',false)
           this.$router.push('/')
         }else{
           this.$store.commit('setLogin',true)
             this.$router.push('/member')
+            this.$store.commit('setPage',"Member")
         }
     }
 }

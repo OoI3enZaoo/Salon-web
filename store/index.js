@@ -1,14 +1,15 @@
 export const state = {
-  toolbar: 'start',
-  isLogin : false
+  isLogin : false,
+  page : ''
 }
 export const mutations = {
-  setToolbar : (state,name) => state.toolbar = name,
-  setLogin : (state,status) => state.isLogin = status
+  setLogin : (state,status) => state.isLogin = status,
+  setPage : (state,page) => state.page = page
 }
 export const getters = {
-  isLogin : (state) => state.isLogin
+  isLogin : (state) => state.isLogin,
+  page : (state) => state.page
 }
 export const actions = {
-   setToolbar : ({commit},name) => commit('setToolbar',name)
+   //setPage : ({commit},page) => commit('setPage',page)
 }
