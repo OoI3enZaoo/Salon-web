@@ -4,11 +4,8 @@
   <v-tabs dark v-model="active">
     <v-tabs-bar slot="activators" class="primary">
       <v-tabs-item v-for="(tab,i) in tabs" :key="i" :href="'#' + tab.name" ripple>
-
-          <v-toolbar-title>{{tab.name}}</v-toolbar-title>
+        {{tab.name}}
       </v-tabs-item>
-
-
       <v-tabs-slider class="yellow"></v-tabs-slider>
     </v-tabs-bar>
 
