@@ -37,6 +37,53 @@
   </v-toolbar>
 
 
+    <mainn class="flex parent">
+    <sectionn>
+      <template>
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png"></v-list-tile-avatar>
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-sub-title><span class='grey--text text--darken-2'>สวัสดีครับผม</span> </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+      </template>
+
+
+
+    </sectionn>
+    <v-card>
+    <v-text-field
+   label="พิมพ์ข้อความ"
+   single-line
+   light
+   hide-details
+   full-width
+  ></v-text-field>
+  </v-card>
+  </mainn>
+
+
+
+
+
+
+
+  <!-- <v-card >
+
+    <v-text-field
+   label="พิมพ์ข้อความ"
+   single-line
+
+   light
+   hide-details
+   full-width
+  ></v-text-field>
+  </v-card> -->
+
+
 
 </div>
 </template>
@@ -89,5 +136,31 @@ export default {
   }
 }
 </script>
+<style>
+mainn{
+width: 100%;
+height: 600px;
+max-height: 800px;
+display: flex;
+flex-flow: column nowrap;
+}
 
-</script>
+sectionn{
+width: 100%;
+overflow-y: scroll;
+flex: 1 auto;
+height: 100%;
+}
+
+.inputt{
+width: 100%;
+flex: 0 0 auto;
+background-color: green;
+}
+
+textareaa{
+width: 100%;
+max-width: 100%;
+}
+
+</style>

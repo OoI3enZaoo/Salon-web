@@ -1,0 +1,242 @@
+<template>
+<v-layout row justify-center>
+  <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
+    <v-icon slot="activator">info</v-icon>
+    <v-card>
+      <v-toolbar dark class="primary">
+        <v-btn icon @click.native="dialog = false" dark>
+          <v-icon>close</v-icon>
+        </v-btn>
+        <v-toolbar-title>นายนานา มานา (เจ้าของร้านทำผม)</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn dark flat @click.native="dialog = false"><v-icon dark>chat_bubble</v-icon></v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-list three-line subheader>
+
+        <v-container>
+          <v-subheader>รายได้ของเดือน</v-subheader>
+          <v-card >
+<div id="chartdiv"></div>
+          </v-card>
+        </v-container>
+      </v-list>
+
+      <v-divider></v-divider>
+      <v-list three-line subheader>
+        <v-container>
+          <v-subheader>ราคาค่าบริการของร้าน</v-subheader>
+
+          <v-layout row>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline" >ค่าทำผม</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำสี</h5>
+                <h5>150</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าสระไดร์</h5>
+                <h5>100-200</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำผม</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำเล็บ</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำเล็บ</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+          </v-layout>
+
+          <br>
+          <v-layout row>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline" >ค่าทำผม</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำสี</h5>
+                <h5>150</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าสระไดร์</h5>
+                <h5>100-200</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำผม</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำเล็บ</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+            <v-flex>
+              <v-card class="text-xs-center">
+                <h5 style="display:inline">ค่าทำเล็บ</h5>
+                <h5>50</h5>
+              </v-card>
+            </v-flex>
+          </v-layout>
+
+
+        </v-container>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list three-line subheader>
+        <v-subheader>ตั้งค่า</v-subheader>
+        <v-list-tile avatar>
+          <v-list-tile-action>
+            <v-checkbox></v-checkbox>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Notifications</v-list-tile-title>
+            <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded</v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile avatar>
+          <v-list-tile-action>
+            <v-checkbox></v-checkbox>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Sound</v-list-tile-title>
+            <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply</v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile avatar>
+          <v-list-tile-action>
+            <v-checkbox></v-checkbox>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Auto-add widgets</v-list-tile-title>
+            <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+      </v-list>
+    </v-card>
+  </v-dialog>
+</v-layout>
+</template>
+<script>
+
+
+export default {
+  data() {
+    return {
+      dialog: false
+    }
+  },
+  mounted() {
+    //do something after mounting vue instance
+    AmCharts.makeChart( "chartdiv", {
+     "type": "serial",
+     "theme": "light",
+     "dataProvider": [ {
+       "country": "มกราคม",
+       "visits": 2025
+     }, {
+       "country": "กุมภาพันธ์",
+       "visits": 1882
+     }, {
+       "country": "มีนาคม",
+       "visits": 1809
+     }, {
+       "country": "เมษายน",
+       "visits": 1322
+     }, {
+       "country": "พฤษภาคม",
+       "visits": 1122
+     }, {
+       "country": "มิถุนายน",
+       "visits": 1114
+     }, {
+       "country": "กรกฎาคม",
+       "visits": 984
+     }, {
+       "country": "สิงหาคม",
+       "visits": 711
+     }, {
+       "country": "กันยายน",
+       "visits": 665
+     }, {
+       "country": "ตุลาคม",
+       "visits": 580
+     }, {
+       "country": "พฤศจิกายน",
+       "visits": 443
+     }, {
+       "country": "ธันวาคม",
+       "visits": 441
+     }
+   ],
+     "valueAxes": [ {
+       "gridColor": "#FFFFFF",
+       "gridAlpha": 0.2,
+       "dashLength": 0
+     } ],
+     "gridAboveGraphs": true,
+     "startDuration": 1,
+     "graphs": [ {
+       "balloonText": "[[category]]: <b>[[value]]</b>",
+       "fillAlphas": 0.8,
+       "lineAlpha": 0.2,
+       "type": "column",
+       "valueField": "visits"
+     } ],
+     "chartCursor": {
+       "categoryBalloonEnabled": false,
+       "cursorAlpha": 0,
+       "zoomable": false
+     },
+     "categoryField": "country",
+     "categoryAxis": {
+       "gridPosition": "start",
+       "gridAlpha": 0,
+       "tickPosition": "start",
+       "tickLength": 20
+     },
+     "export": {
+       "enabled": true
+     }
+
+   } );
+
+  }
+}
+</script>
+<style>
+#chartdiv {
+width		: 100%;
+height		: 500px;
+font-size	: 11px;
+}
+</style>>

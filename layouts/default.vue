@@ -12,8 +12,8 @@
               </v-flex>
               <v-flex xs7>
                 <br>
-                <p class="pl-5">นายสมชาย น มงคล</p>
-                <p class="pl-5 ">ผู้ดูแล</p>
+                <span class="ml-4">นายสมชาย น มงคล</span><br>
+                <span class="ml-4">ผู้ดูแล</span>
               </v-flex>
             </v-layout>
           </v-card-media>
@@ -48,6 +48,9 @@
                                 <v-list-tile-title >Brunch this weekend?</v-list-tile-title>
                                 <v-list-tile-sub-title><span class='grey--text text--darken-2'>Ali Connors</span> — I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</v-list-tile-sub-title>
                               </v-list-tile-content>
+                              <v-list-tile-action>
+                                 <v-list-tile-action-text>15 นาที</v-list-tile-action-text>
+                               </v-list-tile-action>
                             </v-list-tile>
                               <v-divider :inset ="true"></v-divider>
                           </template>

@@ -4,6 +4,12 @@ module.exports = {
   */
   head: {
     title: 'starter',
+    script: [
+      { src: 'https://www.amcharts.com/lib/3/amcharts.js' },
+      { src: 'https://www.amcharts.com/lib/3/serial.js' },
+        { src: 'https://www.amcharts.com/lib/3/plugins/export/export.min.js' },
+        { src : 'https://www.amcharts.com/lib/3/themes/light.js'}
+    ],
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -11,7 +17,8 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://www.amcharts.com/lib/3/plugins/export/export.css' },
     ]
   },
   /*
