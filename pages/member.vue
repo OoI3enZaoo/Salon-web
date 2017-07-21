@@ -1,14 +1,19 @@
 <template>
 <div>
+    <v-toolbar dark class="primary">
   <v-tabs dark v-model="active">
     <v-tabs-bar slot="activators" class="primary">
       <v-tabs-item v-for="(tab,i) in tabs" :key="i" :href="'#' + tab.name" ripple>
-        {{tab.name}}
+
+          <v-toolbar-title>{{tab.name}}</v-toolbar-title>
       </v-tabs-item>
+
+
       <v-tabs-slider class="yellow"></v-tabs-slider>
     </v-tabs-bar>
 
   </v-tabs>
+</v-toolbar>
 
   <v-container fluid>
     <v-layout row>
@@ -32,7 +37,9 @@
                     <v-icon>chat_bubble</v-icon>
                   </v-flex>
                   <v-flex xs6>
-                    <info></info>
+                  <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer"><v-icon>info</v-icon></nuxt-link>
+
+
                   </v-flex>
                 </v-layout>
 
@@ -50,11 +57,8 @@
 </div>
 </template>
 <script>
-import info from '../components/info.vue'
 export default {
-  components: {
-    info
-  },
+
   data() {
     return {
       tabs: [
@@ -92,7 +96,21 @@ export default {
     }
   },
   methods: {
+    hideFrom(){
+      console.log("Chart1");
+    }
+  },
+  mounted() {
+    //do something after mounting vue instance
 
+    if (JSON.parse(localStorage.getItem("isLogin")) == false) {
+      this.$store.commit('setLogin', false)
+      this.$router.push('/')
+    } else {
+      this.$store.commit('setLogin', true)
+      this.$router.push('/member')
+      this.$store.commit('setPage', "Message")
+    }
   }
 }
 </script>

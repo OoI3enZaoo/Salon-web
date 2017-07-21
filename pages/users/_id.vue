@@ -1,24 +1,24 @@
 <template>
-<v-layout row justify-center>
-  <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
-    <v-icon slot="activator">info</v-icon>
-    <v-card>
-      <v-toolbar dark class="primary">
-        <v-btn icon @click.native="dialog = false" dark>
-          <v-icon>close</v-icon>
-        </v-btn>
-        <v-toolbar-title>นายนานา มานา (เจ้าของร้านทำผม)</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn dark flat @click.native="dialog = false"><v-icon dark>chat_bubble</v-icon></v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
+  <div>
+    <v-toolbar dark class="primary">
+      <v-btn icon dark nuxt to= "/member">
+        <v-icon>navigate_before</v-icon>
+      </v-btn>
+      <v-toolbar-title>นายนานา มานา (เจ้าของร้านทำผม)</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn dark flat @click.native=""><v-icon dark>chat_bubble</v-icon></v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-container>
+
       <v-list three-line subheader>
 
         <v-container>
           <v-subheader>รายได้ของเดือน</v-subheader>
           <v-card >
-<div id="chartdiv"></div>
+            <div id="chartdiv"></div>
+
           </v-card>
         </v-container>
       </v-list>
@@ -110,7 +110,7 @@
 
         </v-container>
       </v-list>
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider>
       <v-list three-line subheader>
         <v-subheader>ตั้งค่า</v-subheader>
         <v-list-tile avatar>
@@ -141,102 +141,111 @@
           </v-list-tile-content>
         </v-list-tile>
 
-      </v-list>
-    </v-card>
-  </v-dialog>
-</v-layout>
+      </v-list> -->
+<!--
+    <h3>{{ name }}</h3>
+       <h4>@{{ username }}</h4>
+       <p>Email : {{ email }}</p> -->
+       </v-container>
+  </div>
 </template>
 <script>
-
-
+import axios from 'axios'
 export default {
-  data() {
-    return {
-      dialog: false
-    }
-  },
-  mounted() {
-    //do something after mounting vue instance
-    AmCharts.makeChart( "chartdiv", {
-     "type": "serial",
-     "theme": "light",
-     "dataProvider": [ {
-       "country": "มกราคม",
-       "visits": 2025
-     }, {
-       "country": "กุมภาพันธ์",
-       "visits": 1882
-     }, {
-       "country": "มีนาคม",
-       "visits": 1809
-     }, {
-       "country": "เมษายน",
-       "visits": 1322
-     }, {
-       "country": "พฤษภาคม",
-       "visits": 1122
-     }, {
-       "country": "มิถุนายน",
-       "visits": 1114
-     }, {
-       "country": "กรกฎาคม",
-       "visits": 984
-     }, {
-       "country": "สิงหาคม",
-       "visits": 711
-     }, {
-       "country": "กันยายน",
-       "visits": 665
-     }, {
-       "country": "ตุลาคม",
-       "visits": 580
-     }, {
-       "country": "พฤศจิกายน",
-       "visits": 443
-     }, {
-       "country": "ธันวาคม",
-       "visits": 441
-     }
-   ],
-     "valueAxes": [ {
-       "gridColor": "#FFFFFF",
-       "gridAlpha": 0.2,
-       "dashLength": 0
-     } ],
-     "gridAboveGraphs": true,
-     "startDuration": 1,
-     "graphs": [ {
-       "balloonText": "[[category]]: <b>[[value]]</b>",
-       "fillAlphas": 0.8,
-       "lineAlpha": 0.2,
-       "type": "column",
-       "valueField": "visits"
-     } ],
-     "chartCursor": {
-       "categoryBalloonEnabled": false,
-       "cursorAlpha": 0,
-       "zoomable": false
-     },
-     "categoryField": "country",
-     "categoryAxis": {
-       "gridPosition": "start",
-       "gridAlpha": 0,
-       "tickPosition": "start",
-       "tickLength": 20
-     },
-     "export": {
-       "enabled": true
-     }
+  validate ({ params }) {
+     return !isNaN(+params.id)
+   },
+   async asyncData ({ params, error }) {
+     try {
 
-   } );
 
-  }
+       const { data } = await axios.get(`https://jsonplaceholder.typicode.com/users/${+params.id}`)
+       return data
+     } catch (e) {
+       error({ message: 'User not found', statusCode: 404 })
+     }
+   },
+   mounted() {
+     //do something after mounting vue instance
+     let a = AmCharts.makeChart("chartdiv", {
+      "type": "serial",
+      "theme": "light",
+      "dataProvider": [ {
+        "country": "มกราคม",
+        "visits": 2025
+      }, {
+        "country": "กุมภาพันธ์",
+        "visits": 1882
+      }, {
+        "country": "มีนาคม",
+        "visits": 1809
+      }, {
+        "country": "เมษายน",
+        "visits": 1322
+      }, {
+        "country": "พฤษภาคม",
+        "visits": 1122
+      }, {
+        "country": "มิถุนายน",
+        "visits": 1114
+      }, {
+        "country": "กรกฎาคม",
+        "visits": 984
+      }, {
+        "country": "สิงหาคม",
+        "visits": 711
+      }, {
+        "country": "กันยายน",
+        "visits": 665
+      }, {
+        "country": "ตุลาคม",
+        "visits": 580
+      }, {
+        "country": "พฤศจิกายน",
+        "visits": 443
+      }, {
+        "country": "ธันวาคม",
+        "visits": 441
+      }
+     ],
+      "valueAxes": [ {
+        "gridColor": "#FFFFFF",
+        "gridAlpha": 0.2,
+        "dashLength": 0
+      } ],
+      "gridAboveGraphs": true,
+      "startDuration": 1,
+      "graphs": [ {
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.8,
+        "lineAlpha": 0.2,
+        "type": "column",
+        "valueField": "visits"
+      } ],
+      "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+      },
+      "categoryField": "country",
+      "categoryAxis": {
+        "gridPosition": "start",
+        "gridAlpha": 0,
+        "tickPosition": "start",
+        "tickLength": 20
+      },
+      "export": {
+        "enabled": true
+      }
+
+     } );
+     console.log("ID MOUNTED: " + a );
+
+   }
 }
 </script>
-<style>
+<style >
 #chartdiv {
-width		: 100%;
-height		: 500px;
-font-size	: 11px;
+width		: 100%; height		: 500px; font-size	: 11px;
 }
-</style>>
+</style>

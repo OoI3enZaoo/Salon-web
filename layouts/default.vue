@@ -19,7 +19,8 @@
           </v-card-media>
         </v-card>
         <v-list class="show-sm-only">
-          <v-list-tile v-for="(item,i) in menuItem" :key="i" router :to="item.link">
+          <v-list-tile v-for="(item,i) in menuItem" :key="i" nuxt :to="item.link ">
+
             <v-list-tile-action>
               <v-icon>{{item.icon}}</v-icon>
             </v-list-tile-action>
@@ -61,7 +62,7 @@
 
 
       <v-toolbar class="primary">
-        <v-toolbar-side-icon @click.native.stop="slideNavLeft = !slideNavLeft" ></v-toolbar-side-icon>
+        <v-toolbar-side-icon dark @click.native.stop="slideNavLeft = !slideNavLeft" ></v-toolbar-side-icon>
         <v-toolbar-title>
           <div v-text="this.page" class="white--text text-xs-center">d</div>
         </v-toolbar-title>
@@ -70,7 +71,8 @@
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-toolbar-side-icon @click.native.stop="slideNavRight = !slideNavRight"></v-toolbar-side-icon>
+          <v-toolbar-side-icon dark @click.native.stop="slideNavRight = !slideNavRight"></v-toolbar-side-icon>
+
         </v-toolbar-items>
       </v-toolbar>
 
