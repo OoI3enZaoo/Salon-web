@@ -3,7 +3,7 @@
   <v-app id="example-3">
 
     <div v-if="this.isLogin">
-      <v-navigation-drawer v-model="slideNavLeft" clipped persistent absolute height="100%">
+      <v-navigation-drawer v-model="slideNavLeft" persistent absolute height="100%">
         <v-card>
           <v-card-media class="white--text" src="http://images.all-free-download.com/images/graphiclarge/nostalgic_blue_background_06_hd_pictures_169782.jpg">
             <v-layout row>
@@ -30,7 +30,21 @@
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-navigation-drawer  v-model="slideNavRight" clipped persistent absolute height="100%" right>
+      <v-toolbar class="primary">
+        <v-toolbar-side-icon dark @click.native.stop="slideNavLeft = !slideNavLeft" ></v-toolbar-side-icon>
+        <v-toolbar-title>
+          <div v-text="this.page" class="white--text text-xs-center">d</div>
+        </v-toolbar-title>
+        <v-toolbar-items>
+          <!-- <v-btn flat @click.native="slideNavRight = !slideNavRight">RightNav</v-btn>       -->
+        </v-toolbar-items>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-toolbar-side-icon dark @click.native.stop="slideNavRight = !slideNavRight"></v-toolbar-side-icon>
+
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-navigation-drawer  v-model="slideNavRight" clipped persistent  height="100%" right>
               <v-text-field
              label="ค้นหาชื่อผู้ใช้ที่นี่"
              single-line
@@ -61,20 +75,7 @@
 
 
 
-      <v-toolbar class="primary">
-        <v-toolbar-side-icon dark @click.native.stop="slideNavLeft = !slideNavLeft" ></v-toolbar-side-icon>
-        <v-toolbar-title>
-          <div v-text="this.page" class="white--text text-xs-center">d</div>
-        </v-toolbar-title>
-        <v-toolbar-items>
-          <!-- <v-btn flat @click.native="slideNavRight = !slideNavRight">RightNav</v-btn>       -->
-        </v-toolbar-items>
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-toolbar-side-icon dark @click.native.stop="slideNavRight = !slideNavRight"></v-toolbar-side-icon>
 
-        </v-toolbar-items>
-      </v-toolbar>
 
 
 
