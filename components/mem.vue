@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
 
-      <v-select
+      <!-- <v-select
              v-bind:items="states"
              v-model="search"
              label="ผู้ใช้ที่ซื้อคอร์สทั้งหมด"
@@ -11,8 +11,13 @@
              auto
              append-icon="map"
              hide-details
-           ></v-select>
+           ></v-select> -->
 
+           <template v-for="(item,i) in checkboxItems">
+
+           <v-checkbox v-model="search"  :value = "item" :label="item"> </v-checkbox>
+
+          </template>
       <v-spacer></v-spacer>
       <v-text-field
         append-icon="search"
@@ -20,12 +25,17 @@
         single-line
         hide-details
         v-model="search"
+          full-width
+
+
+
       ></v-text-field>
     </v-card-title>
     <v-data-table
         :headers="headers"
         :items="items"
         :search="search"
+
 
 
 
@@ -36,14 +46,9 @@
             @open="props.item._name = props.item.name"
             @cancel="props.item.name = props.item._name || props.item.name"
             lazy
-          > {{ props.item.name }}
-            <v-text-field
-              slot="input"
-              label="Edit"
-              v-bind:value="props.item.name"
-              v-on:change="val => props.item.name = val"
-              single-line counter="counter"
-            ></v-text-field>
+          >
+          <img :src="profile"  height="40px" width="40px" style="width:50px;">&nbsp;&nbsp;&nbsp;{{ props.item.name }}
+
           </v-edit-dialog>
         </td>
         <td class="text-xs-right">{{ props.item.calories }}</td>
@@ -52,25 +57,16 @@
         <td class="text-xs-right">{{ props.item.protein }}</td>
         <td class="text-xs-right">{{ props.item.sodium }}</td>
         <td class="text-xs-right">{{ props.item.calcium }}</td>
-        <td>
-          <v-edit-dialog
-            class="text-xs-right"
-            @open="props.item._iron = props.item.iron"
-            @cancel="props.item.iron = props.item._iron || props.item.iron"
-            large
-            lazy
-          >
-            <div class="text-xs-right">{{ props.item.iron }}</div>
-            <div slot="input" class="mt-3 title">Update Iron</div>
-            <v-text-field
-              slot="input"
-              label="Edit"
-              v-model="props.item.iron"
-              single-line
-              counter
-              autofocus
-            ></v-text-field>
-          </v-edit-dialog>
+
+        <td class="text-xs-right">
+          <v-layout row>
+            <v-flex xs4>
+              <v-btn icon><v-icon>chat_bubble</v-icon> </v-btn>
+            </v-flex>
+            <v-flex xs4>
+            <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer">  <v-btn icon><v-icon>info</v-icon> </v-btn></nuxt-link>
+            </v-flex>
+          </v-layout>
         </td>
       </template>
       <template slot="pageText" scope="{ pageStart, pageStop }">
@@ -103,8 +99,10 @@
       return {
         search: '',
         pagination: {},
+        checkboxItems : ['เจ้าของร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ผู้ช่วยช่าง','ช่างตัดผม','อีกอันนึง','มีอีกอันจำชื่อไม่ได้'],
          states: ['เจ้าของกิจการร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ช่างตัดผม','ผู้ช่วยช่าง'],
-         e2: null,
+         e2: [''],
+         profile : 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png',
         headers: [
           {
             text: 'Dessert (100g serving)',

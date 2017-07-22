@@ -8,7 +8,9 @@ module.exports = {
       { src: 'https://www.amcharts.com/lib/3/amcharts.js' },
       { src: 'https://www.amcharts.com/lib/3/serial.js' },
         { src: 'https://www.amcharts.com/lib/3/plugins/export/export.min.js' },
-        { src : 'https://www.amcharts.com/lib/3/themes/light.js'}
+        { src : 'https://www.amcharts.com/lib/3/themes/light.js'},
+        {src : 'https://www.amcharts.com/lib/3/pie.js'},
+        {src : 'https://www.amcharts.com/lib/3/xy.js'}
     ],
     meta: [
       { charset: 'utf-8' },

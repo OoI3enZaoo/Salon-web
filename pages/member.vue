@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-toolbar dark class="primary">
+    <!-- <v-toolbar dark class="primary">
   <v-tabs dark v-model="active">
     <v-tabs-bar slot="activators" class="primary">
       <v-tabs-item v-for="(tab,i) in tabs" :key="i" :href="'#' + tab.name" ripple>
@@ -10,12 +10,12 @@
     </v-tabs-bar>
 
   </v-tabs>
-</v-toolbar>
+</v-toolbar> -->
 <v-card>
   <v-container fluid>
     <v-layout row>
       <v-flex xs12>
-
+<!--
         <v-text-field
        label="ค้นหาชื่อผู้ใช้ที่นี่"
        single-line
@@ -55,13 +55,14 @@
           </v-list>
           <v-divider></v-divider>
 
-        </v-card>
-
+        </v-card> -->
+  <mem></mem>
       </v-flex>
     </v-layout>
+
   </v-container>
   </v-card>
-  <mem></mem>
+
 </div>
 
 </template>

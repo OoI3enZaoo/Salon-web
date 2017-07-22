@@ -7,7 +7,7 @@
       <v-toolbar-title>นายนานา มานา (เจ้าของร้านทำผม)</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn dark flat @click.native=""><v-icon dark>chat_bubble</v-icon></v-btn>
+        <v-btn icon dark flat @click.native=""><v-icon dark>chat_bubble</v-icon></v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-container>

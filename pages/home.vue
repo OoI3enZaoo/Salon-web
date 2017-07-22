@@ -1,95 +1,118 @@
 <template>
-  <div>
-      <v-container fluid>
-      <v-layout row  >
-          <v-flex xs3>
-              <v-card height = "100px" class ="green white--text">
-                <v-card-text>
+<div>
+  <v-container fluid>
+    <v-layout row>
+      <v-flex xs3>
+        <v-card class="light-green white--text">
+          <v-card-text >
+                    <div class="text-xs-center">
+                      <v-icon x-large dark>attach_money</v-icon>
+                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
+                        </div>
+                        <div class="text-xs-center">
+                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
+                      </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs3>
+        <v-card  class="deep-orange white--text">
+          <v-card-text >
+                    <div class="text-xs-center">
+                      <v-icon x-large dark>attach_money</v-icon>
+                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
+                        </div>
+                        <div class="text-xs-center">
+                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
+                      </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs3>
+        <v-card  class="amber white--text">
+          <v-card-text >
+                    <div class="text-xs-center">
+                      <v-icon x-large dark>attach_money</v-icon>
+                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
+                        </div>
+                        <div class="text-xs-center">
+                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
+                      </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs3>
+        <v-card  class="purple white--text">
+          <v-card-text >
+                    <div class="text-xs-center">
+                      <v-icon x-large dark>attach_money</v-icon>
+                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
+                        </div>
+                        <div class="text-xs-center">
+                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
+                      </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <br>
+    <v-layout row>
+      <v-flex xs8>
+        <v-card>
+            <v-card-title>
+              <lineGraph></lineGraph>
+            </v-card-title>
+        </v-card>
+      </v-flex>
+      <v-flex xs4>
+        <v-card>
+          <v-card-title>
+            <pieChart></pieChart>
+            </v-card-title>
+        </v-card>
+      </v-flex>
 
-                  <!-- <v-layout row>
-                        <v-flex xs3>
-                            <div class="pa-2 pl-5">
-                                <v-icon x-large dark >home</v-icon>
-                            </div>
-                        </v-flex>
-                        <v-flex xs2>
-                            <div class="pa-2 pl-5">
-                                <h4 class ="white--text">565</h4><br>
-                            </div>
-                        </v-flex>
-                          <p class ="pa-3 pt-5">สมาชิกทั้งหมด</p>
+    </v-layout>
+    <br>
+    <v-layout row>
+      <v-flex xs12>
+        <v-card height="200px">
 
-                  </v-layout> -->
-    </v-card-text>
-              </v-card>
-          </v-flex>
-          <v-flex xs3>
-            <v-card height = "100px" class ="red white--text">
-
-            </v-card>
-          </v-flex>
-          <v-flex xs3>
-            <v-card height = "100px" class ="grey white--text">
-
-            </v-card>
-          </v-flex>
-          <v-flex xs3>
-            <v-card height = "100px" class ="deep-purple white--text">
-
-            </v-card>
-          </v-flex>
-      </v-layout>
-<br>
-      <v-layout row>
-          <v-flex xs8>
-              <v-card height = "300px">
-
-              </v-card>
-          </v-flex>
-          <v-flex xs4>
-            <v-card height = "300px">
-
-            </v-card>
-          </v-flex>
-
-      </v-layout>
-      <br>
-      <v-layout row>
-          <v-flex xs12>
-              <v-card height = "200px">
-
-              </v-card>
-          </v-flex>
+        </v-card>
+      </v-flex>
 
 
-      </v-layout>
-</v-container>
-  </div>
+    </v-layout>
+  </v-container>
+</div>
 </template>
 <script>
+import pieChart from '../components/chart/pieChart.vue'
+import lineGraph from '../components/chart/lineGraph.vue'
 export default {
-
-  name: "",
-
-  data (){
+  components: {
+    pieChart,
+    lineGraph
+  },
+  data() {
     return {
-      message : "message"
+      message: "message"
     }
   },
   mounted() {
     //do something after mounting vue instance
 
-      if(JSON.parse(localStorage.getItem("isLogin")) == false){
+    if (JSON.parse(localStorage.getItem("isLogin")) == false) {
       console.log("falseeee");
-      this.$store.commit('setLogin',false)
+      this.$store.commit('setLogin', false)
       this.$router.push('/')
 
 
-    }else{
+    } else {
       console.log("trueeee");
-      this.$store.commit('setLogin',true)
-        this.$router.push('/home')
-        this.$store.commit('setPage',"Home")
+      this.$store.commit('setLogin', true)
+      this.$router.push('/home')
+      this.$store.commit('setPage', "Home")
 
     }
     console.log(localStorage.getItem("isLogin"));
