@@ -4,53 +4,53 @@
     <v-layout row>
       <v-flex xs3>
         <v-card class="light-green white--text">
-          <v-card-text >
-                    <div class="text-xs-center">
-                      <v-icon x-large dark>attach_money</v-icon>
-                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
-                        </div>
-                        <div class="text-xs-center">
-                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
-                      </div>
+          <v-card-text>
+            <div class="text-xs-center">
+              <v-icon x-large dark>attach_money</v-icon>
+              <h5 class="white--text" style="display:inline;"><b>2000</b></h5><br>
+            </div>
+            <div class="text-xs-center">
+              <p class="white--text" style="display:inline;">รายได้เดือนที่แล้ว</p>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex xs3>
-        <v-card  class="deep-orange white--text">
-          <v-card-text >
-                    <div class="text-xs-center">
-                      <v-icon x-large dark>attach_money</v-icon>
-                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
-                        </div>
-                        <div class="text-xs-center">
-                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
-                      </div>
+        <v-card class="deep-orange white--text">
+          <v-card-text>
+            <div class="text-xs-center">
+              <v-icon x-large dark>attach_money</v-icon>
+              <h5 class="white--text" style="display:inline;"><b>2000</b></h5><br>
+            </div>
+            <div class="text-xs-center">
+              <p class="white--text" style="display:inline;">รายได้เดือนที่แล้ว</p>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex xs3>
-        <v-card  class="amber white--text">
-          <v-card-text >
-                    <div class="text-xs-center">
-                      <v-icon x-large dark>attach_money</v-icon>
-                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
-                        </div>
-                        <div class="text-xs-center">
-                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
-                      </div>
+        <v-card class="amber white--text">
+          <v-card-text>
+            <div class="text-xs-center">
+              <v-icon x-large dark>attach_money</v-icon>
+              <h5 class="white--text" style="display:inline;"><b>2000</b></h5><br>
+            </div>
+            <div class="text-xs-center">
+              <p class="white--text" style="display:inline;">รายได้เดือนที่แล้ว</p>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
       <v-flex xs3>
-        <v-card  class="purple white--text">
-          <v-card-text >
-                    <div class="text-xs-center">
-                      <v-icon x-large dark>attach_money</v-icon>
-                      <h5 class ="white--text" style="display:inline;"><b>2000</b></h5><br>
-                        </div>
-                        <div class="text-xs-center">
-                              <p class ="white--text" style ="display:inline;">รายได้เดือนที่แล้ว</p>
-                      </div>
+        <v-card class="purple white--text">
+          <v-card-text>
+            <div class="text-xs-center">
+              <v-icon x-large dark>attach_money</v-icon>
+              <h5 class="white--text" style="display:inline;"><b>2000</b></h5><br>
+            </div>
+            <div class="text-xs-center">
+              <p class="white--text" style="display:inline;">รายได้เดือนที่แล้ว</p>
+            </div>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -58,8 +58,16 @@
     <br>
     <v-layout row>
       <v-flex xs12>
-        <v-card >
+        <v-card>
           <v-card-title>
+            <template v-for="item in canvasItem">
+            &nbsp;&nbsp;&nbsp;
+            <card :class ="item.color" height="20px" >
+                <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </card>
+              &nbsp; <span>{{item.text}}</span>&nbsp;&nbsp;&nbsp;
+            </template>
+
             <lineGraph></lineGraph>
           </v-card-title>
         </v-card>
@@ -71,14 +79,14 @@
         <v-card>
           <v-card-title>
             <pieChart></pieChart>
-            </v-card-title>
+          </v-card-title>
         </v-card>
       </v-flex>
       <v-flex xs8>
         <v-card>
-            <v-card-title>
-                <mem></mem>
-            </v-card-title>
+          <v-card-title>
+            <mem></mem>
+          </v-card-title>
         </v-card>
       </v-flex>
 
@@ -101,7 +109,26 @@ export default {
   },
   data() {
     return {
-      message: "message"
+      message: "message",
+      canvasItem: [{
+        text: 'เจ้าของร้านทำผม',
+        color: "red"
+      }, {
+        text: 'ผู้ที่สนใจกิจการร้านทำผม',
+        color: "red"
+      }, {
+        text: 'ผู้ช่วยช่าง',
+        color: "red"
+      }, {
+        text: 'ช่างตัดผม',
+        color: "red"
+      }, {
+        text: 'อีกอันนึง',
+        color: "red"
+      }, {
+        text :'มีอีกอันจำชื่อไม่ได้',
+        color: "red"
+      }]
     }
   },
   mounted() {
