@@ -18,7 +18,9 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "node-sass": "^4.5.3",
     "nuxt": "0.10.7",
+    "sass-loader": "^6.0.6",
     "vue-axios": "^2.0.2",
     "vue-server-renderer": "latest",
     "vuetify": "^0.14.5"
