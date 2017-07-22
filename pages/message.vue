@@ -13,58 +13,7 @@
       </v-tabs-bar>
 
        -->
-  <v-toolbar class="white" dense standalone fixed-footer>
-    <v-toolbar-title>
-
-      <v-layout row>
-        <v-flex xs3>
-          <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png" width="30" height="30" class="mt-3">
-
-        </v-flex>
-        <v-flex xs12 class ="mt-3">
-
-        <p class="grey--text" >นายนานา (เจ้าของร้านทำผม)</p>
-        </v-flex>
-
-      </v-layout>
-    </v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-toolbar-items>
-      <v-icon medium style="cursor:pointer">info_outline</v-icon>
-      <v-icon medium style="cursor:pointer">notifications_off</v-icon>
-      <v-icon medium style="cursor:pointer">delete</v-icon>
-    </v-toolbar-items>
-  </v-toolbar>
-
-
-    <mainn class="flex parent">
-    <sectionn>
-      <template>
-          <v-list subheader>
-        <v-list-tile avatar>
-          <v-list-tile-avatar>
-            <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png"></v-list-tile-avatar>
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-sub-title><span class='grey--text text--darken-2'>สวัสดีครับผม</span> </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-</v-list>
-      </template>
-
-
-
-    </sectionn>
-    <v-card>
-    <v-text-field
-   label="พิมพ์ข้อความ"
-   single-line
-   light
-   hide-details
-   full-width
-  ></v-text-field>
-  </v-card>
-  </mainn>
+  <chat></chat>
 
 
 
@@ -89,8 +38,11 @@
 </div>
 </template>
 <script>
+import chat from '../components/chat.vue'
 export default {
-
+  components: {
+    chat
+  },
   name: "",
   data() {
     return {

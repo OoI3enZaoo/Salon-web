@@ -75,12 +75,12 @@ body {
 }
 
 .wrapper {
-    height: 520px;
-    width: 320px;
+    height: 90%;
+    width: 1400px;
     overflow: hidden;
     background-color: white;
     position: fixed;
-    top: 100px;
+    top: 80px;
     left: 50%;
     transform: translateX(-50%);
 
@@ -88,7 +88,7 @@ body {
 
     .inner {
         overflow: scroll;
-        height: 520px;
+        height: 90%;
         padding-top: $navHeight;
         background: darken($white, 5%);
 
