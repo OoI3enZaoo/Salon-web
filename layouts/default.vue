@@ -30,7 +30,7 @@
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-navigation-drawer   v-model="slideNavRight" clipped persistent absolute height="100%" right>
+      <v-navigation-drawer  v-model="slideNavRight" clipped persistent absolute height="100%" right>
               <v-text-field
              label="ค้นหาชื่อผู้ใช้ที่นี่"
              single-line

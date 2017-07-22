@@ -11,10 +11,19 @@
 
   </v-tabs>
 </v-toolbar>
-
+<v-card>
   <v-container fluid>
     <v-layout row>
       <v-flex xs12>
+
+        <v-text-field
+       label="ค้นหาชื่อผู้ใช้ที่นี่"
+       single-line
+       append-icon="search"
+       light
+       hide-details
+       full-width
+      ></v-text-field>
         <v-card>
 
 
@@ -51,11 +60,17 @@
       </v-flex>
     </v-layout>
   </v-container>
+  </v-card>
+  <mem></mem>
 </div>
+
 </template>
 <script>
+import mem from '../components/mem.vue'
 export default {
-
+  components: {
+    mem
+  },
   data() {
     return {
       tabs: [
