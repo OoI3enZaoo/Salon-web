@@ -57,13 +57,16 @@
     </v-layout>
     <br>
     <v-layout row>
-      <v-flex xs8>
-        <v-card>
-            <v-card-title>
-              <lineGraph></lineGraph>
-            </v-card-title>
+      <v-flex xs12>
+        <v-card >
+          <v-card-title>
+            <lineGraph></lineGraph>
+          </v-card-title>
         </v-card>
       </v-flex>
+    </v-layout>
+    <br>
+    <v-layout row>
       <v-flex xs4>
         <v-card>
           <v-card-title>
@@ -71,28 +74,30 @@
             </v-card-title>
         </v-card>
       </v-flex>
-
-    </v-layout>
-    <br>
-    <v-layout row>
-      <v-flex xs12>
-        <v-card height="200px">
-
+      <v-flex xs8>
+        <v-card>
+            <v-card-title>
+                <mem></mem>
+            </v-card-title>
         </v-card>
       </v-flex>
 
 
     </v-layout>
+
+
   </v-container>
 </div>
 </template>
 <script>
 import pieChart from '../components/chart/pieChart.vue'
 import lineGraph from '../components/chart/lineGraph.vue'
+import mem from '../components/mem.vue'
 export default {
   components: {
     pieChart,
-    lineGraph
+    lineGraph,
+    mem
   },
   data() {
     return {
