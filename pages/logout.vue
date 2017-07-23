@@ -6,15 +6,14 @@
 </template>
 <script>
 export default {
+  fetch({store}){
+    store.commit('islogin',false)
+  },
   mounted() {
     //do something after mounting vue instance
-     localStorage.setItem('isLogin',false)
-      this.$store.commit('setLogin',false)
+    // this.$store.commit('islogin',false)
+    // localStorage.setItem('isLogin',false)
 
-       this.$store.commit('setPage',"")
-    //
-       this.$router.push('/')
-    console.log("Logout");
 
   }
 }

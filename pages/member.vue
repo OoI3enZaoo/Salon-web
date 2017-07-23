@@ -69,6 +69,7 @@
 <script>
 import mem from '../components/mem.vue'
 export default {
+
   components: {
     mem
   },
@@ -115,14 +116,13 @@ export default {
   },
   mounted() {
     //do something after mounting vue instance
-
-    if (JSON.parse(localStorage.getItem("isLogin")) == false) {
-      this.$store.commit('setLogin', false)
-      this.$router.push('/')
-    } else {
-      this.$store.commit('setLogin', true)
+    if(JSON.parse(localStorage.getItem("isLogin")) == false){
+    this.$store.commit('islogin',false)
+    this.$router.push('/')
+    }else{
+    this.$store.commit('islogin',true)
       this.$router.push('/member')
-      this.$store.commit('setPage', "Message")
+      this.$store.commit('setPage',"Member")
     }
   }
 }

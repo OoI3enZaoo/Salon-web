@@ -102,10 +102,11 @@ import pieChart from '../components/chart/pieChart.vue'
 import lineGraph from '../components/chart/lineGraph.vue'
 import mem from '../components/mem.vue'
 export default {
+  middleware : 'authenticated',
   components: {
-    pieChart,
-    lineGraph,
-    mem
+    'pieChart' : pieChart,
+    'lineGraph' : lineGraph,
+    'mem' :mem
   },
   data() {
     return {
@@ -133,21 +134,17 @@ export default {
   },
   mounted() {
     //do something after mounting vue instance
-
-    if (JSON.parse(localStorage.getItem("isLogin")) == false) {
-      console.log("falseeee");
-      this.$store.commit('setLogin', false)
-      this.$router.push('/')
-
-
-    } else {
-      console.log("trueeee");
-      this.$store.commit('setLogin', true)
+    // console.log("cookie: "+document.cookie)
+    // console.log("islogin : " + this.$store.getters.islogin);
+    if(JSON.parse(localStorage.getItem("isLogin")) == false){
+    this.$store.commit('islogin',false)
+    this.$router.push('/')
+    }else{
+    this.$store.commit('islogin',true)
       this.$router.push('/home')
-      this.$store.commit('setPage', "Home")
+      this.$store.commit('setPage',"Home")
+  }
 
-    }
-    console.log(localStorage.getItem("isLogin"));
   }
 }
 </script>

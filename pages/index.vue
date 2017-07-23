@@ -1,6 +1,7 @@
 <template>
 <v-app>
   <v-layout>
+
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
 
@@ -33,7 +34,7 @@ import Simplert from 'vue2-simplert'
 
 
 export default {
-  // middleware :  'authenticated2',
+   middleware :  'authed',
    components: {Simplert},
   data: () => ({
     user: {
@@ -42,6 +43,9 @@ export default {
     }
   }),
   mounted(){
+
+      // console.log("cookie: "+document.cookie)
+      // console.log("Islogin: " +this.$store.getters.islogin);
     // const isLogin = localStorage.getItem("isLogin")
     // this.$store.commit('setLogin',isLogin)
     // console.log("localStorage: " + isLogin);
@@ -53,12 +57,12 @@ export default {
     //   }
 
     if(JSON.parse(localStorage.getItem("isLogin")) == false){
-      this.$store.commit('setLogin',false)
+      this.$store.commit('islogin',false)
       this.$router.push('/')
       console.log("INDEX.vue>> false");
     }
     else{
-      this.$store.commit('setLogin',true)
+      this.$store.commit('islogin',true)
         this.$router.push('/home')
         console.log("INDEX.vue>> TRUE");
     }
@@ -81,7 +85,7 @@ export default {
               }
             }
             if (status == true) {
-              this.$store.commit('setLogin',true)
+              this.$store.commit('islogin',true)
               localStorage.setItem('isLogin',true)
               console.log("localStorage: " + localStorage.getItem("isLogin"));
               this.$router.push('/home')

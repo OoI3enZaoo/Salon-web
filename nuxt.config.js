@@ -1,7 +1,40 @@
+const axios = require('axios')
 module.exports = {
   /*
   ** Headers of the page
   */
+
+  // generate :{
+  //   routes(callback){
+  //     const posts = axios.get("https://jsonplaceholder.typicode.com/users")
+  //     .then((res) =>{
+  //       let routes = res.data.map((uid) => {
+  //          return '/users/' + uid.id
+  //       })
+  //       callback(null, routes)
+  //     })
+  //     .catch(callback)
+  //   }
+  // },
+
+  generate: {
+    routes: function () {
+      return axios.get('https://jsonplaceholder.typicode.com/users')
+      .then((res) => {
+        return res.data.map((users) => {
+          return {
+            route: '/users/' + user.id,
+            payload: users
+          }
+        })
+      })
+    }
+  },
+
+
+  router: {
+    middleware: 'test'
+  },
   head: {
     title: 'starter',
     script: [
@@ -27,11 +60,21 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#3B8070' },
+
+  // generate: {
+  //   routes (callback) {
+  //     const posts = require('static/post.json')
+  //     let routes = posts.map(post => `users/${post.id}`)
+  //     callback(null, routes)
+  //   }
+  // },
+
   /*
   ** Build configuration
   */
   build: {
     vendor: ['vuetify']
+
   },
   plugins: ['~plugins/vuetify.js'],
   css: [

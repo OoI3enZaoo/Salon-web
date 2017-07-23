@@ -2,7 +2,7 @@
 <div>
   <v-app id="example-3">
 
-    <div v-if="this.isLogin">
+    <div v-if="$store.getters.islogin">
       <v-navigation-drawer v-model="slideNavLeft" persistent absolute height="100%">
         <v-card>
           <v-card-media class="white--text" src="http://images.all-free-download.com/images/graphiclarge/nostalgic_blue_background_06_hd_pictures_169782.jpg">
@@ -134,12 +134,7 @@ export default {
         }
       ]
     }
-  },
-  computed: {
-    ...mapGetters([
-      'isLogin', 'page'
-    ])
-  },
+  }
 
 }
 </script>
