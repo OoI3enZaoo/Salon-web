@@ -22,20 +22,16 @@
       </v-card>
     </v-flex>
   </v-layout>
-  <simplert :useRadius="true"
-          :useIcon="true"
-          ref="simplert">
-</simplert>
+
 </v-app>
 </template>
 <script>
 
-import Simplert from 'vue2-simplert'
 
 
 export default {
-   middleware :  'authed',
-   components: {Simplert},
+ 
+ 
   data: () => ({
     user: {
       username: '',
@@ -96,7 +92,7 @@ export default {
                  type: 'error',
                  onClose: this.onClose
               }
-              this.$refs.simplert.openSimplert(obj)
+              //this.$refs.simplert.openSimplert(obj)
 
             }
           })
@@ -107,7 +103,7 @@ export default {
            type: 'error',
            onClose: this.onClose
         }
-        this.$refs.simplert.openSimplert(obj)
+       // this.$refs.simplert.openSimplert(obj)
       }
     }//login
   }

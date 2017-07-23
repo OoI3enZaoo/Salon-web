@@ -17,24 +17,8 @@ module.exports = {
   //   }
   // },
 
-  generate: {
-    routes: function () {
-      return axios.get('https://jsonplaceholder.typicode.com/users')
-      .then((res) => {
-        return res.data.map((users) => {
-          return {
-            route: '/users/' + user.id,
-            payload: users
-          }
-        })
-      })
-    }
-  },
+ 
 
-
-  router: {
-    middleware: 'test'
-  },
   head: {
     title: 'starter',
     script: [

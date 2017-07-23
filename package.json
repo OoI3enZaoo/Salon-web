@@ -1,5 +1,5 @@
 {
-  "name": "salon",
+  "name": "f",
   "version": "1.0.0",
   "description": "Nuxt.js + Vuetify.js project",
   "author": "OoI3enZaoO <Teerapath-Ben@hotmail.com>",
@@ -19,24 +19,19 @@
   "dependencies": {
     "axios": "^0.16.2",
     "js-cookie": "^2.1.4",
-    "jwt-decode": "^2.2.0",
     "node-sass": "^4.5.3",
-    "nuxt": "0.10.7",
+    "nuxt": "1.0.0-alpha.5",
     "sass-loader": "^6.0.6",
-    "vue-axios": "^2.0.2",
-    "vue-server-renderer": "latest",
-    "vuetify": "^0.14.5",
-    "vuex-persistedstate": "^1.4.1"
-  },
-  "devDependencies": {
-    "eslint": "^4.3.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-html": "^3.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "vue2-simplert": "^0.5.0"
+    "vue-axios": "^2.0.2",
+    "vue-server-renderer": "latest",
+    "vue2-simplert": "^0.5.2",
+    "vuetify": "^0.14.5",
+    "vuex-persistedstate": "^2.0.0"
+  },
+  "devDependencies": {
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1"
   }
 }

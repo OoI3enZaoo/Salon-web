@@ -1,108 +1,42 @@
 <template>
-  <v-card>
-    <v-card-title>
-
-      <!-- <v-select
-             v-bind:items="states"
-             v-model="search"
-             label="ผู้ใช้ที่ซื้อคอร์สทั้งหมด"
-             single-line
-               multiple
-             auto
-             append-icon="map"
-             hide-details
-           ></v-select> -->
-
-           <template v-for="(item,i) in checkboxItems">
-
-           <v-checkbox v-model="search"  :value = "item" :label="item"> </v-checkbox>
-
-          </template>
-      <v-spacer></v-spacer>
-      <v-text-field
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-        v-model="search"
-          full-width
-
-
-
-      ></v-text-field>
-    </v-card-title>
+  <div>
     <v-data-table
-        :headers="headers"
-        :items="items"
-        :search="search"
-
-
-
-
-      >
-      <template slot="items" scope="props">
-        <td>
-          <v-edit-dialog
-            @open="props.item._name = props.item.name"
-            @cancel="props.item.name = props.item._name || props.item.name"
-            lazy
-          >
-          <img :src="profile"  height="40px" width="40px" style="width:50px;">&nbsp;&nbsp;&nbsp;{{ props.item.name }}
-
-          </v-edit-dialog>
-        </td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">{{ props.item.sodium }}</td>
-        <td class="text-xs-right">{{ props.item.calcium }}</td>
-
-        <td class="text-xs-right">
-          <v-layout row>
-            <v-flex xs4>
-              <v-btn icon><v-icon>chat_bubble</v-icon> </v-btn>
-            </v-flex>
-            <v-flex xs4>
-            <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer">  <v-btn icon><v-icon>info</v-icon> </v-btn></nuxt-link>
-            </v-flex>
-          </v-layout>
-        </td>
+      v-bind:headers="headers"
+      v-bind:items="items"
+      v-bind:search="search"
+      v-bind:pagination.sync="pagination"
+      hide-actions
+      class="elevation-1"
+    >
+      <template slot="headerCell" scope="props">
+        <span v-tooltip:bottom="{ 'html': props.header.text }">
+          {{ props.header.text }}
+        </span>
       </template>
-      <template slot="pageText" scope="{ pageStart, pageStop }">
-        From {{ pageStart }} to {{ pageStop }}
+      <template slot="items" scope="props">
+        <td>{{ props.item.name }}</td>
+        <td  class="text-xs-right">{{ props.item.calories }}</td>
+        <td  class="text-xs-right">{{ props.item.fat }}</td>
+        <td  class="text-xs-right">{{ props.item.carbs }}</td>
+        <td  class="text-xs-right">{{ props.item.protein }}</td>
+        <td  class="text-xs-right">{{ props.item.sodium }}</td>
+        <td  class="text-xs-right">{{ props.item.calcium }}</td>
+        <td  class="text-xs-right">{{ props.item.iron }}</td>
       </template>
     </v-data-table>
-
-    <!-- <div class="text-xs-center pt-2">
-        <v-btn primary @click.native="toggleOrder">Toggle sort order</v-btn>
-        <v-btn primary @click.native="nextSort">Sort next column</v-btn>
-      </div> -->
-
-  </v-card>
+    <div class="text-xs-center pt-2">
+      <v-pagination v-model="pagination.page" :length="Math.ceil(this.items.length / pagination.rowsPerPage)"></v-pagination>
+    </div>
+  </div>
 </template>
+
 <script>
   export default {
-
-    methods: {
-      toggleOrder () {
-        this.pagination.descending = !this.pagination.descending
-      },
-      nextSort () {
-        let index = this.headers.findIndex(h => h.value === this.pagination.sortBy)
-        index = (index + 1) % this.headers.length
-        index = index === 0 ? index + 1 : index
-        this.pagination.sortBy = this.headers[index].value
-      }
-    },
     data () {
       return {
         search: '',
-        pagination: {},
-        checkboxItems : ['เจ้าของร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ผู้ช่วยช่าง','ช่างตัดผม','อีกอันนึง','มีอีกอันจำชื่อไม่ได้'],
-         states: ['เจ้าของกิจการร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ช่างตัดผม','ผู้ช่วยช่าง'],
-         e2: [''],
-         profile : 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png',
+        pagination: {rowsPerPage : 7},
+        selected: [],
         headers: [
           {
             text: 'Dessert (100g serving)',
@@ -154,7 +88,7 @@
           },
           {
             value: false,
-            name: 'ช่างตัดผม',
+            name: 'Cupcake',
             calories: 305,
             fat: 3.7,
             carbs: 67,
