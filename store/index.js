@@ -1,4 +1,4 @@
-
+import createPersistedState from 'vuex-persistedstate';
 export const state = () => ({
   islogin : false,
   page : '',
@@ -15,6 +15,3 @@ export const mutations  =  {
   setPage : (state,page) => state.page = page,
   setNumber :(state,number) => state.number += number
 }
-
-
-

@@ -1,5 +1,36 @@
 <template>
   <div>
+
+    <v-card>
+       <v-card-title>
+
+         <!-- <v-select
+                v-bind:items="states"
+                v-model="search"
+                label="ผู้ใช้ที่ซื้อคอร์สทั้งหมด"
+                single-line
+                  multiple
+                auto
+                append-icon="map"
+                hide-details
+              ></v-select> -->
+
+              <template v-for="(item,i) in checkboxItems">
+
+              <v-checkbox v-model="search"  :value = "item" :label="item"> </v-checkbox>
+
+             </template>
+         <v-spacer></v-spacer>
+         <v-text-field
+           append-icon="search"
+           label="Search"
+           single-line
+           hide-details
+           v-model="search"
+             full-width
+         ></v-text-field>
+       </v-card-title>
+
     <v-data-table
       v-bind:headers="headers"
       v-bind:items="items"
@@ -14,19 +45,32 @@
         </span>
       </template>
       <template slot="items" scope="props">
-        <td>{{ props.item.name }}</td>
+        <td>
+ <img :src="profile"  height="30px" width="30px" style="width:50px;">&nbsp;&nbsp;&nbsp;{{ props.item.name }}
+          {{ props.item.name }}</td>
         <td  class="text-xs-right">{{ props.item.calories }}</td>
         <td  class="text-xs-right">{{ props.item.fat }}</td>
         <td  class="text-xs-right">{{ props.item.carbs }}</td>
         <td  class="text-xs-right">{{ props.item.protein }}</td>
         <td  class="text-xs-right">{{ props.item.sodium }}</td>
         <td  class="text-xs-right">{{ props.item.calcium }}</td>
-        <td  class="text-xs-right">{{ props.item.iron }}</td>
+        <td class="text-xs-right">
+          <v-layout row>
+            <v-flex xs4>
+              <v-btn icon><v-icon>chat_bubble</v-icon> </v-btn>
+            </v-flex>
+            <v-flex xs4>
+            <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer">  <v-btn icon><v-icon>info</v-icon> </v-btn></nuxt-link>
+            </v-flex>
+          </v-layout>
+        </td>
+
       </template>
     </v-data-table>
     <div class="text-xs-center pt-2">
       <v-pagination v-model="pagination.page" :length="Math.ceil(this.items.length / pagination.rowsPerPage)"></v-pagination>
     </div>
+  </v-card>
   </div>
 </template>
 
@@ -37,6 +81,9 @@
         search: '',
         pagination: {rowsPerPage : 7},
         selected: [],
+        checkboxItems : ['เจ้าของร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ผู้ช่วยช่าง','ช่างตัดผม','อีกอันนึง','มีอีกอันจำชื่อไม่ได้'],
+         states: ['เจ้าของกิจการร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ช่างตัดผม','ผู้ช่วยช่าง'],
+         profile : 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png',
         headers: [
           {
             text: 'Dessert (100g serving)',
