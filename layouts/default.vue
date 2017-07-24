@@ -33,45 +33,14 @@
       <v-toolbar class="primary">
         <v-toolbar-side-icon dark @click.native.stop="slideNavLeft = !slideNavLeft" ></v-toolbar-side-icon>
         <v-toolbar-title>
-          <div v-text="this.page" class="white--text text-xs-center">d</div>
+          <div v-text="$store.getters.page" class="white--text text-xs-center">d</div>
         </v-toolbar-title>
         <v-toolbar-items>
           <!-- <v-btn flat @click.native="slideNavRight = !slideNavRight">RightNav</v-btn>       -->
         </v-toolbar-items>
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-toolbar-side-icon dark @click.native.stop="slideNavRight = !slideNavRight"></v-toolbar-side-icon>
-
-        </v-toolbar-items>
+     
       </v-toolbar>
-      <v-navigation-drawer  v-model="slideNavRight" clipped persistent  height="100%" right>
-              <v-text-field
-             label="ค้นหาชื่อผู้ใช้ที่นี่"
-             single-line
-             append-icon="search"
-             light
-             hide-details
-             full-width
-            ></v-text-field>
-                <v-list two-line>
-                          <template>
-                            <v-list-tile avatar>
-                              <v-list-tile-avatar>
-                                <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png"></v-list-tile-avatar>
-                              </v-list-tile-avatar>
-                              <v-list-tile-content>
-                                <v-list-tile-title >Brunch this weekend?</v-list-tile-title>
-                                <v-list-tile-sub-title><span class='grey--text text--darken-2'>Ali Connors</span> — I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</v-list-tile-sub-title>
-                              </v-list-tile-content>
-                              <v-list-tile-action>
-                                 <v-list-tile-action-text>15 นาที</v-list-tile-action-text>
-                               </v-list-tile-action>
-                            </v-list-tile>
-                              <v-divider :inset ="true"></v-divider>
-                          </template>
-                        </v-list>
 
-            </v-navigation-drawer>
 
 
 
@@ -106,7 +75,7 @@ export default {
   data() {
     return {
       slideNavLeft: true,
-      slideNavRight: false,
+
       menuItem: [{
           title: "แผงควบคุม",
           icon: "dashboard",

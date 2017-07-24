@@ -1,5 +1,7 @@
 <template>
-<div id="chartdiv2"></div>
+<div id="chartdiv2">
+
+</div>
 
 </template>
 <script>
@@ -154,6 +156,7 @@ mounted() {
 </script>
 <style>
 #chartdiv2 {
+  
   width: 100%;
   height: 500px;
 }

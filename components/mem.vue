@@ -1,9 +1,11 @@
 <template>
   <div>
 
+    <v-layout row >
+      <v-flex xs12 sm12>
+
     <v-card>
        <v-card-title>
-
          <!-- <v-select
                 v-bind:items="states"
                 v-model="search"
@@ -60,7 +62,7 @@
               <v-btn icon><v-icon>chat_bubble</v-icon> </v-btn>
             </v-flex>
             <v-flex xs4>
-            <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer">  <v-btn icon><v-icon>info</v-icon> </v-btn></nuxt-link>
+            <nuxt-link :to="'/users/5'" tag="span" style="cursor:pointer">  <v-btn icon><v-icon>info</v-icon> </v-btn></nuxt-link>
             </v-flex>
           </v-layout>
         </td>
@@ -71,6 +73,10 @@
       <v-pagination v-model="pagination.page" :length="Math.ceil(this.items.length / pagination.rowsPerPage)"></v-pagination>
     </div>
   </v-card>
+
+</v-flex>
+</v-layout>
+
   </div>
 </template>
 

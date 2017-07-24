@@ -1,8 +1,8 @@
 <template>
 <div>
   <v-container fluid>
-    <v-layout row>
-      <v-flex xs3>
+    <v-layout row wrap>
+      <v-flex xs6 sm3>
         <v-card class="light-green white--text">
           <v-card-text>
             <div class="text-xs-center">
@@ -14,8 +14,9 @@
             </div>
           </v-card-text>
         </v-card>
+        <br>
       </v-flex>
-      <v-flex xs3>
+      <v-flex xs6 sm3>
         <v-card class="deep-orange white--text">
           <v-card-text>
             <div class="text-xs-center">
@@ -28,7 +29,7 @@
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs3>
+      <v-flex xs6 sm3>
         <v-card class="amber white--text">
           <v-card-text>
             <div class="text-xs-center">
@@ -41,7 +42,7 @@
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs3>
+      <v-flex xs6 sm3>
         <v-card class="purple white--text">
           <v-card-text>
             <div class="text-xs-center">
@@ -57,37 +58,38 @@
     </v-layout>
     <br>
     <v-layout row>
-      <v-flex xs12>
-        <v-card>
-          <v-card-title>
-            <template v-for="item in canvasItem">
-            &nbsp;&nbsp;&nbsp;
-            <card :class ="item.color" height="20px" >
-                <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </card>
-              &nbsp; <span>{{item.text}}</span>&nbsp;&nbsp;&nbsp;
-            </template>
+      <v-flex xs12 sm12>
 
             <lineGraph></lineGraph>
-          </v-card-title>
-        </v-card>
+
+            <v-layout row wrap>
+              <template v-for="item in canvasItem">
+                <v-flex xs4 sm2>
+                      <v-card :class ="item.color" height="20px"width="10px">
+                          <span> </span>
+                      </v-card>
+                        &nbsp; <span>{{item.text}}</span>
+                  </v-flex>
+
+            </template>
+            </v-layout>
+
       </v-flex>
     </v-layout>
     <br>
-    <v-layout row>
-      <v-flex xs4>
+    <v-layout row wrap>
+      <v-flex xs12 sm3>
         <v-card>
           <v-card-title>
             <pieChart></pieChart>
           </v-card-title>
         </v-card>
+        <br>
       </v-flex>
-      <v-flex xs8>
-        <v-card>
-          <v-card-title>
-            <mem></mem>
-          </v-card-title>
-        </v-card>
+      <v-flex xs12 sm9>
+
+        <mem></mem>
+
       </v-flex>
 
 
@@ -102,11 +104,11 @@ import pieChart from '../components/chart/pieChart.vue'
 import lineGraph from '../components/chart/lineGraph.vue'
 import mem from '../components/mem.vue'
 export default {
-  middleware : 'authenticated',
+  //middleware: 'authenticated',
   components: {
-    'pieChart' : pieChart,
-    'lineGraph' : lineGraph,
-    'mem' :mem
+    'pieChart': pieChart,
+    'lineGraph': lineGraph,
+    'mem': mem
   },
   data() {
     return {
@@ -127,7 +129,7 @@ export default {
         text: 'อีกอันนึง',
         color: "red"
       }, {
-        text :'มีอีกอันจำชื่อไม่ได้',
+        text: 'มีอีกอันจำชื่อไม่ได้',
         color: "red"
       }]
     }
@@ -136,14 +138,14 @@ export default {
     //do something after mounting vue instance
     // console.log("cookie: "+document.cookie)
     // console.log("islogin : " + this.$store.getters.islogin);
-    if(JSON.parse(localStorage.getItem("isLogin")) == false){
-    this.$store.commit('islogin',false)
-    this.$router.push('/')
-    }else{
-    this.$store.commit('islogin',true)
+    if (JSON.parse(localStorage.getItem("isLogin")) == false) {
+      this.$store.commit('islogin', false)
+      this.$router.push('/')
+    } else {
+      this.$store.commit('islogin', true)
       this.$router.push('/home')
-      this.$store.commit('setPage',"Home")
-  }
+      this.$store.commit('setPage', "Home")
+    }
 
   }
 }

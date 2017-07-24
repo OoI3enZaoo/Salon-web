@@ -12,36 +12,38 @@
     </v-toolbar>
     <v-container>
       <v-card>
-      <v-layout row>
-          <v-flex xs-5>
-            <img src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg" height="500" alt="รูป">
-          </v-flex>
-          <v-flex xs-7>
-            <div class="text-xs-left">
-          <br>
-          <h4 style="display:inline"><b>{{ name }}</b></h4>
-          <h5 >คอร์สเจ้าขอร้าน/ช่างตัดผม</h5>
-          <v-divider></v-divider>
-          <br>
 
-            <v-layout row>
-              <v-flex xs3>
-                <h6><b>อายุ</b></h6><br>
-                <h6><b>ที่อยู่</b></h6><br>
-                <h6><b>อีเมล</b></h6><br>
-                <h6><b>เบอร์โทรศัพท์</b></h6><br>
-                </v-flex>
-                <v-flex xs9>
-                   <h6>{{ id }}</h6><br>
-                   <h6>{{ address.street}}</h6><br>
-                    <h6>{{ email}}</h6><br>
-                    <h6>{{ phone}}</h6><br>
-                </v-flex>
-            </v-layout>
-            </div>
+
+  <div class="text-xs-center">
+              <img src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg" height="200" alt="รูป">
+</div>
+
+
+              <div class="text-xs-center">
+            <br>
+            <h4 style="display:inline"><b>{{ name }}</b></h4>
+            <h5 >คอร์สเจ้าขอร้าน/ช่างตัดผม</h5>
+            <v-divider ></v-divider>
+            <br>
+
+              <v-layout row>
+                <v-flex xs6 sm6>
+                  <h6><b>อายุ</b></h6><br>
+                  <h6><b>ที่อยู่</b></h6><br>
+                  <h6><b>อีเมล</b></h6><br>
+                  <h6><b>เบอร์โทรศัพท์</b></h6><br>
+                  </v-flex>
+                  <v-flex xs6 sm6>
+                     <h6>{{ id }}</h6><br>
+                     <h6>{{ address.street}}</h6><br>
+                      <h6>{{ email}}</h6><br>
+                      <h6>{{ phone}}</h6><br>
+                          </v-flex>
+              </v-layout>
+              </div>
 
           </v-flex>
-      </v-layout>
+
       </v-card>
 
 
@@ -63,81 +65,103 @@
         <v-container>
           <v-subheader>ราคาค่าบริการของร้าน</v-subheader>
 
-          <v-layout row>
-            <v-flex>
+          <v-layout row wrap>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline" >ค่าทำผม</h5>
-                <h5>50</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำสี</h5>
-                <h5>150</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าสระไดร์</h5>
-                <h5>100-200</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำผม</h5>
-                <h5>50</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำเล็บ</h5>
-                <h5>50</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำเล็บ</h5>
-                <h5>50</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
+            <br>
             </v-flex>
-          </v-layout>
 
-          <br>
-          <v-layout row>
-            <v-flex>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline" >ค่าทำผม</h5>
-                <h5>50</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
             </v-flex>
-            <v-flex>
+            <v-flex xs6 sm2>
               <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำสี</h5>
-                <h5>150</h5>
-              </v-card>
-            </v-flex>
-            <v-flex>
-              <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าสระไดร์</h5>
-                <h5>100-200</h5>
-              </v-card>
-            </v-flex>
-            <v-flex>
-              <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำผม</h5>
-                <h5>50</h5>
-              </v-card>
-            </v-flex>
-            <v-flex>
-              <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำเล็บ</h5>
-                <h5>50</h5>
-              </v-card>
-            </v-flex>
-            <v-flex>
-              <v-card class="text-xs-center">
-                <h5 style="display:inline">ค่าทำเล็บ</h5>
-                <h5>50</h5>
+              <v-card-text>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;">ค่าทำผม</h5>
+                </div>
+                <div class="text-xs-center">
+                    <h5 style="display:inline;"> <b>฿50</b></h5>
+                </div>
+              </v-card-text>
               </v-card>
             </v-flex>
           </v-layout>
@@ -187,7 +211,6 @@ import axios from 'axios'
 export default {
 
    async asyncData ({ params, error }) {
-
      try {
        const { data } = await axios.get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
        return data
