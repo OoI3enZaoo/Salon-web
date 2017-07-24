@@ -48,7 +48,7 @@
       </template>
       <template slot="items" scope="props">
         <td>
- <img :src="profile"  height="30px" width="30px" style="width:50px;">&nbsp;&nbsp;&nbsp;{{ props.item.name }}
+ <img :src="profile"  height="35px" >&nbsp;&nbsp;&nbsp;{{ props.item.name }}
           {{ props.item.name }}</td>
         <td  class="text-xs-right">{{ props.item.calories }}</td>
         <td  class="text-xs-right">{{ props.item.fat }}</td>

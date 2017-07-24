@@ -20,7 +20,6 @@
         </v-card>
         <v-list class="show-sm-only">
           <v-list-tile v-for="(item,i) in menuItem" :key="i" nuxt :to="item.link ">
-
             <v-list-tile-action>
               <v-icon>{{item.icon}}</v-icon>
             </v-list-tile-action>
@@ -38,7 +37,7 @@
         <v-toolbar-items>
           <!-- <v-btn flat @click.native="slideNavRight = !slideNavRight">RightNav</v-btn>       -->
         </v-toolbar-items>
-     
+
       </v-toolbar>
 
 
