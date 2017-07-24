@@ -41,17 +41,23 @@ Nunc magna omnis dolor integer, aliquam leo, neque euismod viverra volutpat inte
 <br>
 
 
-<v-layout row>
-      <v-flex xs2>
+<v-layout row wrap>
+      <v-flex xs12 sm2>
+        <div class="text-xs-center">
             <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
+        </div>
       </v-flex>
-      <v-flex xs8>
+      <v-flex xs12 sm8>
+        <div class="text-xs-center text-sm-left">
           <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
           <p>รอติดตามอยู่นะครับ</p>
+            </div>
       </v-flex>
-      <v-flex xs2>
+      <v-flex xs12 sm2>
+        <div class="text-xs-center text-sm-left">
           <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
-      </v-flex>
+        </div>
+    </v-flex>
  </v-layout>
 
     <br>
@@ -59,83 +65,52 @@ Nunc magna omnis dolor integer, aliquam leo, neque euismod viverra volutpat inte
     <br>
 
 
-    <v-layout row>
-          <v-flex xs2>
+    <v-layout row wrap>
+          <v-flex xs12 sm2>
+            <div class="text-xs-center">
                 <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
+            </div>
           </v-flex>
-          <v-flex xs8>
+          <v-flex xs12 sm8>
+            <div class="text-xs-center text-sm-left">
               <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
               <p>รอติดตามอยู่นะครับ</p>
+                </div>
           </v-flex>
-          <v-flex xs2>
+          <v-flex xs12 sm2>
+            <div class="text-xs-center text-sm-left">
               <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
-          </v-flex>
+            </div>
+        </v-flex>
      </v-layout>
 
+        <br>
+            <v-divider></v-divider>
+        <br>
 
 
-
-
-     <br>
-         <v-divider></v-divider>
-     <br>
-
-
-     <v-layout row>
-           <v-flex xs2>
-                 <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
-           </v-flex>
-           <v-flex xs8>
-               <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
-               <p>รอติดตามอยู่นะครับ</p>
-           </v-flex>
-           <v-flex xs2>
-               <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
-           </v-flex>
-      </v-layout>
-
-
-
-
-      <br>
-          <v-divider></v-divider>
-      <br>
-
-
-      <v-layout row>
-            <v-flex xs2>
-                  <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
+        <v-layout row wrap>
+              <v-flex xs12 sm2>
+                <div class="text-xs-center">
+                    <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
+                </div>
+              </v-flex>
+              <v-flex xs12 sm8>
+                <div class="text-xs-center text-sm-left">
+                  <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
+                  <p>รอติดตามอยู่นะครับ</p>
+                    </div>
+              </v-flex>
+              <v-flex xs12 sm2>
+                <div class="text-xs-center text-sm-left">
+                  <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
+                </div>
             </v-flex>
-            <v-flex xs8>
-                <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
-                <p>รอติดตามอยู่นะครับ</p>
-            </v-flex>
-            <v-flex xs2>
-                <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
-            </v-flex>
-       </v-layout>
+         </v-layout>
 
-
-
-
-
-       <br>
-           <v-divider></v-divider>
-       <br>
-
-
-       <v-layout row>
-             <v-flex xs2>
-                   <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
-             </v-flex>
-             <v-flex xs8>
-                 <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
-                 <p>รอติดตามอยู่นะครับ</p>
-             </v-flex>
-             <v-flex xs2>
-                 <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
-             </v-flex>
-        </v-layout>
+            <br>
+                <v-divider></v-divider>
+            <br>
 
 
 
