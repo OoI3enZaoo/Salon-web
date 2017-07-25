@@ -31,6 +31,7 @@
     "vuex-persistedstate": "^2.0.0",
 	"firebase": "^4.1.5",
 	"vuefire": "^1.4.3"
+
   
   },
   "devDependencies": {
