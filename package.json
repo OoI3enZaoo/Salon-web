@@ -30,7 +30,8 @@
     "vuetify": "^0.14.5",
     "vuex-persistedstate": "^2.0.0",
 	"firebase": "^4.1.5",
-	"vuefire": "^1.4.3"
+	"vuefire": "^1.4.3",
+	 "vue-quill-editor": "^2.2.6"
 
   
   },
