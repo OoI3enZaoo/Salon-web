@@ -37,9 +37,7 @@
 
 import {db} from '../util/firebase'
 
-if (typeof window !== 'undefined') {
-  const swal = require('sweetalert2');
-}
+
 
 import VueImageUploadCroppie from 'vue-image-upload-croppie'
 

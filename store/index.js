@@ -1,4 +1,4 @@
-import createPersistedState from 'vuex-persistedstate';
+
 export const state = () => ({
   islogin : false,
   page : '',
