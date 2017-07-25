@@ -32,7 +32,6 @@
     "vue-image-upload-croppie": "^1.0.5",
     "vue-quill-editor": "^2.2.6",
     "vue-server-renderer": "latest",
-    "vue2-simplert": "^0.5.2",
     "vuefire": "^1.4.3",
     "vuetify": "^0.14.5",
     "vuex-persistedstate": "^2.0.0"
