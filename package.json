@@ -28,7 +28,9 @@
     "vue-server-renderer": "latest",
     "vue2-simplert": "^0.5.2",
     "vuetify": "^0.14.5",
-    "vuex-persistedstate": "^2.0.0"
+    "vuex-persistedstate": "^2.0.0",
+	"firebase": "^4.1.5",
+	"vuefire": "^1.4.3"
   
   },
   "devDependencies": {
