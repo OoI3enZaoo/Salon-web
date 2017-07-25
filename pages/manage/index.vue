@@ -1,6 +1,5 @@
 <template>
 <div>
-้
 
   <v-container>
     <v-layout row wrap>
@@ -8,8 +7,7 @@
         <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="states" v-model="e7" multiple chips persistent-hint></v-select>
       </v-flex>
       <v-flex sm2 xs12>
-        <createCourse></createCourse>
-
+        <v-btn icon class ="pink white--text"><v-icon >add</v-icon></v-btn><span>เพิ่มคอร์สใหม่</span>      
       </v-flex>
 
 
@@ -144,12 +142,8 @@
 </div>
 </template>
 <script>
-import createCourse from '~components/createCourse'
 export default {
   //middleware : 'authenticated',
-  components: {
-    createCourse
-  },
   data() {
     return {
       testCouses: [{
@@ -202,7 +196,7 @@ export default {
     } else {
       this.$store.commit('islogin', true)
       this.$router.push('/manage')
-      this.$store.commit('setPage', "การจัดการระบบ")
+      this.$store.commit('setPage', "Manage")
     }
   }
 }

@@ -15,7 +15,7 @@
        -->
 
 
-       <v-navigation-drawer  v-model="slideNavRight"  persistent  height="100%" right>
+       <v-navigation-drawer  v-model="slideNavRight" clipped persistent  height="100%" right>
                <v-text-field
               label="ค้นหาชื่อผู้ใช้ที่นี่"
               single-line
@@ -66,7 +66,7 @@
       <v-icon medium style="cursor:pointer">delete</v-icon>
     </v-toolbar-items>
 
-
+  
        <v-toolbar-items>
          <v-toolbar-side-icon light @click.native.stop="slideNavRight = !slideNavRight"></v-toolbar-side-icon>
 

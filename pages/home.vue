@@ -1,6 +1,6 @@
 <template>
 <div>
-
+   
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs6 sm3>
@@ -101,8 +101,6 @@
 </div>
 </template>
 <script>
-
-
 import pieChart from '../components/chart/pieChart.vue'
 import lineGraph from '../components/chart/lineGraph.vue'
 import mem from '../components/mem.vue'
