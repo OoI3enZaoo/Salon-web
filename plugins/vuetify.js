@@ -9,9 +9,6 @@ import VueFire from 'vuefire'
 if (process.BROWSER_BUILD) {
   const VueQuillEditor = require('vue-quill-editor/ssr')
   Vue.use(VueQuillEditor)
-
-  const VueParticles = require('vue-particles')
-  Vue.use(VueParticles)
 }
 
 
