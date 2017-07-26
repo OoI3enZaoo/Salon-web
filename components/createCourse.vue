@@ -22,29 +22,15 @@
             </v-card-title>
             <v-card-text>
               <v-text-field  label="กรอกชื่อคอร์สที่ต้องการ" hint ="กรอกเป็นภาษาใดก็ได้" v-model = "course.title" required></v-text-field>
-              <v-text-field  label="กรอกราคา"  hint="ไม่ควรเกิน 10000 บาท" v-model = "course.price"></v-text-field>
+              <v-text-field  type = "number" label="กรอกราคา"  hint="ไม่ควรเกิน 10000 บาท" v-model = "course.price"></v-text-field>
               <v-text-field label="รายละเอียดแบบย่อ"  hint="รายละเอียดสั้นๆ" v-model ="course.snippet"></v-text-field>
-                <div class="text-xs-center">
-                    <img :src="cover"><br>
-                    <v-btn primary>
-                    <!-- <VueCoreImageUpload
-                      text="คลิ๊กที่นี่เพื่ออัพรูปหน้าปกของคอร์ส"
-                      :crop="false"
-                      @imageuploaded="imageuploaded"
-                      :data="cover"
-                      :max-file-size="5242880"
-                      url="http://101.198.151.190/api/upload.php"
-                       >
-                    </VueCoreImageUpload> -->
-                    </v-btn>
-                    <br>
-                    <br>
-                </div>
+
 
               <div class="quill-editor"
-                 v-model="content"
+                 v-model="course.description"
                  v-quill:myQuillEditor="editorOption">
             </div>
+
             <br><br><br><br>
 
     <v-btn primary @click.native="addCourse">สร้างคอร์สใหม่</v-btn>
@@ -70,7 +56,7 @@
   </v-layout>
 
   <!-- <div class="quill-editor"
-       v-model="content"
+       v-model="mycont"
        v-quill:myQuillEditor="editorOption">
   </div> -->
 
@@ -82,7 +68,7 @@ import { quillEditor } from 'vue-quill-editor'
 import { ImageImport } from '../modules/ImageImport.js'
  import { ImageResize } from '../modules/ImageResize.js'
  Quill.register('modules/imageImport', ImageImport)
- Quill.register('modules/im ageResize', ImageResize)
+ Quill.register('modules/imageResize', ImageResize)
 
 import {db} from '../util/firebase'
 let adminRef = db.ref('bar')
@@ -99,8 +85,8 @@ export default {
 
   data() {
     return {
+      mycont : '',
       dialog: false,
-      content : '',
       course : {
         title : '',
         price : '',
@@ -108,22 +94,21 @@ export default {
         description : ''
       },
         cover: 'https://static.esea.net/global/images/users/675235.1476314733.jpg',
-      editorOption: {
-
-          placeholder: "กรอกรายละเอียดของคอร์สที่นี่",
+        editorOption: {
           modules: {
 
-            imageImport: true,
-            imageResize: {
-              displaySize: true
-            }
-          }
-        }
+             imageImport: true,
+           imageResize: {
+             displaySize: true
+           }
+           }
+         }
+
     }
   },
   methods :{
     addCourse(){
-      this.course.description = this.content;
+
         adminRef.push(this.course)
     },
     removeItem(item){
