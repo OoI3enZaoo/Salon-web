@@ -87,7 +87,7 @@
 
     <v-layout row wrap>
       <v-flex xs6>
-        <h2 class="display-1">  คอร์สเจ้าของร้านทำผม</h2>
+        <h2 class="display-1" primary>  คอร์สเจ้าของร้านทำผม</h2>
       </v-flex>
       <v-flex xs6>
         <div class="text-xs-right">
@@ -150,6 +150,9 @@ export default {
   components: {
     createCourse
   },
+  fetch ({store}) {
+   store.commit('setPage', "การจัดการ")
+  },
   data() {
     return {
       testCouses: [{
@@ -202,7 +205,7 @@ export default {
     } else {
       this.$store.commit('islogin', true)
       this.$router.push('/manage')
-      this.$store.commit('setPage', "การจัดการระบบ")
+
     }
   }
 }

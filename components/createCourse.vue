@@ -18,13 +18,13 @@
           <v-card>
 
             <v-card-title>
-              <span class="headline">ฟอร์มรายการสร้างคอร์ส</span>
+              <h3 class ="headline">ฟอร์มรายการสร้างคอร์ส</h3>
             </v-card-title>
             <v-card-text>
               <v-text-field  label="กรอกชื่อคอร์สที่ต้องการ" hint ="กรอกเป็นภาษาใดก็ได้" v-model = "course.title" required></v-text-field>
               <v-text-field  type = "number" label="กรอกราคา"  hint="ไม่ควรเกิน 10000 บาท" v-model = "course.price"></v-text-field>
               <v-text-field label="รายละเอียดแบบย่อ"  hint="รายละเอียดสั้นๆ" v-model ="course.snippet"></v-text-field>
-              
+
               <div class = "text-xs-center text-sm-center">
                   <base64-upload class="user"
                     imageSrc="https://static.esea.net/global/images/users/675235.1476314733.jpg"
@@ -149,6 +149,7 @@ export default {
    max-height: 25em;
   }
   .user {
+
   width: 500px;
   height: 330px;
 }

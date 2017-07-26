@@ -22,6 +22,7 @@
     "js-cookie": "^2.1.4",
     "node-sass": "^4.5.3",
     "nuxt": "1.0.0-alpha.5",
+    "particles.js": "^2.0.0",
     "sass-loader": "^6.0.6",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",

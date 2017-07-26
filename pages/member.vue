@@ -69,7 +69,9 @@
 <script>
 import mem from '../components/mem.vue'
 export default {
-
+  fetch ({store}) {
+   store.commit('setPage', "รายชื่อสมาชิก")
+  },
   components: {
     mem
   },
@@ -122,7 +124,7 @@ export default {
     }else{
     this.$store.commit('islogin',true)
       this.$router.push('/member')
-      this.$store.commit('setPage',"Member")
+
     }
   }
 }

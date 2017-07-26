@@ -1,7 +1,8 @@
-<template>
-<v-app>
-  <v-layout>
+<template >
+<v-app >
 
+  <v-container >
+  <v-layout>
     <v-flex xs12 sm6 offset-sm3>
 
 
@@ -23,12 +24,12 @@
         </v-card-actions>
       </v-card>
 
-      
+
 
 
     </v-flex>
   </v-layout>
-
+</v-container>
 </v-app>
 </template>
 <script>

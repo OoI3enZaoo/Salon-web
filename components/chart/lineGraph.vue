@@ -18,6 +18,12 @@ mounted() {
   "type": "xy",
   "theme": "light",
   "marginRight": 80,
+  "legend": {
+        "equalWidths": false,
+        "useGraphSettings": true,
+        "valueAlign": "left",
+        "valueWidth": 120
+    },
   "dataDateFormat": "YYYY-MM-DD",
   "startDuration": 1.5,
   "trendLines": [],
@@ -36,6 +42,7 @@ mounted() {
     "fillAlphas": 0,
     "xField": "date",
     "yField": "ay",
+    "title": "คอร์สเจ้าของร้านเสริมสวย",
     "valueField": "aValue"
   }, {
     "balloonText": "<div style='margin:5px;'><b>[[x]]</b><br>y:<b>[[y]]</b><br>value:<b>[[value]]</b></div>",
@@ -47,6 +54,7 @@ mounted() {
     "fillAlphas": 0,
     "xField": "date",
     "yField": "by",
+    "title": "คอร์สร้านตัดผม",
     "valueField": "bValue"
   }],
   "valueAxes": [{
@@ -156,7 +164,7 @@ mounted() {
 </script>
 <style>
 #chartdiv2 {
-  
+
   width: 100%;
   height: 500px;
 }

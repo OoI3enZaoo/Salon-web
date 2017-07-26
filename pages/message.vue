@@ -127,7 +127,9 @@
 </template>
 <script>
 export default {
-
+  fetch ({store}) {
+   store.commit('setPage', "การติดต่อสื่อสาร")
+  },
   data() {
     return {
       slideNavRight: true,
@@ -142,7 +144,6 @@ export default {
     }else{
       this.$store.commit('islogin',true)
       this.$router.push('/message')
-      this.$store.commit('setPage',"Message")
   }
   }
 }

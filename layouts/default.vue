@@ -1,7 +1,6 @@
 <template>
 <div>
   <v-app id="example-3">
-
     <div v-if="$store.getters.islogin">
       <v-navigation-drawer v-model="slideNavLeft" persistent absolute height="100%">
         <v-card>
@@ -19,46 +18,44 @@
           </v-card-media>
         </v-card>
         <v-list class="show-sm-only">
-          <v-list-tile v-for="(item,i) in menuItem" :key="i" nuxt :to="item.link ">
+
+          <template v-for="(item,i) in menuItem"  >
+              <v-divider v-if="item.divider"></v-divider>
+          <v-list-tile :key="i" nuxt :to="item.link">
             <v-list-tile-action>
+
               <v-icon>{{item.icon}}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               {{item.title}}
             </v-list-tile-content>
           </v-list-tile>
+
+
+
+          </template>
         </v-list>
       </v-navigation-drawer>
       <v-toolbar class="primary">
+
         <v-toolbar-side-icon dark @click.native.stop="slideNavLeft = !slideNavLeft" ></v-toolbar-side-icon>
+
         <v-toolbar-title>
           <div v-text="$store.getters.page" class="white--text text-xs-center">d</div>
         </v-toolbar-title>
         <v-toolbar-items>
           <!-- <v-btn flat @click.native="slideNavRight = !slideNavRight">RightNav</v-btn>       -->
         </v-toolbar-items>
-
       </v-toolbar>
 
-
-
-
-
-
-
-
       <main>
-
-          <nuxt />
-
+        <nuxt />
       </main>
     </div>
 
     <div v-else>
       <main>
-        <v-container>
           <nuxt />
-        </v-container>
       </main>
     </div>
 
@@ -69,8 +66,11 @@
 import {
   mapGetters
 } from 'vuex'
+
 export default {
+
   name: "example-3",
+
   data() {
     return {
       slideNavLeft: true,
@@ -98,7 +98,8 @@ export default {
         {
           title: "ลงชื่อออก",
           icon: "insert_invitation",
-          link: "/logout"
+          link: "/logout",
+          divider : 'true'
         }
       ]
     }
@@ -106,3 +107,6 @@ export default {
 
 }
 </script>
+<style>
+
+</style>
