@@ -24,6 +24,12 @@
               <v-text-field  label="กรอกชื่อคอร์สที่ต้องการ" hint ="กรอกเป็นภาษาใดก็ได้" v-model = "course.title" required></v-text-field>
               <v-text-field  type = "number" label="กรอกราคา"  hint="ไม่ควรเกิน 10000 บาท" v-model = "course.price"></v-text-field>
               <v-text-field label="รายละเอียดแบบย่อ"  hint="รายละเอียดสั้นๆ" v-model ="course.snippet"></v-text-field>
+              
+              <div class = "text-xs-center text-sm-center">
+                  <base64-upload class="user"
+                    imageSrc="https://static.esea.net/global/images/users/675235.1476314733.jpg"
+                    @change="onChangeImage"></base64-upload>
+                </div>
 
 
               <div class="quill-editor"
@@ -31,6 +37,7 @@
                  v-quill:myQuillEditor="editorOption">
             </div>
 
+              <h3 v-text="course.description"></h3>
             <br><br><br><br>
 
     <v-btn primary @click.native="addCourse">สร้างคอร์สใหม่</v-btn>
@@ -44,12 +51,16 @@
            price > {{item.price }}<br>
            snippet > {{item.snippet }}<br>
            description > <span v-html="item.description"></span><br>
+           cover > <div v-if="item.imageCover">
+             <img :src ="item.imageCover" width="500" height="330">
+           </div>
          </li>
       </ul>
 
           </v-card>
         </v-container>
         <v-divider></v-divider>
+
 
       </v-card>
     </v-dialog>
@@ -69,6 +80,7 @@ import { ImageImport } from '../modules/ImageImport.js'
  import { ImageResize } from '../modules/ImageResize.js'
  Quill.register('modules/imageImport', ImageImport)
  Quill.register('modules/imageResize', ImageResize)
+import Base64Upload from 'vue-base64-upload'
 
 import {db} from '../util/firebase'
 let adminRef = db.ref('bar')
@@ -78,9 +90,8 @@ export default {
     adminRef
   },
   components: {
-    quillEditor
+    quillEditor, Base64Upload
   },
-
 
 
   data() {
@@ -91,8 +102,10 @@ export default {
         title : '',
         price : '',
         snippet :'',
-        description : ''
+        description : '',
+        imageCover : ''
       },
+
         cover: 'https://static.esea.net/global/images/users/675235.1476314733.jpg',
         editorOption: {
           modules: {
@@ -118,6 +131,10 @@ export default {
      if (res.errcode == 0) {
        this.src = res.data.src;
      }
+   },
+   onChangeImage(file) {
+     console.log("fiel.base64: " + file.base64);
+     this.course.imageCover = 'data:image/jpeg;base64,'+file.base64
    }
   }
 
@@ -131,4 +148,8 @@ export default {
    padding-bottom: 1em;
    max-height: 25em;
   }
+  .user {
+  width: 500px;
+  height: 330px;
+}
 </style>

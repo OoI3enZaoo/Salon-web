@@ -26,6 +26,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-axios": "^2.0.2",
+    "vue-base64-upload": "^1.0.1",
     "vue-quill-editor": "^2.2.6",
     "vue-server-renderer": "latest",
     "vue2-simplert": "^0.5.2",
