@@ -226,34 +226,6 @@ export default {
       this.$router.push('/manage')
     }
 
-      axios.get('https://salon-b177d.firebaseio.com/courses.json')
-      .then((res)=>{
-        let response = res.data
-          for(let data in response){
-            response[data].key = data;
-            this.cousesItem.push(response[data])
-              console.log(JSON.stringify(response[data]));
-          }
-      })
-
-      axios.get('https://salon-b177d.firebaseio.com/lessons.json')
-      .then((res2)=>{
-          let response2 = res2.data;
-          let lessionArray = [];
-          for(let data2 in response2){
-            //console.log("key: " +  response[data].key + "  courseId: " + response2[data2].courseId);
-              // if(response2[data2].courseId ==  response[data].key){
-              //     lessionArray.push(response2[data2])
-              // }
-              response2[data2].key = data2
-              this.lessonsItem.push(response2[data2])
-              console.log("lessonItem: " + JSON.stringify(response2[data2]));
-          }
-          // console.log("lessionArray: " + JSON.stringify(lessionArray));
-          // response[data].lessons = lessionArray
-
-        //  console.log("result: " + JSON.stringify(response[data]));
-      })
 
   },
   methods: {
@@ -271,35 +243,12 @@ export default {
           number : number
         }
         lessonRef.push(a);
-        // console.log(a);
-        // axios.post('https://salon-b177d.firebaseio.com/lessons.json',a)
-        // .then((res)=>{
-        //     console.log("res: " + JSON.stringify(res));
-        //     let response = res.data;
-        //     console.log("response: " + JSON.stringify(response));
-        //
-        //     this.lessonsItem.push(response)
-        //       console.log("lessonsItem: " + this.lessonsItem.length);
-        // })
+
 
     },
     removeLesson(item){
       lessonRef.child(item['.key']).remove();
-    //   console.log("lessonsItem: " + JSON.stringify(this.lessonsItem)) ;
-    //   axios.delete('https://salon-b177d.firebaseio.com/lessons/'+item+'.json')
-    // .then((res)=>{
-    //   console.log("removeLeson: " + res);
-    // })
-    // console.log("item: " + item);
-    // let letItem = this.lessonsItem;
-    //   for(let a in letItem){
-    //     console.log("a: " + letItem[a]);
-    //     if(letItem[a].key == item){
-    //       console.log("true");
-    //       letItem.splice(a,1);
-    //       return true
-    //     }
-    //   }
+
     }
   }
 }
