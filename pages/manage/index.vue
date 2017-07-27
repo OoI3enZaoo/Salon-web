@@ -155,6 +155,7 @@ let cousesRef = db.ref('courses')
 let lessonRef = db.ref('lessons')
 import createCourse from '~components/createCourse'
 
+//5555
 export default {
   //middleware : 'authenticated',
   firebase: {
@@ -225,8 +226,6 @@ export default {
       this.$store.commit('islogin', true)
       this.$router.push('/manage')
     }
-
-
   },
   methods: {
     addLesson(item) {
