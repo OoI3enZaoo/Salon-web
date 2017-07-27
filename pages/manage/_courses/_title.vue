@@ -120,8 +120,9 @@ Nunc magna omnis dolor integer, aliquam leo, neque euismod viverra volutpat inte
 <script>
 
 export default {
-  async asyncData({params}){
-  //  alert("course: " + JSON.stringify(params))
+  async asyncData({params,store}){
+    //alert("course: " + JSON.stringify(params))
+    store.commit('setPage','เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ')
 },
 data(){
   return {

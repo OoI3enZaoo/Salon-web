@@ -1,15 +1,6 @@
 <template>
   <div>
-    <v-toolbar dark class="primary">
-      <v-btn icon dark nuxt to= "/member">
-        <v-icon>navigate_before</v-icon>
-      </v-btn>
-      <v-toolbar-title>นายนานา มานา (เจ้าของร้านทำผม)</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn icon dark flat @click.native=""><v-icon dark>chat_bubble</v-icon></v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+
     <v-container>
       <v-card>
 
@@ -48,7 +39,7 @@
 
 
 
-
+<!--
       <v-list three-line subheader>
 
         <v-container>
@@ -58,7 +49,7 @@
 
           </v-card>
         </v-container>
-      </v-list>
+      </v-list> -->
 
       <v-divider></v-divider>
       <v-list three-line subheader>
@@ -209,11 +200,13 @@
 <script>
 import axios from 'axios'
 export default {
-
+  fetch({store}){
+    store.commit('setPage',"นายนานา มานา (เจ้าของร้านทำผม)")
+  },
    async asyncData ({ params, error }) {
      try {
-       const { data } = await axios.get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-       return data
+         const { data } = await axios.get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
+         return data
      } catch (e) {
        error({ message: 'User not found', statusCode: 404 })
      }

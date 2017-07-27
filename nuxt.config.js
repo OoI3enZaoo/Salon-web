@@ -16,6 +16,17 @@ module.exports = {
   //     .catch(callback)
   //   }
   // },
+  generate :{
+    routes: [
+      '/USERS/1',
+      '/USERS/2',
+      '/USERS/3',
+      '/USERS/4',
+      '/USERS/5',
+      '/USERS/6',
+      '/USERS/7'
+    ]
+  },
 
 
 

@@ -26,8 +26,8 @@
               <v-text-field label="รายละเอียดแบบย่อ"  hint="รายละเอียดสั้นๆ" v-model ="course.snippet"></v-text-field>
 
               <div class = "text-xs-center text-sm-center">
-                  <base64-upload class="user"
-                    imageSrc="https://static.esea.net/global/images/users/675235.1476314733.jpg"
+                  <base64-upload class="user" style="width: 300px;"
+                    imageSrc="https://t3.ftcdn.net/jpg/00/80/37/56/240_F_80375661_O3L2isjdQdnloGOANUFe5NB99nMQMpra.jpg"
                     @change="onChangeImage"></base64-upload>
                 </div>
 
@@ -75,6 +75,7 @@
 </template>
 <script>
 // import VueCoreImageUpload from 'vue-core-image-upload'
+import {db} from '../util/firebase'
 import { quillEditor } from 'vue-quill-editor'
 import { ImageImport } from '../modules/ImageImport.js'
  import { ImageResize } from '../modules/ImageResize.js'
@@ -82,7 +83,7 @@ import { ImageImport } from '../modules/ImageImport.js'
  Quill.register('modules/imageResize', ImageResize)
 import Base64Upload from 'vue-base64-upload'
 
-import {db} from '../util/firebase'
+
 let adminRef = db.ref('bar')
 
 export default {
@@ -150,7 +151,7 @@ export default {
   }
   .user {
 
-  width: 500px;
-  height: 330px;
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>
