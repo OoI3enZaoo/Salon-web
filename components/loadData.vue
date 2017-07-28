@@ -76,7 +76,9 @@
       </v-flex>
       </template>
     </v-layout>
-
+    <br>
+    <v-divider></v-divider>
+    <br>
       <br>
     </span>
   </div>
