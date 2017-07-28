@@ -1,21 +1,11 @@
 <template>
 <div>
-  ้
+
 
   <v-container>
 
-
-
-    <ul>
-      <!-- <li v-for="item in cousesItem" :key="item" v-if="item.key">
-        ชื่อคอร์ส {{item.key}}
-      {{ item['.key'] }}
-        ผู้สอน {{item.author}} รายละเอียด {{item.description}}
-        <v-btn icon primary @click.native="addLesson(item)">
-          <v-icon class="white--text">add</v-icon>
-        </v-btn> -->
-
-
+<loadData></loadData>
+    <!-- <ul>
         <li v-for="item in cousesRef" :key="item" >
 
           ชื่อคอร์ส {{item.key}} {{i}}ผู้สอน {{item.author}} รายละเอียด {{item.description}}
@@ -23,40 +13,30 @@
             <v-icon class="white--text">add</v-icon>
           </v-btn>
 
+
+
+
+
+
         <ul>
-          <li v-for="lesson in lessonRef"  v-if="item['.key'] == lesson.courseId">
-                  <p>{{lesson.number}}</p>
-                  <v-btn icon primary @click.native="removeLesson(lesson)">
+          <li  v-for="lesson in lessonRef"  v-if="item['.key'] == lesson.courseId">
+                  <td><p>{{lesson.number}}</p></td>
+                  <td><v-btn icon primary @click.native="removeLesson(lesson)">
                     <v-icon error class="white--text" >remove</v-icon>
-                  </v-btn>
+                  </v-btn></td>
           </li>
-        </ul>
+                  </ul>
 
-            <!-- <ul>
 
-              <li v-for="lesson in lessonsItem" v-if="lesson.courseId == item.key">
-                   {{lesson.number}}
-                   <v-btn icon primary @click.native="removeLesson(lesson.key)">
-                     <v-icon error class="white--text" >remove</v-icon>
-                   </v-btn>
-               </li>
-                 </ul> -->
+
+
+
       </li>
-    </ul>
+    </ul> -->
 
 
 
-    <v-layout row wrap>
-      <v-flex sm10 xs12>
-        <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="states" v-model="e7" multiple chips persistent-hint></v-select>
-      </v-flex>
-      <v-flex sm2 xs12>
-        <createCourse></createCourse>
 
-      </v-flex>
-
-
-    </v-layout>
 
 
 
@@ -128,6 +108,8 @@
       </template>
     </v-layout>
     <br>
+
+
     <div class="text-xs-center">
       <v-pagination v-bind:length.number="4" circle></v-pagination>
     </div>
@@ -147,23 +129,15 @@
 </div>
 </template>
 <script>
-import {
-  db
-} from '../../util/firebase'
-import axios from 'axios'
-let cousesRef = db.ref('courses')
-let lessonRef = db.ref('lessons')
-import createCourse from '~components/createCourse'
+
+import loadData from '~components/loadData'
 
 //5555
 export default {
   //middleware : 'authenticated',
-  firebase: {
-    lessonRef,
-    cousesRef
-  },
+
   components: {
-    createCourse
+    loadData
   },
   fetch({
     store
@@ -173,6 +147,7 @@ export default {
 
   data() {
     return {
+      pagination: {},
       testCouses: [{
           img: "https://camo.mybb.com/e01de90be6012adc1b1701dba899491a9348ae79/687474703a2f2f7777772e6a71756572797363726970742e6e65742f696d616765732f53696d706c6573742d526573706f6e736976652d6a51756572792d496d6167652d4c69676874626f782d506c7567696e2d73696d706c652d6c69676874626f782e6a7067",
           title: "เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ"
@@ -206,10 +181,7 @@ export default {
           title: "เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ"
         }
       ],
-      e7: ['คอร์สเจ้าของร้านเสริมสวย', 'คอร์สร้านตัดผม', 'คอร์สช่างเสริมสวย', 'คอร์สผู้สนใจช่างเสริมสวย'],
-      states: [
-        'คอร์สเจ้าของร้านเสริมสวย', 'คอร์สร้านตัดผม', 'คอร์สช่างเสริมสวย', 'คอร์สผู้สนใจช่างเสริมสวย'
-      ],
+
       cousesItem : [''],
       lessonsItem : ['']
 
@@ -226,42 +198,7 @@ export default {
       this.$store.commit('islogin', true)
       this.$router.push('/manage')
     }
-  },
-  methods: {
-    addLesson(item) {
-      console.log("item: " + item);
-      let number = Math.floor((Math.random() * 100) + 1);
-        let a = {
-          author : "my name is ben",
-          content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-          courseId : item,
-          cover : "https://image.flaticon.com/teams/slug/freepik.jpg",
-          description  : "loremrelrekjdlkfj",
-          time : "27/7/2560 22.21",
-          title : "บทเรียนใหมdfdfdf่",
-          number : number
-        }
-        lessonRef.push(a);
-
-
-    },
-    removeLesson(item){
-      lessonRef.child(item['.key']).remove();
-
-    }
   }
+
 }
 </script>
-<style>
-.item-description {
-  font-size: .9em;
-  margin: 0;
-  margin-bottom: .3em;
-  height: 5em;
-  line-height: 1.8em;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 3;
-}
-</style>
