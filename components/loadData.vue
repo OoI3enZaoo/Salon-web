@@ -54,7 +54,7 @@
                   <v-card-media height="200px" :src="lesson.cover"> </v-card-media>
               </v-flex>
               <v-flex xs8>
-                <nuxt-link tag ="span" type="span" :to="'/manage/hello/sawasdee_kub'" style ="cursor:pointer;" >
+                <nuxt-link tag ="span" type="span" :to="'/manage/'+ course['.key']+ '/'+ lesson['.key']" style ="cursor:pointer;" >
                   <v-card-title>
                     <h6 class="headline grey.darken--text">{{lesson.title}}</h6>
                     <p class ="item-description" style="-webkit-box-orient:vertical;">{{lesson.description}}</p>
@@ -63,8 +63,9 @@
                     </nuxt-link>
                   <v-card-actions >
                   <p><v-icon>access_time</v-icon>&nbsp;2017/7/27&nbsp;20:36</p>&nbsp;&nbsp;
-                  <p><v-icon>remove_red_eye</v-icon>&nbsp;652</p>&nbsp;&nbsp;
-                    <p><v-icon>favorite</v-icon>&nbsp;50</p>&nbsp;&nbsp;
+                  <p><v-icon>remove_red_eye</v-icon>&nbsp;{{lesson.view}}</p>&nbsp;&nbsp;
+                    <p><v-icon>favorite</v-icon>&nbsp;{{lesson.like}}</p>&nbsp;&nbsp;
+                    <v-spacer></v-spacer>
                       <p><v-btn icon @click.native="removeLesson(lesson)"><v-icon error>delete</v-icon></v-btn></p>&nbsp;&nbsp;
                 </v-card-actions>
               </v-flex>
@@ -113,7 +114,9 @@ export default {
           cover : "https://pbs.twimg.com/profile_images/781901562218057729/6TNebxkc.jpg",
           description  : "Quis imperdiet nostra tempus nemo cursus quisque, et semper. Ut vivamus neque ac eros urna, at nunc velit sit wisi diam arcu, nonummy ac ut volutpat integer sed, orci placerat mollis donec vel. Luctus integer est orci at commodo, dapibus vel aenean in varius, wisi tempor metus urna mus magna. Orci nulla risus sit arcu luctus, elit massa, volutpat vitae ac, quis ullamcorper mauris elit id integer. Non lorem pretium elit turpis sed, erat odio inceptos elit a massa, ac consequat, est nec nonummy. Leo arcu eros. Justo nisl cras donec, praesent sollicitudin, sem ornare magna bibendum maecenas diam, accumsa",
           time : "27/7/2560 22.21",
-          title : "เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ",
+          title : "การต่อรอง",
+          view : 5,
+          like : 200,
           number : number
         }
         lessonRef.push(a);

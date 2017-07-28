@@ -1,94 +1,91 @@
 <template>
   <div>
+
+
+      <v-container>
+          <v-card>
+            <v-card-text>
+              <v-layout row wrap>
+                  <v-flex xs12 sm2>
+                    <div class="text-xs-center">
+                        <img src="http://doofazit.com/image/matt-bloom-circle.png" height="100">
+                    </div>
+                  </v-flex>
+                  <v-flex xs12 sm8>
+                    <div class="text-sm-left text-xs-center">
+                          <h5>{{title}}</h5>
+                        <span class = "hidden-xs-only ">บทความโดย&nbsp;&nbsp;&nbsp;</span>
+                        <span>นายสมชาย น มงคล </span>
+                          &nbsp;&nbsp;|&nbsp;&nbsp;
+                          <span >11 กรกฎาคม 2560</span>
+
+                    </div>
+                  </v-flex>
+                      <v-spacer></v-spacer>
+                  <v-flex xs12 sm2>
+                    <div class="text-sm-right text-xs-center">
+                          <v-btn v-if="edit ==false"icon info class ="white--text display:inline" @click.native="edit = !edit"><v-icon>mode_edit</v-icon></v-btn>
+                          <template v-else>
+                            <v-btn  icon info class ="white--text display:inline" @click.native="Save"><v-icon>save</v-icon></v-btn>
+                              <v-btn  icon info class ="white--text display:inline" @click.native="edit = !edit"><v-icon>cancel</v-icon></v-btn>
+                          </template>
+                          <v-btn icon error class ="white--text display:inline" @click.native="remove"><v-icon>delete</v-icon></v-btn>
+
+                    </div>
+                  </v-flex>
+              </v-layout>
+
+            </v-card-text>
+
+            <v-card-media height="400px" :src ="cover"></v-card-media>
+            <v-card-text>
+              <h6 class ="primary--text">รายละเอียด</h6>
+                <span v-if="!edit">
+                  {{description}}
+                </span>
+                    <v-text-field  v-else multi-line label="แก้ไข" :value="description"></v-text-field>
+                <br>  <br>  <br>
+                  <h6 class ="primary--text">เนื้อหา</h6>
+
+                  <span v-if="!edit">
+                    {{content}}
+                  </span>
+                  <quill-editor v-else
+                        ref="myQuillEditor"
+                        v-model="editLesson.content"
+                        :content ="mContent"
+                        :options="editorOption"
+                        @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)"
+                        @ready="onEditorReady($event)">
+                      </quill-editor>
+                        {{editLesson.content}}
+                  <!-- <v-text-field  v-else multi-line label="แก้ไข" :value="content"></v-text-field> -->
+
+            </v-card-text>
+            <br><br>
+            <v-card-actions v-if="edit">
+                <v-spacer></v-spacer>
+                <v-btn primary @click.native="Save">บันทึก</v-btn>
+                    <v-btn class ="white primary--text" @click.native ="edit = !edit">ยกเลิก</v-btn>
+            </v-card-actions>
+          </v-card>
+      </v-container>
+
+
+
       <v-container>
 
-        <v-layout row wrap>
-            <v-flex xs12 sm2>
-              <div class="text-xs-center">
-                  <img src="http://doofazit.com/image/matt-bloom-circle.png" height="80">
-              </div>
-            </v-flex>
-            <v-flex xs12 sm8>
-              <div class="text-sm-left text-xs-center">
-                    <h5>เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ</h5>
-                  <span class = "hidden-xs-only ">บทความโดย&nbsp;&nbsp;&nbsp;</span>
-                  <span>นายสมชาย น มงคล </span>
-                    &nbsp;&nbsp;|&nbsp;&nbsp;
-                    <span >11 กรกฎาคม 2560</span>
 
-              </div>
-            </v-flex>
-
-            <v-flex xs12 sm2>
-              <div class="text-sm-right text-xs-center">
-                  <v-btn icon info class ="white--text display:inline"><v-icon>mode_edit</v-icon></v-btn>
-                    <v-btn icon error class ="white--text display:inline"><v-icon>delete</v-icon></v-btn>
-
-              </div>
-            </v-flex>
-        </v-layout>
         <br>
         <v-divider></v-divider>
-<br> <br>
-<p>dfdfdfLorem ipsum dolor sit amet, nibh mollis, lorem cras vitae. Tellus nec morbi et ligula, nulla tortor et, nulla adipiscing vel sit, elementum soluta tortor. Ut aliquam dictumst integer, donec wisi leo velit natoque orci sem, suscipit dictumst, arcu elementum id, phasellus nulla eros sem. Vitae netus neque sollicitudin mauris, morbi quisque praesent ultrices, sit lectus a, curabitur suspendisse sit, nec leo interdum enim metus volutpat. Id lacinia dui hendrerit ultrices non tellus, purus scelerisque et ut, fames penatibus sed parturient eu suspendisse. Quis imperdiet nostra tempus nemo cursus quisque, et semper. Ut vivamus neque ac eros urna, at nunc velit sit wisi diam arcu, nonummy ac ut volutpat integer sed, orci placerat mollis donec vel. Luctus integer est orci at commodo, dapibus vel aenean in varius, wisi tempor metus urna mus magna.
-Orci nulla risus sit arcu luctus, elit massa, volutpat vitae ac, quis ullamcorper mauris elit id integer. Non lorem pretium elit turpis sed, erat odio inceptos elit a massa, ac consequat, est nec nonummy. Leo arcu eros. Justo nisl cras donec, praesent sollicitudin, sem ornare magna bibendum maecenas diam, accumsan vel volutpat, in augue tincidunt turpis in nibh vivamus. Mi hic felis suscipit lorem donec, urna ultricies, vehicula eros etiam ipsum, dolor est non eleifend ornare facilisis vel, in at. Facilisis quam cras turpis in, commodo a ridiculus mattis diam mauris eget, semper felis cras curabitur fermentum accumsan eget, voluptas molestie nisl, etiam felis posuere iaculis. Elementum velit ac augue nec, posuere dolor eu neque. Ut massa lectus libero, hendrerit ut justo neque, mollis convallis enim erat tortor ut, viverra iaculis magna ultrices. Dignissim non neque proin arcu nunc ut. Ipsum maiores, mauris quam cursus integer justo, morbi eget vitae potenti condimentum diam.
-Velit sed erat porttitor non vestibulum, sed tincidunt, amet amet in ligula porttitor, eu eu id vitae imperdiet at. Luctus pellentesque cumque morbi sed, maecenas tincidunt. Gravida aliquet quisque ultricies porttitor magnis. Dis ut itaque, fermentum quam purus suspendisse dictum, tellus taciti sem magnis in ut. Mauris ac. Diam velit suspendisse ut, sed scelerisque, orci venenatis felis.
-Nunc magna omnis dolor integer, aliquam leo, neque euismod viverra volutpat integer nostra. Metus ac, ac non. Feugiat est sed mi tellus, lobortis natoque at, fringilla lorem, dui sagittis curabitur elit in et mauris. Pulvinar nulla, nunc mattis pellentesque pellentesque nullam. Pellentesque ut sem molestie, tortor autem nec et vestibulum eget. Posuere porttitor malesuada in, praesent vestibulum in, dolor felis sit. Libero dignissim. Non integer, sagittis ante nunc in pellentesque pede, ligula ligula quis interdum, pharetra curabitur pede enim.</p>
-
-<br>
-<v-divider></v-divider>
-<br>
 
 
-<v-layout row wrap>
-      <v-flex xs12 sm2>
-        <div class="text-xs-center">
-            <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
-        </div>
-      </v-flex>
-      <v-flex xs12 sm8>
-        <div class="text-xs-center text-sm-left">
-          <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
-          <p>รอติดตามอยู่นะครับ</p>
-            </div>
-      </v-flex>
-      <v-flex xs12 sm2>
-        <div class="text-xs-center text-sm-left">
-          <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
-        </div>
-    </v-flex>
- </v-layout>
-
-    <br>
-        <v-divider></v-divider>
-    <br>
 
 
-    <v-layout row wrap>
-          <v-flex xs12 sm2>
-            <div class="text-xs-center">
-                <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
-            </div>
-          </v-flex>
-          <v-flex xs12 sm8>
-            <div class="text-xs-center text-sm-left">
-              <p class ="primary--text">Theerapat Vijitpoo &nbsp; &nbsp; <v-icon small>av_timer</v-icon> &nbsp;<span class="grey--text">2 ชั่วโมงที่แล้ว</span> </p>
-              <p>รอติดตามอยู่นะครับ</p>
-                </div>
-          </v-flex>
-          <v-flex xs12 sm2>
-            <div class="text-xs-center text-sm-left">
-              <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
-            </div>
-        </v-flex>
-     </v-layout>
-
-        <br>
-            <v-divider></v-divider>
-        <br>
 
 
-        <v-layout row wrap>
+        <!-- <v-layout row wrap>
               <v-flex xs12 sm2>
                 <div class="text-xs-center">
                     <img src="https://www.sochiie.com/wp-content/uploads/2014/04/facebook-teerasej-profile-ball-circle.png" height="80">
@@ -105,29 +102,97 @@ Nunc magna omnis dolor integer, aliquam leo, neque euismod viverra volutpat inte
                   <v-btn error icon class ="white--text"><v-icon>delete</v-icon></v-btn>
                 </div>
             </v-flex>
-         </v-layout>
+         </v-layout> -->
 
-            <br>
+            <!-- <br>
                 <v-divider></v-divider>
-            <br>
-
-
-
-
+            <br> -->
+            {{lessonRef}}
       </v-container>
   </div>
 </template>
 <script>
+import axios from 'axios'
 
+import { quillEditor } from 'vue-quill-editor'
+import { ImageImport } from '../../../modules/ImageImport.js'
+ import { ImageResize } from '../../../modules/ImageResize.js'
+ Quill.register('modules/imageImport', ImageImport)
+ Quill.register('modules/imageResize', ImageResize)
+ import {db} from '../../../util/firebase'
+ let lessonRef = db.ref('lessons')
+let mParams;
 export default {
+  firebase :{
+      lessonRef
+  },
   async asyncData({params,store}){
-    //alert("course: " + JSON.stringify(params))
     store.commit('setPage','เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ')
+      lessonRef.child(params.title)
+        mParams = params.title;
+        const { data } =  await axios.get('https://salon-b177d.firebaseio.com/lessons/' + params.title + '.json')
+        return data;
+
+},
+methods: {
+  remove(){
+    console.log("params: " + mParams);
+    lessonRef.child(mParams).remove()
+
+      // axios.delete('https://salon-b177d.firebaseio.com/lessons/' + mParams + '/.json')
+      // .then((res)=>{
+      //   this.$router.push('/manage')
+      // })
+  },
+      onEditorBlur(editor) {
+       console.log('editor blur!', editor)
+     },
+     onEditorFocus(editor) {
+       console.log('editor focus!', editor)
+     },
+     onEditorReady(editor) {
+       console.log('editor ready!', editor)
+     },
+     onEditorChange({ editor, html, text }) {
+       console.log('editor change!', editor, html, text)
+       this.content = html
+     },
+     Save(){
+       axios.put('')
+     }
+},
+components: {
+  quillEditor
+},
+computed:{
+  editor() {
+     return this.$refs.myQuillEditor.quill
+   },
+   mContent(){
+     return this.content
+   }
+
 },
 data(){
   return {
-
+    edit : false,
+    editLesson :{
+          description : '',
+          content : '',
+    },
+    editorOption: {
+      modules: {
+         imageImport: true,
+         imageResize: {
+         displaySize: true
+       }
+       }
+     }
   }
+},
+mounted() {
+  //do something after mounting vue instance
+  console.log("this.content: " + this.mContent);
 }
 }
 </script>

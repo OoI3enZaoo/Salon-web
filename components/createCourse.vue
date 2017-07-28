@@ -110,9 +110,8 @@ export default {
         cover: 'https://static.esea.net/global/images/users/675235.1476314733.jpg',
         editorOption: {
           modules: {
-
              imageImport: true,
-           imageResize: {
+             imageResize: {
              displaySize: true
            }
            }
