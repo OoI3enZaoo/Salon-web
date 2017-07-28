@@ -1,16 +1,14 @@
 <template >
-<v-app >
+<v-app style=" background-image:url('https://www.clipartsgram.com/image/1845233953-website-backgrounds-e280ab289855821e280ac-e280abe280ac.jpg');  background-repeat: no-repeat;  background-size: cover; ">
 
   <v-container >
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
-
-
-
+      <div id="center">
       <v-card>
 
-        <v-card-media height="150px" class="primary lighten-4--text">
-          <h6 style="text-align:center; margin-top: 60px;" class="white--text">ยินดีต้อนรับสู่ระบบจัดการ Salon & Academy สำหรับผู้ดูแล</h6>
+        <v-card-media src = "https://www.sketchappsources.com/resources/source-images-plus2/material-design-icon-patterns-2.png" height="150px" class="primary lighten-4--text">
+          <h6 style="text-align:center; margin-top: 60px;" class="white--text">ระบบจัดการ Salon & Academy</h6>
         </v-card-media>
         <v-card-title primary-title>
           <v-flex xs12 sm12>
@@ -20,14 +18,16 @@
             <v-text-field type ="password" name="input-1" label="Password" id="testing" v-model="user.password" @keyup.enter.native="Login"></v-text-field>
           </v-flex>
         </v-card-title>
+
         <v-card-actions>
-          <v-btn primary style="width: 3000px" @click.native="Login">Login</v-btn>
+<v-spacer></v-spacer>
+          <v-btn primary  @click.native="Login">Login</v-btn>
         </v-card-actions>
       </v-card>
 
 
 
-
+</div>
     </v-flex>
   </v-layout>
 </v-container>
@@ -45,19 +45,6 @@ import {db} from '../util/firebase'
 
 let adminRef = db.ref('admin')
 
-let series = db.ref('courses')
-series.on('value',(snapshot) =>{
-    snapshot.forEach((res)=>{
-      let data = res.val();
-
-      console.log("sold: " + Object.keys(data.sold).length);
-
-    })
-})
-console.log("series: " + series);
-adminRef.on('value', (snapshot)=>{
-  console.log("child_added: " + JSON.stringify(snapshot.val()));
-})
 export default {
   firebase :{
     adminRef
@@ -136,3 +123,11 @@ export default {
   }
 }
 </script>
+<style >
+#center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

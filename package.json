@@ -31,6 +31,7 @@
     "vue-base64-upload": "^1.0.1",
     "vue-quill-editor": "^2.2.6",
     "vue-server-renderer": "latest",
+    "vue-toastr-2": "0.0.9",
     "vue2-simplert": "^0.5.2",
     "vuefire": "^1.4.3",
     "vuetify": "^0.14.5",

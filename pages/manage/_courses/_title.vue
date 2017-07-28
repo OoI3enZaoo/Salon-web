@@ -52,7 +52,7 @@
                   </span>
                   <quill-editor v-else
                         ref="myQuillEditor"
-                        v-model="editLesson.content"
+                        v-model="content"
                         :content ="mContent"
                         :options="editorOption"
                         @blur="onEditorBlur($event)"

@@ -65,8 +65,8 @@
                   <p><v-icon>access_time</v-icon>&nbsp;2017/7/27&nbsp;20:36</p>&nbsp;&nbsp;
                   <p><v-icon>remove_red_eye</v-icon>&nbsp;{{lesson.view}}</p>&nbsp;&nbsp;
                     <p><v-icon>favorite</v-icon>&nbsp;{{lesson.like}}</p>&nbsp;&nbsp;
-                    <v-spacer></v-spacer>
-                      <p><v-btn icon @click.native="removeLesson(lesson)"><v-icon error>delete</v-icon></v-btn></p>&nbsp;&nbsp;
+
+                      <p><v-btn @click.native="removeLesson(lesson)" class ="red red--text" flat>ลบ</v-btn></p>&nbsp;&nbsp;
                 </v-card-actions>
               </v-flex>
           </v-layout>
