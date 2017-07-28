@@ -25,11 +25,12 @@
         </v-card-actions>
       </v-card>
 
-
+<vue-toastr ref="toastr"></vue-toastr>
 
 </div>
     </v-flex>
   </v-layout>
+
 </v-container>
 </v-app>
 </template>
@@ -109,6 +110,7 @@ export default {
                 return true
               }else{
                 console.log("not found");
+                this.$refs.toastr.e("ERRROR MESSAGE");
               }
 
           })

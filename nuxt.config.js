@@ -70,7 +70,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vuetify']
+    vendor: ['vuetify','vue-quill-editor/ssr']
 
   },
   plugins: ['~plugins/vuetify.js'],

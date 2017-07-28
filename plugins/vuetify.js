@@ -3,12 +3,18 @@ import Vuetify from 'vuetify'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueFire from 'vuefire'
+import Toastr from 'vue-toastr';
 
+Vue.component('vue-toastr',Toastr);
 
 
 if (process.BROWSER_BUILD) {
   const VueQuillEditor = require('vue-quill-editor/ssr')
+
   Vue.use(VueQuillEditor)
+
+
+
 }
 
 
