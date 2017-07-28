@@ -66,7 +66,7 @@
                   <p><v-icon>remove_red_eye</v-icon>&nbsp;{{lesson.view}}</p>&nbsp;&nbsp;
                     <p><v-icon>favorite</v-icon>&nbsp;{{lesson.like}}</p>&nbsp;&nbsp;
 
-                      <p><v-btn @click.native="removeLesson(lesson)" class ="red red--text" flat>ลบ</v-btn></p>&nbsp;&nbsp;
+                      <p><v-btn icon @click.native="removeLesson(lesson)" class ="red red--text" flat>ลบ</v-btn></p>&nbsp;&nbsp;
                 </v-card-actions>
               </v-flex>
           </v-layout>

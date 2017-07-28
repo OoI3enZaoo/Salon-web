@@ -70,7 +70,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vuetify','vue-quill-editor/ssr']
+    vendor: ['vuetify','vue-quill-editor/ssr','axios','./util/firebase.js']
 
   },
   plugins: ['~plugins/vuetify.js'],
