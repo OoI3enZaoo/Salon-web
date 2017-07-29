@@ -20,7 +20,7 @@
         <v-list class="show-sm-only">
 
           <template v-for="(item,i) in menuItem"  >
-              <v-divider v-if="item.divider"></v-divider>
+              <v-divider v-if="item.divider"> </v-divider>
           <v-list-tile :key="i" nuxt :to="item.link">
             <v-list-tile-action>
 

@@ -126,6 +126,7 @@
 </div>
 </template>
 <script>
+import chat from '../components/chat'
 export default {
   fetch ({store}) {
    store.commit('setPage', "การติดต่อสื่อสาร")
@@ -133,8 +134,10 @@ export default {
   data() {
     return {
       slideNavRight: true,
-
     }
+  },
+  components: {
+    chat
   },
   mounted() {
     //do something after mounting vue instance
