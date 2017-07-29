@@ -3,9 +3,7 @@
   <v-layout row justify-center>
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
 
-      <v-btn fab icon class="pink white--text" slot="activator">
-        <v-icon>add</v-icon>
-      </v-btn>
+      <v-btn class="primary white--text" large slot="activator"> สร้างคอร์สใหม่ </v-btn>
       <v-card>
         <v-toolbar dark class="primary">
           <v-btn icon @click.native="dialog = false" dark>
@@ -44,7 +42,7 @@
             </v-card-text>
 
 
-      <ul>
+      <!-- <ul>
         <li v-for ="item in adminRef">
           <v-btn error @click.native="removeItem(item)">ลบ</v-btn>
            Title > {{item.title }} <br>
@@ -55,7 +53,7 @@
              <img :src ="item.imageCover" width="500" height="330">
            </div>
          </li>
-      </ul>
+      </ul> -->
 
           </v-card>
         </v-container>
@@ -75,7 +73,7 @@
 </template>
 <script>
 // import VueCoreImageUpload from 'vue-core-image-upload'
-import {db} from '../util/firebase'
+// import {db} from '../util/firebase'
 import { quillEditor } from 'vue-quill-editor'
 import { ImageImport } from '../modules/ImageImport.js'
  import { ImageResize } from '../modules/ImageResize.js'
@@ -84,12 +82,12 @@ import { ImageImport } from '../modules/ImageImport.js'
 import Base64Upload from 'vue-base64-upload'
 
 
-let adminRef = db.ref('bar')
+// let adminRef = db.ref('bar')
 
 export default {
-  firebase :{
-    adminRef
-  },
+  // firebase :{
+  //   adminRef
+  // },
   components: {
     quillEditor, Base64Upload
   },

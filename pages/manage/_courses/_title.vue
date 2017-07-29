@@ -6,7 +6,7 @@
             <v-card-text>
               <v-layout row wrap>
                   <v-flex xs12 sm2>
-                    <v-btn error @click.native="test">Test Button</v-btn>
+
                     <div class="text-xs-center">
                         <img src="http://doofazit.com/image/matt-bloom-circle.png" height="100">
                     </div>
@@ -154,16 +154,7 @@ export default {
 
 
        this.edit = false
-     },
-     test(){
-       axios.put('https://salon-b177d.firebaseio.com/lessons/-KqCXbG4Mt2X9uSJuNVz/number.json',70)
-       .then(res=>{
-         console.log("res: "  + JSON.stringify(res));
-       })
-       .catch(error =>{
-         console.log("error");
-       })
-     },
+     },    
      ...mapActions([
         'editLesson'
      ])

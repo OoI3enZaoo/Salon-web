@@ -26,7 +26,8 @@ export const mutations  =  {
   addLesson : (state,data) => state.lessonsData.push(data),
   setCurrentLesson : (state,data) =>state.currentLesson = state.lessonsData.filter(res => data == res.key),
   //removeLesson : (state,data) =>  state.loadLesson.filter((data,i) => data.key == item ? this.loadLesson.splice(i,1) : '');
-  editLesson :(state,data) => state.lessonsData.filter(res => data.key == res.key ? res = data : '')
+  editLesson :(state,data) => state.lessonsData.filter(res => data.key == res.key ? res = data : ''),
+  user :(state) => console.log("hello world")
 }
 export const actions = {
   removeLesson({commit},id){
@@ -37,8 +38,6 @@ export const actions = {
     })
      console.log('id: ' + id);
     //state.lessonsData.filter((data,i) => data.courseId == id ? console.log("found") : console.log("not found"));
-
-
   },
   addLesson({commit},data){
     console.log("data: " + data);
