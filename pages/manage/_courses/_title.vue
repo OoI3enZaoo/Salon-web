@@ -1,7 +1,6 @@
 <template>
   <div>
 
-
       <v-container>
           <v-card>
             <v-card-text>
@@ -13,7 +12,7 @@
                   </v-flex>
                   <v-flex xs12 sm8>
                     <div class="text-sm-left text-xs-center">
-                          <h5>{{title}}</h5>
+                          <h5>{{currentLesson[0].title}}</h5>
                         <span class = "hidden-xs-only ">บทความโดย&nbsp;&nbsp;&nbsp;</span>
                         <span>นายสมชาย น มงคล </span>
                           &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -37,22 +36,23 @@
 
             </v-card-text>
 
-            <v-card-media height="400px" :src ="cover"></v-card-media>
+            <v-card-media height="400px" :src ="currentLesson[0].cover"></v-card-media>
             <v-card-text>
               <h6 class ="primary--text">รายละเอียด</h6>
                 <span v-if="!edit">
-                  {{description}}
+                  {{currentLesson[0].description}}
                 </span>
-                    <v-text-field  class="input-group--focused" v-else label="แก้ไข"  v-model="description"></v-text-field>
+                    <v-text-field  class="input-group--focused" v-else label="แก้ไข"  v-model="currentLesson[0].description"></v-text-field>
                 <br>  <br>  <br>
                   <h6 class ="primary--text">เนื้อหา</h6>
 
+
                   <span v-if="!edit">
-                    <span v-html="content"></span>
+                    <span v-html="currentLesson[0].content"></span>
                   </span>
                   <quill-editor v-else
                         ref="myQuillEditor"
-                        v-model="content"
+                        v-model="currentLesson[0].content"
                         :content ="mContent"
                         :options="editorOption"
                         @blur="onEditorBlur($event)"
@@ -90,11 +90,13 @@ import { ImageImport } from '../../../modules/ImageImport.js'
  import { ImageResize } from '../../../modules/ImageResize.js'
  Quill.register('modules/imageImport', ImageImport)
  Quill.register('modules/imageResize', ImageResize)
-
+import {mapGetters} from 'vuex'
 let mParams;
 export default {
   async asyncData({params,store}){
+    mParams = params.title;
     store.commit('setPage','เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ')
+    store.commit('setCurrentLesson',mParams)
     //  const filter =  store.state.lesson.filter(data => params.title == data.key ? data : undefined)
         //console.log("filters: " + filter);
         // if(filter == ''){
@@ -102,12 +104,12 @@ export default {
         // }else{
         //     console.log("found: " + filter);
         // }
-        mParams = params.title;
-        const { data } =  await axios.get('https://salon-b177d.firebaseio.com/lessons/' + params.title + '.json')
-        store.commit('addLesson',data)
-        data.key = mParams
-        console.log("data: " + JSON.stringify(data));
-        return data;
+
+        // const { data } =  await axios.get('https://salon-b177d.firebaseio.com/lessons/' + params.title + '.json')
+        // store.commit('addLesson',data)
+        // data.key = mParams
+        // console.log("data: " + JSON.stringify(data));
+        // return data;
     },
     methods: {
       Remove(){
@@ -177,7 +179,10 @@ computed:{
    },
    mDescription(){
      return this.description
-   }
+   },
+   ...mapGetters([
+     'currentLesson'
+   ])
 
 },
 data(){
@@ -196,10 +201,6 @@ data(){
        }
      }
   }
-},
-mounted() {
-  //do something after mounting vue instance
-  console.log("this.content: " + this.mContent);
 }
 }
 </script>
