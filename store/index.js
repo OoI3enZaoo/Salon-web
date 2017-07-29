@@ -24,8 +24,9 @@ export const mutations  =  {
   setLesson :(state,data) => state.lessonsData = data,
   setCourse : (state,data) => state.courseData = data,
   addLesson : (state,data) => state.lessonsData.push(data),
-  setCurrentLesson : (state,data) =>state.currentLesson = state.lessonsData.filter(res => data == res.key)
+  setCurrentLesson : (state,data) =>state.currentLesson = state.lessonsData.filter(res => data == res.key),
   //removeLesson : (state,data) =>  state.loadLesson.filter((data,i) => data.key == item ? this.loadLesson.splice(i,1) : '');
+  editLesson :(state,data) => state.lessonsData.filter(res => data.key == res.key ? res = data : '')
 }
 export const actions = {
   removeLesson({commit},id){
@@ -52,7 +53,17 @@ export const actions = {
     .catch((error) =>{
       console.log("error to post data to firebase");
     })
-
+  },
+  editLesson({commit},{params,data}){
+    console.log("params: " + params);
+    console.log("data: " + JSON.stringify(data));
+    axios.put('https://salon-b177d.firebaseio.com/lessons/' + params + '.json',data)
+    .then((res)=>{
+      let result = res.data;
+      result.key = params
+      console.log("res2: " + JSON.stringify(result));
+        commit('editLesson',result)
+    })
 
   }
 }

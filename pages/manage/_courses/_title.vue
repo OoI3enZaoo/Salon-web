@@ -6,6 +6,7 @@
             <v-card-text>
               <v-layout row wrap>
                   <v-flex xs12 sm2>
+                    <v-btn error @click.native="test">Test Button</v-btn>
                     <div class="text-xs-center">
                         <img src="http://doofazit.com/image/matt-bloom-circle.png" height="100">
                     </div>
@@ -90,7 +91,7 @@ import { ImageImport } from '../../../modules/ImageImport.js'
  import { ImageResize } from '../../../modules/ImageResize.js'
  Quill.register('modules/imageImport', ImageImport)
  Quill.register('modules/imageResize', ImageResize)
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 let mParams;
 export default {
   async asyncData({params,store}){
@@ -133,24 +134,39 @@ export default {
        this.content = html
      },
      Save(){
-       this.editLesson.author = this.author;
-       this.editLesson.courseId = this.courseId;
-       this.editLesson.cover = this.cover;
-       this.editLesson.like = this.like;
-       this.editLesson.number =this.number;
-       this.editLesson.time = this.time;
-       this.editLesson.title = this.title;
-       this.editLesson.view = this.view;
-       this.editLesson.description = this.description;
-       this.editLesson.content = this.content;
-       console.log("res: " + JSON.stringify(this.editLesson));
-       axios.put('https://salon-b177d.firebaseio.com/lessons/' + mParams + '.json',this.editLesson)
-       .then((res)=>{
-         console.log("res2: " + JSON.stringify(res));
-       })
+       this.editLes.author = this.currentLesson[0].author;
+       this.editLes.courseId = this.currentLesson[0].courseId;
+       this.editLes.cover = this.currentLesson[0].cover;
+       this.editLes.like = this.currentLesson[0].like;
+       this.editLes.number =this.currentLesson[0].number;
+       this.editLes.time = this.currentLesson[0].time;
+       this.editLes.title = this.currentLesson[0].title;
+       this.editLes.view = this.currentLesson[0].view;
+       this.editLes.description = this.currentLesson[0].description;
+       this.editLes.content = this.currentLesson[0].content;
+
+       this.editLesson({
+         params : mParams,
+         data : this.editLes})
+
+
+      // console.log("res: " + JSON.stringify(this.editLes));
+
 
        this.edit = false
-     }
+     },
+     test(){
+       axios.put('https://salon-b177d.firebaseio.com/lessons/-KqCXbG4Mt2X9uSJuNVz/number.json',70)
+       .then(res=>{
+         console.log("res: "  + JSON.stringify(res));
+       })
+       .catch(error =>{
+         console.log("error");
+       })
+     },
+     ...mapActions([
+        'editLesson'
+     ])
 
 },
 watch: {
@@ -188,7 +204,7 @@ computed:{
 data(){
   return {
     edit : false,
-    editLesson :{
+    editLes :{
           description : '',
           content : ''
     },

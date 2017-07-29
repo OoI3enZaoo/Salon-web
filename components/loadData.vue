@@ -1,7 +1,6 @@
 <template>
   <div>
 <template v-for= "lesson in loadLesson">
-  {{lesson.number}}
 </template>
     <v-layout row wrap>
       <v-flex sm10 xs12>
@@ -53,7 +52,7 @@
         <v-card class ="elevation-1">
           <v-layout row>
               <v-flex xs4>
-                {{lesson.key}}
+
                   <v-card-media height="200px" :src="lesson.cover"> </v-card-media>
               </v-flex>
               <v-flex xs8>
