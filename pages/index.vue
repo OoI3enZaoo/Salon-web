@@ -25,6 +25,8 @@
         </v-card-actions>
       </v-card>
 
+<vue-toastr ref="toastr"></vue-toastr>
+
 </div>
     </v-flex>
   </v-layout>
@@ -40,15 +42,12 @@ import {db} from '../util/firebase'
 
 
 
-
-
 let adminRef = db.ref('admin')
 
 export default {
   firebase :{
     adminRef
   },
-
 
 
   data: () => ({
@@ -93,8 +92,7 @@ export default {
     Login(){
       console.log("Login2");
       if(this.user.password != '' || this.user.username != ''){
-
-        adminRef.on('value' , (snapshot) => {
+          adminRef.on('value' , (snapshot) => {
           snapshot.forEach((data)=>{
               let res = data.val()
               console.log("username: " + res.username + " password: " + res.password);
@@ -107,8 +105,7 @@ export default {
                 return true
               }else{
                 console.log("not found");
-
-
+                toastr.info('Are you the 6 fingered man?')
               }
 
           })

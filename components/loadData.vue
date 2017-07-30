@@ -33,7 +33,7 @@
             <v-btn  icon info class ="white--text display:inline" @click.native="save(course,editLes[index])"><v-icon>save</v-icon></v-btn>
               <v-btn  icon info class ="white--text display:inline" @click.native="cancel(course,editLes[index])"><v-icon>cancel</v-icon></v-btn>
           </template>
-          <v-btn icon error class="white--text display:inline">
+          <v-btn icon error class="white--text display:inline" @click.native="RemoveC(course.key)">
           <v-icon>delete</v-icon>
           </v-btn>
 
@@ -44,7 +44,8 @@
           <blockquote>
             <v-expansion-panel >
                   <v-expansion-panel-content>
-                    <div slot="header">รายละเอียดแนะนำคอร์ส</div>
+                    <div slot="header" v-if="course.snippet">{{course.snippet}}</div>
+                    <div slot="header" v-else>แนะนำคอร์ส</div>
                     <v-card>
                       <v-card-text>
                           <p v-html="course.description"></p>
@@ -59,7 +60,7 @@
 
             <v-expansion-panel expand>
                   <v-expansion-panel-content default>
-                    <div slot="header">รายละเอียดแนะนำคอร์ส</div>
+                  <v-text-field v-model ="editLes[index].snippet"></v-text-field>
                     <v-card>
                       <v-card-text>
                       <!-- <v-text-field type ="text" auto-grow textarea v-model ="course.description"></v-text-field> -->
@@ -76,29 +77,14 @@
           </blockquote>
     </template>
 
-
     <div class="text-xs-right">
-      <p style="display:inline">
-        <v-icon large>attach_money</v-icon>
-        <template v-if="course.edit == false">
-          <p style="display:inline">2500</p>
-       </template>
-       <template v-else>
-         <v-btn  icon flat >2500</v-btn>
-      </template>
-     </p>&nbsp;&nbsp;
-      <p style="display:inline">
-        <v-icon large>shopping_cart</v-icon>
-        <template v-if="course.edit == false">
-          50
-       </template>
-       <template v-else>
-         <v-btn  icon flat >50</v-btn>
-      </template>
+    <p style="display:inline">
+      <v-icon large>attach_money</v-icon> 2500</p>&nbsp;&nbsp;
+    <p style="display:inline">
+      <v-icon large>shopping_cart</v-icon>50</p> &nbsp;&nbsp;
 
-     </p> &nbsp;&nbsp;
+  </div>
 
-    </div>
 
     <br>
     <v-divider></v-divider>
@@ -127,7 +113,7 @@
                   <p><v-icon>remove_red_eye</v-icon>&nbsp;{{lesson.view}}</p>&nbsp;&nbsp;
                     <p><v-icon>favorite</v-icon>&nbsp;{{lesson.like}}</p>&nbsp;&nbsp;
 
-                      <p><v-btn icon @click.native="Remove(lesson.key)" class ="red red--text" flat>ลบ</v-btn></p>&nbsp;&nbsp;
+                      <p><v-btn icon @click.native="RemoveL(lesson.key)" class ="red red--text" flat>ลบ</v-btn></p>&nbsp;&nbsp;
                 </v-card-actions>
               </v-flex>
           </v-layout>
@@ -211,7 +197,7 @@ export default {
 
 
     },
-    Remove(item){
+    RemoveL(item){
       //lessonRef.child(item['.key']).remove();
       console.log("loadLesson: " + this.loadLesson);
       this.removeLesson(item)
@@ -220,12 +206,13 @@ export default {
 
     },
     ...mapActions([
-      'removeLesson','addLesson','setCourse'
+      'removeLesson','addLesson','setCourse','removeCourse'
     ]),
     cancel(course,courseEdit){
        course.edit = !course.edit
        courseEdit.name = course.name
         courseEdit.description = course.description
+        courseEdit.snippet = course.snippet
        console.log("Course: " + JSON.stringify(course));
        console.log("courseEdit: " + JSON.stringify(courseEdit));
     },
@@ -233,8 +220,12 @@ export default {
         course.edit = !course.edit
         course.name = courseEdit.name
         course.description = courseEdit.description
+        course.snippet = courseEdit.snippet
         this.setCourse({key : course.key, data : course})
-
+    },
+    RemoveC(key){
+      console.log("key: " + key);
+        this.removeCourse(key)
     },
     loadEditCourse(index){
         return this.editLes[index]
@@ -292,7 +283,6 @@ export default {
     loadCourse(){
       return this.courseData
     },
-
     loadLesson(){
       return  this.lessonsData
     },

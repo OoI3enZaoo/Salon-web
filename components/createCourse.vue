@@ -4,6 +4,7 @@
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
 
       <v-btn class="primary white--text" large slot="activator"> สร้างคอร์สใหม่ </v-btn>
+      <form @submit.prevent="Add">
       <v-card>
         <v-toolbar dark class="primary">
           <v-btn icon @click.native="dialog = false" dark>
@@ -19,9 +20,9 @@
               <h3 class ="headline">ฟอร์มรายการสร้างคอร์ส</h3>
             </v-card-title>
             <v-card-text>
-              <v-text-field  label="กรอกชื่อคอร์สที่ต้องการ" hint ="กรอกเป็นภาษาใดก็ได้" v-model = "course.title" required></v-text-field>
-              <v-text-field  type = "number" label="กรอกราคา"  hint="ไม่ควรเกิน 10000 บาท" v-model = "course.price"></v-text-field>
-              <v-text-field label="รายละเอียดแบบย่อ"  hint="รายละเอียดสั้นๆ" v-model ="course.snippet"></v-text-field>
+              <v-text-field  label="กรอกชื่อคอร์สที่ต้องการ" hint ="กรอกเป็นภาษาใดก็ได้" v-model = "course.name" required></v-text-field>
+              <v-text-field  type = "number" label="กรอกราคา"  hint="ไม่ควรเกิน 10000 บาท" v-model = "course.price" required></v-text-field>
+              <v-text-field label="รายละเอียดแบบย่อ"  hint="รายละเอียดสั้นๆ" v-model ="course.snippet" required></v-text-field>
 
               <div class = "text-xs-center text-sm-center">
                   <base64-upload class="user" style="width: 300px;"
@@ -38,7 +39,7 @@
               <h3 v-text="course.description"></h3>
             <br><br><br><br>
 
-    <v-btn primary @click.native="addCourse">สร้างคอร์สใหม่</v-btn>
+            <v-btn primary type ="submit" >สร้างคอร์สใหม่</v-btn>
             </v-card-text>
 
 
@@ -58,9 +59,8 @@
           </v-card>
         </v-container>
         <v-divider></v-divider>
-
-
       </v-card>
+    </form>
     </v-dialog>
   </v-layout>
 
@@ -80,7 +80,8 @@ import { ImageImport } from '../modules/ImageImport.js'
  Quill.register('modules/imageImport', ImageImport)
  Quill.register('modules/imageResize', ImageResize)
 import Base64Upload from 'vue-base64-upload'
-
+import axios from 'axios'
+import {mapActions} from 'vuex'
 
 // let adminRef = db.ref('bar')
 
@@ -98,13 +99,12 @@ export default {
       mycont : '',
       dialog: false,
       course : {
-        title : '',
+        name : '',
         price : '',
         snippet :'',
         description : '',
-        imageCover : ''
+        cover : ''
       },
-
         cover: 'https://static.esea.net/global/images/users/675235.1476314733.jpg',
         editorOption: {
           modules: {
@@ -118,9 +118,12 @@ export default {
     }
   },
   methods :{
-    addCourse(){
+    Add(){
+      console.log("addCourse: " + this.course);
+      this.addCourse(this.course)
+      this.dialog = false
+        //adminRef.push(this.course)
 
-        adminRef.push(this.course)
     },
     removeItem(item){
       adminRef.child(item['.key']).remove()
@@ -132,8 +135,11 @@ export default {
    },
    onChangeImage(file) {
      console.log("fiel.base64: " + file.base64);
-     this.course.imageCover = 'data:image/jpeg;base64,'+file.base64
-   }
+     this.course.cover = 'data:image/jpeg;base64,'+file.base64
+   },
+   ...mapActions([
+     'addCourse'
+   ])
   }
 
 }

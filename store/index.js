@@ -1,6 +1,8 @@
 import axios from 'axios'
 export const state = () => ({
   islogin : false,
+  firstname : 'สมชาย',
+  lastname : 'น มงคล',
   page : '',
   number : 1,
   courseData : [],
@@ -27,7 +29,8 @@ export const mutations  =  {
   setCurrentLesson : (state,data) =>state.currentLesson = state.lessonsData.filter(res => data == res.key),
   //removeLesson : (state,data) =>  state.loadLesson.filter((data,i) => data.key == item ? this.loadLesson.splice(i,1) : '');
   editLesson :(state,data) => state.lessonsData.filter(res => data.key == res.key ? res = data : ''),
-  editCourse : (state,data) =>state.courseData.filter(res => data.key === res.key ? res = data : '')
+  editCourse : (state,data) =>state.courseData.filter(res => data.key === res.key ? res = data : ''),
+  addCourse : (state,data) => state.courseData.push(data)
 }
 export const actions = {
   removeLesson({commit,state},id){
@@ -75,6 +78,30 @@ export const actions = {
         result.edit = false
         console.log("res: " + JSON.stringify(res));
         commit('editCourse',result)
+    })
+  },
+  addCourse({commit,state},data){
+    console.log("data: " + JSON.stringify(data));
+      data.author = state.firstname + ' ' + state.lastname
+      data.edit = false;
+      axios.post('https://salon-b177d.firebaseio.com/courses.json',data)
+      .then((res)=>{
+          let key2 = res.data.name;
+          console.log("posted to firebase");
+          data.key = key2;
+          console.log("datatata : " + JSON.stringify(data));
+          commit('addCourse',data)
+      })
+      .catch((error) =>{
+        console.log("error to post data to firebase");
+      })
+  },
+  removeCourse({commit,state},id){
+    axios.delete('https://salon-b177d.firebaseio.com/courses/' + id + '/.json')
+    .then((res)=>{
+      console.log("deleted data of firebase: " + JSON.stringify(res));
+        let a = state.courseData.filter(data => data.key !==id);
+        commit('setCourse',a)
     })
 
   }
