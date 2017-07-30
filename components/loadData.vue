@@ -106,7 +106,7 @@
 
     <v-layout row wrap>
       <template v-for="lesson in loadLesson" v-if="course.key == lesson.courseId">
-      <v-flex xs12 sm6 xl3>
+      <v-flex sm12 md6 lg4 xl3>
 
         <v-card class ="elevation-1">
           <v-layout row>

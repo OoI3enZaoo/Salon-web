@@ -207,17 +207,16 @@ computed:{
 },
 created() {
   //do something after mounting vue instance
-  // this.editLes.author = this.currentLesson[0].author;
-  // this.editLes.courseId = this.currentLesson[0].courseId;
-  // this.editLes.cover = this.currentLesson[0].cover;
-  // this.editLes.like = this.currentLesson[0].like;
-  // this.editLes.number =this.currentLesson[0].number;
-  // this.editLes.time = this.currentLesson[0].time;
-  // this.editLes.view = this.currentLesson[0].view;
-  // this.editLes.description = this.currentLesson[0].description;
-  // this.editLes.content = this.currentLesson[0].content;
-  // this.editLes.title = this.currentLesson[0].title
-  this.editLes.push(this.currentLesson)
+  this.editLes.author = this.currentLesson[0].author;
+  this.editLes.courseId = this.currentLesson[0].courseId;
+  this.editLes.cover = this.currentLesson[0].cover;
+  this.editLes.like = this.currentLesson[0].like;
+  this.editLes.number =this.currentLesson[0].number;
+  this.editLes.time = this.currentLesson[0].time;
+  this.editLes.view = this.currentLesson[0].view;
+  this.editLes.description = this.currentLesson[0].description;
+  this.editLes.content = this.currentLesson[0].content;
+  this.editLes.title = this.currentLesson[0].title;
 
 },
 data(){
