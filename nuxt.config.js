@@ -1,6 +1,6 @@
 const axios = require('axios')
 module.exports = {
-  /*  
+  /*
   ** Headers of the page
   */
 
@@ -70,7 +70,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vuetify','vue-quill-editor/ssr','axios','./util/firebase.js']
+    vendor: ['vuetify','vue-quill-editor/ssr','axios']
 
 
   },

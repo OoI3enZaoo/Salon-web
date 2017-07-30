@@ -1,5 +1,6 @@
 <template>
   <div>
+
 <template v-for= "lesson in loadLesson">
 </template>
     <v-layout row wrap>
@@ -11,19 +12,27 @@
       </v-flex>
     </v-layout>
 
-    <span v-for="course in loadCourse" :key="course">
+    <span v-for="(course,index) in loadCourse" :key="course">
     <v-layout row wrap>
       <v-flex xs12 sm6>
-        <h2 class="display-1"> {{course.name}}</h2>
+        <template v-if="course.edit == false">
+              <h2 class="display-1"> {{course.name}}</h2>
+        </template>
+        <template v-else>
+              <v-text-field single-line v-model="editLes[index].name"></v-text-field>
+        </template>
       </v-flex>
+
       <v-flex xs12 sm6>
         <div class="text-xs-right">
           <v-btn icon primary class="white--text display:inline" @click.native="Add(course.key)" >
           <v-icon>add</v-icon>
           </v-btn>
-          <v-btn icon info class="white--text display:inline">
-            <v-icon>mode_edit</v-icon>
-          </v-btn>
+          <v-btn v-if="course.edit == false"icon info class ="white--text display:inline" @click.native="course.edit = !course.edit"><v-icon>mode_edit</v-icon></v-btn>
+          <template v-else>
+            <v-btn  icon info class ="white--text display:inline" @click.native="save(course,editLes[index])"><v-icon>save</v-icon></v-btn>
+              <v-btn  icon info class ="white--text display:inline" @click.native="cancel(course,editLes[index])"><v-icon>cancel</v-icon></v-btn>
+          </template>
           <v-btn icon error class="white--text display:inline">
           <v-icon>delete</v-icon>
           </v-btn>
@@ -31,13 +40,63 @@
         </div>
       </v-flex>
     </v-layout>
-    <blockquote>{{course.description}}</blockquote>
+    <template v-if="!course.edit">
+          <blockquote>
+            <v-expansion-panel >
+                  <v-expansion-panel-content>
+                    <div slot="header">รายละเอียดแนะนำคอร์ส</div>
+                    <v-card>
+                      <v-card-text>
+                          <p v-html="course.description"></p>
+                      </v-card-text>
+                    </v-card>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+          </blockquote>
+    </template>
+    <template v-else>
+          <blockquote>
+
+            <v-expansion-panel expand>
+                  <v-expansion-panel-content default>
+                    <div slot="header">รายละเอียดแนะนำคอร์ส</div>
+                    <v-card>
+                      <v-card-text>
+                      <!-- <v-text-field type ="text" auto-grow textarea v-model ="course.description"></v-text-field> -->
+                      <quill-editor
+                            ref="myQuillEditor"
+                            v-model="editLes[index].description"
+                            :options="editorOption">
+                          </quill-editor>
+
+                      </v-card-text>
+                    </v-card>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+          </blockquote>
+    </template>
+
 
     <div class="text-xs-right">
       <p style="display:inline">
-        <v-icon large>attach_money</v-icon> 2500</p>&nbsp;&nbsp;
+        <v-icon large>attach_money</v-icon>
+        <template v-if="course.edit == false">
+          <p style="display:inline">2500</p>
+       </template>
+       <template v-else>
+         <v-btn  icon flat >2500</v-btn>
+      </template>
+     </p>&nbsp;&nbsp;
       <p style="display:inline">
-        <v-icon large>shopping_cart</v-icon>50</p> &nbsp;&nbsp;
+        <v-icon large>shopping_cart</v-icon>
+        <template v-if="course.edit == false">
+          50
+       </template>
+       <template v-else>
+         <v-btn  icon flat >50</v-btn>
+      </template>
+
+     </p> &nbsp;&nbsp;
 
     </div>
 
@@ -90,16 +149,44 @@
 import axios from 'axios'
 import createCourse from './createCourse.vue'
 import {mapGetters,mapActions} from 'vuex'
+import { quillEditor } from 'vue-quill-editor'
+import { ImageImport } from '../modules/ImageImport.js'
+ import { ImageResize } from '../modules/ImageResize.js'
+ Quill.register('modules/imageImport', ImageImport)
+ Quill.register('modules/imageResize', ImageResize)
+
+
 export default {
-  name: "",
+   created() {
+
+    //this.editLes = editData
+    //do something after creating vue instance
+
+    this.editLes = this.courseData
+
+    console.log("Created");
+    console.log("editLes2: " + JSON.stringify(this.editLes));
+    console.log("courseData:2 " + JSON.stringify(this.courseData));
+
+  },
   data: () => ({
     e7: ['คอร์สเจ้าของร้านเสริมสวย', 'คอร์สร้านตัดผม', 'คอร์สช่างเสริมสวย', 'คอร์สผู้สนใจช่างเสริมสวย'],
     states: [
       'คอร์สเจ้าของร้านเสริมสวย', 'คอร์สร้านตัดผม', 'คอร์สช่างเสริมสวย', 'คอร์สผู้สนใจช่างเสริมสวย'
-    ]
+    ],
+    edit : false,
+    editorOption: {
+      modules: {
+         imageImport: true,
+         imageResize: {
+         displaySize: true
+       }
+       }
+     },
+     editLes : [],
   }),
   components: {
-    createCourse
+    createCourse,quillEditor
   },
   methods: {
     Add(key) {
@@ -128,15 +215,30 @@ export default {
       //lessonRef.child(item['.key']).remove();
       console.log("loadLesson: " + this.loadLesson);
       this.removeLesson(item)
-      //this.loadLesson.filter(data => data.key !== item);
-      let a = this.loadLesson.filter(data => data.key !==item);
 
-          this.$store.commit('setLesson',a)
+
 
     },
     ...mapActions([
-      'removeLesson','addLesson'
-    ])
+      'removeLesson','addLesson','setCourse'
+    ]),
+    cancel(course,courseEdit){
+       course.edit = !course.edit
+       courseEdit.name = course.name
+        courseEdit.description = course.description
+       console.log("Course: " + JSON.stringify(course));
+       console.log("courseEdit: " + JSON.stringify(courseEdit));
+    },
+    save(course,courseEdit){
+        course.edit = !course.edit
+        course.name = courseEdit.name
+        course.description = courseEdit.description
+        this.setCourse({key : course.key, data : course})
+
+    },
+    loadEditCourse(index){
+        return this.editLes[index]
+    }
 
   },
   mounted() {
@@ -153,9 +255,13 @@ export default {
         let arrayData = [];
           for(let key in result){
             result[key].key = key
+            result[key].edit = false
             arrayData.push(result[key])
           }
+          this.editLes = arrayData
           this.$store.commit('setCourse',arrayData)
+          //console.log("arrayData.length: " + arrayData.length);
+
           arrayData = []
         //  console.log("course[key]: " + JSON.stringify(arrayData));
 
@@ -186,8 +292,12 @@ export default {
     loadCourse(){
       return this.courseData
     },
+
     loadLesson(){
       return  this.lessonsData
+    },
+    edit2(){
+      return console.log("this.loadCourse.length: " +  this.loadCourse.length)
     }
   }
 }

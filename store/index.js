@@ -27,16 +27,17 @@ export const mutations  =  {
   setCurrentLesson : (state,data) =>state.currentLesson = state.lessonsData.filter(res => data == res.key),
   //removeLesson : (state,data) =>  state.loadLesson.filter((data,i) => data.key == item ? this.loadLesson.splice(i,1) : '');
   editLesson :(state,data) => state.lessonsData.filter(res => data.key == res.key ? res = data : ''),
-  user :(state) => console.log("hello world")
+  editCourse : (state,data) =>state.courseData.filter(res => data.key === res.key ? res = data : '')
 }
 export const actions = {
-  removeLesson({commit},id){
+  removeLesson({commit,state},id){
     axios.delete('https://salon-b177d.firebaseio.com/lessons/' + id + '/.json')
     .then((res)=>{
       console.log("deleted data of firebase: " + JSON.stringify(res));
-        //commit('addLesson',res.data)
+        let a = state.lessonsData.filter(data => data.key !==id);
+        commit('setLesson',a)
     })
-     console.log('id: ' + id);
+     //console.log('id: ' + id + " state num: " + state.number);
     //state.lessonsData.filter((data,i) => data.courseId == id ? console.log("found") : console.log("not found"));
   },
   addLesson({commit},data){
@@ -62,6 +63,18 @@ export const actions = {
       result.key = params
       console.log("res2: " + JSON.stringify(result));
         commit('editLesson',result)
+    })
+  },
+  setCourse({commit},{key,data}){
+    console.log("key: " + key);
+    console.log("data: " + JSON.stringify(data));
+    axios.put('https://salon-b177d.firebaseio.com/courses/' +  key+'.json',data)
+    .then(res=>{
+        let result = res;
+        result.key = key
+        result.edit = false
+        console.log("res: " + JSON.stringify(res));
+        commit('editCourse',result)
     })
 
   }
