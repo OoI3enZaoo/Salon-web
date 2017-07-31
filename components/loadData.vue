@@ -1,8 +1,7 @@
 <template>
   <div>
 
-<template v-for= "lesson in loadLesson">
-</template>
+
     <v-layout row wrap>
       <v-flex sm10 xs12>
         <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="states" v-model="e7" multiple chips persistent-hint></v-select>
@@ -64,11 +63,8 @@
                     <v-card>
                       <v-card-text>
                       <!-- <v-text-field type ="text" auto-grow textarea v-model ="course.description"></v-text-field> -->
-                      <quill-editor
-                            ref="myQuillEditor"
-                            v-model="editLes[index].description"
-                            :options="editorOption">
-                          </quill-editor>
+
+                          <quil v-model="editLes[index].description"></quil>
 
                       </v-card-text>
                     </v-card>
@@ -91,13 +87,11 @@
     <br>
 
     <v-layout row wrap>
-      <template v-for="lesson in loadLesson" v-if="course.key == lesson.courseId">
+      <template v-for="lesson in loadLesson" v-if="course.key == lesson.courseId"  v-bind:pagination.sync="page" >
       <v-flex sm12 md6 lg4 xl3>
-
         <v-card class ="elevation-1">
           <v-layout row>
               <v-flex xs4>
-
                   <v-card-media height="200px" :src="lesson.cover"> </v-card-media>
               </v-flex>
               <v-flex xs8>
@@ -119,15 +113,18 @@
           </v-layout>
         </v-card>
         <br>
-
       </v-flex>
       </template>
+
     </v-layout>
+
     <br>
     <v-divider></v-divider>
     <br>
       <br>
+
     </span>
+
   </div>
 </template>
 <script>
@@ -135,12 +132,7 @@
 import axios from 'axios'
 import createCourse from './createCourse.vue'
 import {mapGetters,mapActions} from 'vuex'
-import { quillEditor } from 'vue-quill-editor'
-import { ImageImport } from '../modules/ImageImport.js'
- import { ImageResize } from '../modules/ImageResize.js'
- Quill.register('modules/imageImport', ImageImport)
- Quill.register('modules/imageResize', ImageResize)
-
+import quil from './quill.vue'
 
 export default {
    created() {
@@ -153,6 +145,33 @@ export default {
     console.log("Created");
     console.log("editLes2: " + JSON.stringify(this.editLes));
     console.log("courseData:2 " + JSON.stringify(this.courseData));
+
+    // let arrayItem = []
+    //   this.loadLesson.forEach((val,index)=>{
+    //       //console.log("val: " + JSON.stringify(this.loadLesson.slice(1).slice(-5)));
+    //       //console.log("index: " + index);
+    //       //index == 17
+    //       if(index %5 == 0 && index != 0){
+    //         console.log("= 5: " + index);
+    //         arrayItem.push(val)
+    //         this.currentItem.push({arrayItem})
+    //         console.log("arrayItem: " + arrayItem);
+    //         console.log("this.currentItem: " +this.currentItem);
+    //         console.log("arrayItem.length: " + Object.keys(arrayItem).length);
+    //         arrayItem = []
+    //       }else{
+    //         arrayItem.push(val)   //[{},{},{},{}]
+    //         console.log("!= 5: " + index);
+    //       }
+    //   })
+    //   console.log("end");
+    //     this.currentItem.push({arrayItem})
+    //   console.log("arrayItem.length: " + Object.keys(arrayItem).length);
+    //   console.log("this.currentItem: " + this.currentItem);
+
+
+
+
 
   },
   data: () => ({
@@ -170,9 +189,21 @@ export default {
        }
      },
      editLes : [],
+      pagination: {},
+      page: 1,
+      pages: 20,
+      currentItem : []
   }),
   components: {
-    createCourse,quillEditor
+    createCourse,quil
+  },
+  watch : {
+    page(){
+      console.log("page: " + this.page);
+      this.loadLesson = this.currentItem[this.page-1]
+      //console.log("loadLesson: " + JSON.stringify(this.loadLesson.slice(1).slice(-5)  )  );
+      console.log("this.currentItem[this.page]: " + JSON.stringify(this.currentItem[this.page-1]));
+    }
   },
   methods: {
     Add(key) {
@@ -286,8 +317,14 @@ export default {
     loadLesson(){
       return  this.lessonsData
     },
+    // loadLessonPage(){
+    //   return this.currentItem[this.page].arrayItem
+    // },
     edit2(){
       return console.log("this.loadCourse.length: " +  this.loadCourse.length)
+    },
+    lessonLength(){
+      return this.loadLesson.length
     }
   }
 }

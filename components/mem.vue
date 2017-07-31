@@ -1,223 +1,105 @@
 <template>
-  <div>
+<div>
 
-    <v-layout row >
-      <v-flex xs12 sm12>
 
-    <v-card>
-       <v-card-title>
-         <!-- <v-select
-                v-bind:items="states"
-                v-model="search"
-                label="ผู้ใช้ที่ซื้อคอร์สทั้งหมด"
-                single-line
-                  multiple
-                auto
-                append-icon="map"
-                hide-details
-              ></v-select> -->
+  <v-container>
+    <v-layout row>
+      <v-flex xs12>
+        <v-card>
+          <v-layout row wrap>
+                <v-flex xs11 sm11 lg9>
+                        <v-text-field
+                            label="ค้นหารายชื่อที่นี่"
+                            class="input-group--focused ma-2"
+                            prepend-icon="search"
+                            value="650"
+                            single-line
 
-              <template v-for="(item,i) in checkboxItems">
+                        >
+                        </v-text-field>
 
-              <v-checkbox v-model="search"  :value = "item" :label="item"> </v-checkbox>
-
-             </template>
-         <v-spacer></v-spacer>
-         <v-text-field
-           append-icon="search"
-           label="Search"
-           single-line
-           hide-details
-           v-model="search"
-             full-width
-         ></v-text-field>
-       </v-card-title>
-
-    <v-data-table
-      v-bind:headers="headers"
-      v-bind:items="items"
-      v-bind:search="search"
-      v-bind:pagination.sync="pagination"
-      hide-actions
-      class="elevation-1"
-    >
-      <template slot="headerCell" scope="props">
-        <span v-tooltip:bottom="{ 'html': props.header.text }">
-          {{ props.header.text }}
-        </span>
-      </template>
-      <template slot="items" scope="props">
-        <td>
- <img :src="profile"  height="35px" >&nbsp;&nbsp;&nbsp;{{ props.item.name }}
-          {{ props.item.name }}</td>
-        <td  class="text-xs-right">{{ props.item.calories }}</td>
-        <td  class="text-xs-right">{{ props.item.fat }}</td>
-        <td  class="text-xs-right">{{ props.item.carbs }}</td>
-        <td  class="text-xs-right">{{ props.item.protein }}</td>
-        <td  class="text-xs-right">{{ props.item.sodium }}</td>
-        <td  class="text-xs-right">{{ props.item.calcium }}</td>
-        <td class="text-xs-right">
-          <v-layout row>
-            <v-flex xs4>
-              <v-btn icon><v-icon>chat_bubble</v-icon> </v-btn>
-            </v-flex>
-            <v-flex xs4>
-            <nuxt-link :to="'/users/5'" tag="span" style="cursor:pointer">  <v-btn icon><v-icon>info</v-icon> </v-btn></nuxt-link>
-            </v-flex>
+                </v-flex>
+                <v-flex xs10 sm10 lg2>
+                        <v-select  class= "ml-5 mt-2" v-bind:items="[{ text: 'Mobile' }]" label="ค้นหาตามคอร์ส"></v-select>
+                </v-flex>
           </v-layout>
-        </td>
+          <v-list subheader>
+            <v-subheader>ผู้ใช้ที่สมัครคอร์สทั้งหมด</v-subheader>
+            <v-list-tile avatar v-for="item in items" v-bind:key="item.title">
+              <v-list-tile-avatar>
+                <img v-bind:src="item.avatar" />
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                <v-list-tile-sub-title><span class='grey--text text--darken-2'>คอร์สเจ้าของร้าน,คอร์สช่างตัดผม</span></v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-layout row>
+                  <v-flex xs6>
+                    <v-icon>chat_bubble</v-icon>
+                  </v-flex>
+                  <v-flex xs6>
+                  <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer"><v-icon>info</v-icon></nuxt-link>
 
-      </template>
-    </v-data-table>
-    <div class="text-xs-center pt-2">
-      <v-pagination v-model="pagination.page" :length="Math.ceil(this.items.length / pagination.rowsPerPage)"></v-pagination>
-    </div>
-  </v-card>
 
-</v-flex>
-</v-layout>
+                  </v-flex>
+                </v-layout>
 
-  </div>
+
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+          <v-divider></v-divider>
+
+        </v-card>
+
+      </v-flex>
+    </v-layout>
+  </v-container>
+</div>
 </template>
-
 <script>
-  export default {
-    data () {
-      return {
-        search: '',
-        pagination: {rowsPerPage : 7},
-        selected: [],
-        checkboxItems : ['เจ้าของร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ผู้ช่วยช่าง','ช่างตัดผม','อีกอันนึง','มีอีกอันจำชื่อไม่ได้'],
-         states: ['เจ้าของกิจการร้านทำผม','ผู้ที่สนใจกิจการร้านทำผม','ช่างตัดผม','ผู้ช่วยช่าง'],
-         profile : 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png',
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Sodium (mg)', value: 'sodium' },
-          { text: 'Calcium (%)', value: 'calcium' },
-          { text: 'Iron (%)', value: 'iron' }
-        ],
-        items: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            sodium: 87,
-            calcium: '14%',
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            sodium: 129,
-            calcium: '8%',
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            sodium: 337,
-            calcium: '6%',
-            iron: '7%'
-          },
-          {
-            value: false,
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            sodium: 413,
-            calcium: '3%',
-            iron: '8%'
-          },
-          {
-            value: false,
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            sodium: 327,
-            calcium: '7%',
-            iron: '16%'
-          },
-          {
-            value: false,
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            sodium: 50,
-            calcium: '0%',
-            iron: '0%'
-          },
-          {
-            value: false,
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            sodium: 38,
-            calcium: '0%',
-            iron: '2%'
-          },
-          {
-            value: false,
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            sodium: 562,
-            calcium: '0%',
-            iron: '45%'
-          },
-          {
-            value: false,
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            sodium: 326,
-            calcium: '2%',
-            iron: '22%'
-          },
-          {
-            value: false,
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            sodium: 54,
-            calcium: '12%',
-            iron: '6%'
-          }
-        ]
-      }
+export default {
+  data() {
+    return {
+      tabs: [
+        {name : "ผู้ที่สนใจคอร์สทั้งหมด"},
+        {name : "เจ้าของร้านทำผม"},
+        {name : "ช่างตัดผม"},
+        {name : "ผู้ช่วยช่าง"},
+        {name : "ผู้ที่สนใจกิจการร้านทำผม"}
+      ],
+      active: null,
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      items: [{
+          active: true,
+          title: 'Jason Oner',
+          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
+        },
+        {
+          active: true,
+          title: 'Ranee Carlson',
+          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
+        },
+        {
+          title: 'Cindy Baker',
+          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
+        },
+        {
+          title: 'Ali Connors',
+          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
+        },
+      ],
+      items2: [{
+        title: 'Travis Howard',
+        avatar: '/static/doc-images/lists/5.jpg'
+      }, ]
+    }
+  },
+  methods: {
+    hideFrom(){
+      console.log("Chart1");
     }
   }
+}
 </script>

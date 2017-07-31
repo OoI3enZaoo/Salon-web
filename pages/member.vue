@@ -11,10 +11,7 @@
 
   </v-tabs>
 </v-toolbar> -->
-<v-card>
-  <v-container fluid>
-    <v-layout row>
-      <v-flex xs12>
+
 <!--
         <v-text-field
        label="ค้นหาชื่อผู้ใช้ที่นี่"
@@ -57,11 +54,6 @@
 
         </v-card> -->
   <mem></mem>
-      </v-flex>
-    </v-layout>
-
-  </v-container>
-  </v-card>
 
 </div>
 

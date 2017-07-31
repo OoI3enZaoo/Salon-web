@@ -52,7 +52,7 @@
       </v-list> -->
 
       <v-divider></v-divider>
-      <v-list three-line subheader>
+      <!-- <v-list three-line subheader>
         <v-container>
           <v-subheader>ราคาค่าบริการของร้าน</v-subheader>
 
@@ -159,7 +159,9 @@
 
 
         </v-container>
-      </v-list>
+      </v-list> -->
+
+      
       <!-- <v-divider></v-divider>
       <v-list three-line subheader>
         <v-subheader>ตั้งค่า</v-subheader>

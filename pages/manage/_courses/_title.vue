@@ -59,18 +59,8 @@
                   <span v-if="!edit">
                     <span v-html="currentLesson[0].content"></span>
                   </span>
-                  <quill-editor v-else
-                        ref="myQuillEditor"
-                        v-model="editLes.content"
-                        :content ="mContent"
-                        :options="editorOption"
-                        @blur="onEditorBlur($event)"
-                        @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
-                      </quill-editor>
 
-                  <!-- <v-text-field  v-else multi-line label="แก้ไข" :value="content"></v-text-field> -->
-
+                          <quil v-else v-model="editLes.content"></quil>
             </v-card-text>
             <br><br>
             <v-card-actions >
@@ -94,13 +84,10 @@
 <script>
 import axios from 'axios'
 
-import { quillEditor } from 'vue-quill-editor'
-import { ImageImport } from '../../../modules/ImageImport.js'
- import { ImageResize } from '../../../modules/ImageResize.js'
- Quill.register('modules/imageImport', ImageImport)
- Quill.register('modules/imageResize', ImageResize)
+
 import {mapGetters,mapActions} from 'vuex'
 import Base64Upload from 'vue-base64-upload'
+import quil from '../../../components/quill.vue'
 let mParams;
 export default {
   async asyncData({params,store}){
@@ -122,23 +109,14 @@ export default {
         // return data;
     },
     methods: {
+
       Remove(){
           this.$router.push('/manage')
           this.removeLesson(mParams)
       },
-      onEditorBlur(editor) {
-       console.log('editor blur!', editor)
-     },
-     onEditorFocus(editor) {
-       console.log('editor focus!', editor)
-     },
-     onEditorReady(editor) {
-       console.log('editor ready!', editor)
-     },
-     onEditorChange({ editor, html, text }) {
-       console.log('editor change!', editor, html, text)
-       this.content = html
-     },
+      testna(){
+        console.log("testna555 ");
+      },
      Save(){
        console.log("save");
 
@@ -151,7 +129,7 @@ export default {
        }
        this.editLesson({
          params : mParams,
-         data : this.editLes})
+         data : this.currentLesson[0]})
       // console.log("res: " + JSON.stringify(this.editLes));
 
 
@@ -188,7 +166,7 @@ watch: {
 
     },
 components: {
-  quillEditor, Base64Upload
+  Base64Upload,quil
 },
 computed:{
   editor() {
@@ -224,14 +202,7 @@ data(){
     edit : false,
     editLes :[],
     dataImg : '',
-    editorOption: {
-      modules: {
-         imageImport: true,
-         imageResize: {
-         displaySize: true
-       }
-       }
-     }
+    description: 'Hello'
   }
 }
 }
