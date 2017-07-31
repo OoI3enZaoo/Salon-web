@@ -42,7 +42,7 @@
 
 
 
-    <v-layout row wrap>
+    <!-- <v-layout row wrap>
       <v-flex xs12 sm6>
         <h2 class="display-1">  คอร์สเจ้าของร้านทำผม</h2>
       </v-flex>
@@ -122,7 +122,7 @@
 
     <br>
     <v-divider></v-divider>
-    <br>
+    <br> -->
 
 
   </v-container>
