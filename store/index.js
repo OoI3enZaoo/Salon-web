@@ -8,7 +8,8 @@ export const state = () => ({
   courseData : [],
   lessonsData : [],
   currentCourse : {},
-  currentLesson : {}
+  currentLesson : {},
+  courseList : []
 })
 
 export const getters  =  {
@@ -17,7 +18,8 @@ export const getters  =  {
   number :(state) => state.number,
   courseData : (state) => state.courseData,
   lessonsData : (state) => state.lessonsData,
-  currentLesson : (state) => state.currentLesson
+  currentLesson : (state) => state.currentLesson,
+  courseList : (state) => state.courseList
 }
 export const mutations  =  {
   islogin :(state,status) => state.islogin = status,
@@ -30,7 +32,9 @@ export const mutations  =  {
   //removeLesson : (state,data) =>  state.loadLesson.filter((data,i) => data.key == item ? this.loadLesson.splice(i,1) : '');
   editLesson :(state,data) => state.lessonsData.filter(res => data.key == res.key ? res = data : ''),
   editCourse : (state,data) =>state.courseData.filter(res => data.key === res.key ? res = data : ''),
-  addCourse : (state,data) => state.courseData.push(data)
+  addCourse : (state,data) => state.courseData.push(data),
+  addCourseList : (state,data)=> state.courseList.push(data),
+  setCourseList : (state,data)=> state.courseList = data
 }
 export const actions = {
   removeLesson({commit,state},id){
@@ -39,6 +43,7 @@ export const actions = {
       console.log("deleted data of firebase: " + JSON.stringify(res));
         let a = state.lessonsData.filter(data => data.key !==id);
         commit('setLesson',a)
+
     })
      //console.log('id: ' + id + " state num: " + state.number);
     //state.lessonsData.filter((data,i) => data.courseId == id ? console.log("found") : console.log("not found"));
@@ -96,12 +101,18 @@ export const actions = {
         console.log("error to post data to firebase");
       })
   },
-  removeCourse({commit,state},id){
+    removeCourse({commit,state},{id,name}){
+    console.log("id: " + id);
+    console.log("name: " + name);
     axios.delete('https://salon-b177d.firebaseio.com/courses/' + id + '/.json')
     .then((res)=>{
       console.log("deleted data of firebase: " + JSON.stringify(res));
-        let a = state.courseData.filter(data => data.key !==id);
-        commit('setCourse',a)
+          let a = state.courseData.filter(data => data.key !==id);
+          commit('setCourse',a)
+          let b = state.courseList.filter(data => data !== name);
+          commit('setCourseList',b)
+
+      console.log("a.name: " + a);
     })
 
   }

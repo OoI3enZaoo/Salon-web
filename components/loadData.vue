@@ -4,14 +4,16 @@
 
     <v-layout row wrap>
       <v-flex sm10 xs12>
-        <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="states" v-model="e7" multiple chips persistent-hint></v-select>
+        <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="this.courseList" v-model="courseSelect" multiple chips persistent-hint></v-select>
       </v-flex>
       <v-flex sm2 xs12>
         <createCourse></createCourse>
       </v-flex>
     </v-layout>
 
-    <span v-for="(course,index) in loadCourse" :key="course">
+    <span v-for="(course,index) in loadCourse" :key="course" >
+      <span v-for="select in courseSelect">
+        <span v-if="course.name == select">
     <v-layout row wrap>
       <v-flex xs12 sm6>
         <template v-if="course.edit == false">
@@ -24,15 +26,15 @@
 
       <v-flex xs12 sm6>
         <div class="text-xs-right">
-          <v-btn icon primary class="white--text display:inline" @click.native="Add(course.key)" >
+          <v-btn icon primary class="white--text display:inline" @click.native="Add(course.key)"  v-tooltip:top="{html : 'เพิ่มบทความ'}">
           <v-icon>add</v-icon>
           </v-btn>
-          <v-btn v-if="course.edit == false"icon info class ="white--text display:inline" @click.native="course.edit = !course.edit"><v-icon>mode_edit</v-icon></v-btn>
+          <v-btn v-if="course.edit == false"icon info class ="white--text display:inline" @click.native="course.edit = !course.edit" v-tooltip:top="{html : 'แก้ไขรายละเอียดคอร์ส'}" ><v-icon>mode_edit</v-icon></v-btn>
           <template v-else>
-            <v-btn  icon info class ="white--text display:inline" @click.native="save(course,editLes[index])"><v-icon>save</v-icon></v-btn>
-              <v-btn  icon info class ="white--text display:inline" @click.native="cancel(course,editLes[index])"><v-icon>cancel</v-icon></v-btn>
+            <v-btn  icon info class ="white--text display:inline" @click.native="save(course,editLes[index])" v-tooltip:top="{html : 'บันทึก'}" ><v-icon>save</v-icon></v-btn>
+              <v-btn  icon info class ="white--text display:inline" @click.native="cancel(course,editLes[index])" v-tooltip:top="{html : 'ยกเลิก'}"><v-icon>cancel</v-icon></v-btn>
           </template>
-          <v-btn icon error class="white--text display:inline" @click.native="RemoveC(course.key)">
+          <v-btn icon error class="white--text display:inline" @click.native="RemoveC(course.name,course.key)" v-tooltip:top="{html : 'ลบคอร์ส'}">
           <v-icon>delete</v-icon>
           </v-btn>
 
@@ -74,9 +76,9 @@
     </template>
 
     <div class="text-xs-right">
-    <p style="display:inline">
+    <p style="display:inline" v-tooltip:top="{html : 'ราคา'}">
       <v-icon large>attach_money</v-icon> 2500</p>&nbsp;&nbsp;
-    <p style="display:inline">
+    <p style="display:inline" v-tooltip:top="{html : 'ขายไปแล้ว'}">
       <v-icon large>shopping_cart</v-icon>50</p> &nbsp;&nbsp;
 
   </div>
@@ -89,7 +91,7 @@
     <v-layout row wrap>
       <template v-for="lesson in loadLesson" v-if="course.key == lesson.courseId"  v-bind:pagination.sync="page" >
       <v-flex sm12 md6 lg4 xl3>
-        <v-card class ="elevation-1">
+        <v-card class ="elevation-1" v-tooltip:top="{html : 'กดเพื่อดูรายละเอียด'}">
           <v-layout row>
               <v-flex xs4>
                   <v-card-media height="200px" :src="lesson.cover"> </v-card-media>
@@ -107,7 +109,7 @@
                   <p><v-icon>remove_red_eye</v-icon>&nbsp;{{lesson.view}}</p>&nbsp;&nbsp;
                     <p><v-icon>favorite</v-icon>&nbsp;{{lesson.like}}</p>&nbsp;&nbsp;
 
-                      <p><v-btn icon @click.native="RemoveL(lesson.key)" class ="red red--text" flat>ลบ</v-btn></p>&nbsp;&nbsp;
+                      <!-- <p><v-btn icon @click.native="RemoveL(lesson.key)" class ="red red--text" flat>ลบ</v-btn></p>&nbsp;&nbsp; -->
                 </v-card-actions>
               </v-flex>
           </v-layout>
@@ -123,7 +125,8 @@
     <br>
       <br>
 
-    </span>
+    </span></span>
+  </span>
 
   </div>
 </template>
@@ -141,10 +144,10 @@ export default {
     //do something after creating vue instance
 
     this.editLes = this.courseData
-
     console.log("Created");
     console.log("editLes2: " + JSON.stringify(this.editLes));
     console.log("courseData:2 " + JSON.stringify(this.courseData));
+    this.courseSelect  = this.courseList
 
     // let arrayItem = []
     //   this.loadLesson.forEach((val,index)=>{
@@ -175,10 +178,8 @@ export default {
 
   },
   data: () => ({
-    e7: ['คอร์สเจ้าของร้านเสริมสวย', 'คอร์สร้านตัดผม', 'คอร์สช่างเสริมสวย', 'คอร์สผู้สนใจช่างเสริมสวย'],
-    states: [
-      'คอร์สเจ้าของร้านเสริมสวย', 'คอร์สร้านตัดผม', 'คอร์สช่างเสริมสวย', 'คอร์สผู้สนใจช่างเสริมสวย'
-    ],
+
+
     edit : false,
     editorOption: {
       modules: {
@@ -192,7 +193,8 @@ export default {
       pagination: {},
       page: 1,
       pages: 20,
-      currentItem : []
+      currentItem : [],
+      courseSelect : []
   }),
   components: {
     createCourse,quil
@@ -224,16 +226,11 @@ export default {
         //lessonRef.push(a);
         console.log("data: "+data);
         this.addLesson(data)
-
-
-
     },
     RemoveL(item){
       //lessonRef.child(item['.key']).remove();
       console.log("loadLesson: " + this.loadLesson);
       this.removeLesson(item)
-
-
 
     },
     ...mapActions([
@@ -254,9 +251,10 @@ export default {
         course.snippet = courseEdit.snippet
         this.setCourse({key : course.key, data : course})
     },
-    RemoveC(key){
+    RemoveC(name,key){
       console.log("key: " + key);
-        this.removeCourse(key)
+      console.log("name: " +name);
+        this.removeCourse({id: key , name: name})
     },
     loadEditCourse(index){
         return this.editLes[index]
@@ -309,7 +307,7 @@ export default {
   },
   computed:{
     ...mapGetters([
-      'courseData','lessonsData'
+      'courseData','lessonsData','courseList'
     ]),
     loadCourse(){
       return this.courseData

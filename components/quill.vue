@@ -1,10 +1,5 @@
 <template>
-
-
-
 <div>
-
-
      <quill-editor
             v-model="modelFromParrent"
                 ref="myQuillEditor"
@@ -12,12 +7,7 @@
                 @change="onEditorChange($event)"
                 >
   </quill-editor>
-
 </div>
-
-
-
-
 </template>
 <script>
 
@@ -51,6 +41,7 @@ methods: {
         this.$emit('input',html)
 
     },
+
   test(){
     console.log("test");
   },

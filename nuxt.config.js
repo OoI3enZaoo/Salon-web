@@ -16,6 +16,9 @@ module.exports = {
   //     .catch(callback)
   //   }
   // },
+  router: {
+    middleware: 'course-list'
+  },
   generate :{
     routes: [
       '/USERS/1',
@@ -71,8 +74,6 @@ module.exports = {
   */
   build: {
     vendor: ['vuetify','vue-quill-editor/ssr','axios']
-
-
   },
   plugins: ['~plugins/vuetify.js'],
   css: [

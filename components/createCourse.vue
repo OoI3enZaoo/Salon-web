@@ -3,7 +3,7 @@
   <v-layout row justify-center>
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
 
-      <v-btn class="primary white--text" large slot="activator"> สร้างคอร์สใหม่ </v-btn>
+      <v-btn class="primary white--text" large slot="activator" v-tooltip:top="{html: 'สร้างคอร์สใหม่'}"> สร้างคอร์สใหม่ </v-btn>
       <form @submit.prevent="Add">
       <v-card>
         <v-toolbar dark class="primary">
@@ -82,9 +82,7 @@ import { ImageImport } from '../modules/ImageImport.js'
 import Base64Upload from 'vue-base64-upload'
 import axios from 'axios'
 import {mapActions} from 'vuex'
-
 // let adminRef = db.ref('bar')
-
 export default {
   // firebase :{
   //   adminRef
@@ -92,8 +90,6 @@ export default {
   components: {
     quillEditor, Base64Upload
   },
-
-
   data() {
     return {
       mycont : '',
@@ -122,8 +118,9 @@ export default {
       console.log("addCourse: " + this.course);
       this.addCourse(this.course)
       this.dialog = false
+      console.log("coursename: " + this.course.name);
+      this.$store.commit('addCourseList',this.course.name)
         //adminRef.push(this.course)
-
     },
     removeItem(item){
       adminRef.child(item['.key']).remove()

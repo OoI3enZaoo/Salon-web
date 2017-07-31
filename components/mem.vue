@@ -12,7 +12,6 @@
                             label="ค้นหารายชื่อที่นี่"
                             class="input-group--focused ma-2"
                             prepend-icon="search"
-                            value="650"
                             single-line
 
                         >
@@ -20,7 +19,7 @@
 
                 </v-flex>
                 <v-flex xs10 sm10 lg2>
-                        <v-select  class= "ml-5 mt-2" v-bind:items="[{ text: 'Mobile' }]" label="ค้นหาตามคอร์ส"></v-select>
+                        <v-select  class= "ml-5 mt-2" :item="this.courseList" label="ค้นหาตามคอร์ส"></v-select>
                 </v-flex>
           </v-layout>
           <v-list subheader>
@@ -36,10 +35,13 @@
               <v-list-tile-action>
                 <v-layout row>
                   <v-flex xs6>
+                    <v-btn icon v-tooltip:top="{html : 'สนทนา'}">
                     <v-icon>chat_bubble</v-icon>
+                  </v-btn>
                   </v-flex>
                   <v-flex xs6>
-                  <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer"><v-icon>info</v-icon></nuxt-link>
+
+                  <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer" v-tooltip:top="{html : 'รายละเอียด'}"><v-icon>info</v-icon></nuxt-link>
 
 
                   </v-flex>
@@ -59,6 +61,7 @@
 </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 export default {
   data() {
     return {
@@ -100,6 +103,11 @@ export default {
     hideFrom(){
       console.log("Chart1");
     }
+  },
+  computed :{
+    ...mapGetters([
+      'courseList'
+    ])
   }
 }
 </script>

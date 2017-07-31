@@ -28,12 +28,12 @@
                       <v-spacer></v-spacer>
                   <v-flex xs12 sm2>
                     <div class="text-sm-right text-xs-center">
-                          <v-btn v-if="edit ==false"icon info class ="white--text display:inline" @click.native="edit = !edit"><v-icon>mode_edit</v-icon></v-btn>
+                          <v-btn v-if="edit ==false"icon info class ="white--text display:inline" @click.native="edit = !edit" v-tooltip:top="{html : 'แก้ไข'}"><v-icon>mode_edit</v-icon></v-btn>
                           <template v-else>
-                            <v-btn  icon info class ="white--text display:inline" @click.native="Save"><v-icon>save</v-icon></v-btn>
-                              <v-btn  icon info class ="white--text display:inline" @click.native="cancel"><v-icon>cancel</v-icon></v-btn>
+                            <v-btn  icon info class ="white--text display:inline" @click.native="Save" v-tooltip:top="{html : 'บันทึก'}"><v-icon>save</v-icon></v-btn>
+                              <v-btn  icon info class ="white--text display:inline" @click.native="cancel" v-tooltip:top="{html : 'ยกเลิก'}"><v-icon>cancel</v-icon></v-btn>
                           </template>
-                          <v-btn icon error class ="white--text display:inline" @click.native="Remove"><v-icon>delete</v-icon></v-btn>
+                          <v-btn icon error class ="white--text display:inline" @click.native="Remove" v-tooltip:top="{html : 'ลบ'}"><v-icon>delete</v-icon></v-btn>
 
                     </div>
                   </v-flex>
@@ -66,12 +66,12 @@
             <v-card-actions >
                 <v-spacer></v-spacer>
                 <template v-if="edit">
-                    <v-btn primary @click.native="Save">บันทึก</v-btn>
-                    <v-btn class ="white primary--text" @click.native ="cancel">ยกเลิก</v-btn>
+                    <v-btn primary @click.native="Save" v-tooltip:top="{html : 'บันทึก'}">บันทึก</v-btn>
+                    <v-btn class ="white primary--text" @click.native ="cancel" v-tooltip:top="{html : 'ยกเลิก'}">ยกเลิก</v-btn>
                 </template>
                 <template v-else>
-                    <v-btn primary @click.native="edit = !edit">แก้ไข</v-btn>
-                    <v-btn error class ="white--text" @click.native ="Remove">ลบ</v-btn>
+                    <v-btn primary @click.native="edit = !edit" v-tooltip:top="{html : 'แก้ไข'}" >แก้ไข</v-btn>
+                    <v-btn error class ="white--text" @click.native ="Remove" v-tooltip:top="{html : 'ลบ'}">ลบ</v-btn>
                 </template>
 
             </v-card-actions>
