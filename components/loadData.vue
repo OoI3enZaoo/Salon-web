@@ -1,40 +1,36 @@
 <template>
   <div>
-
-
     <v-layout row wrap>
       <v-flex sm10 xs12>
-        <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="this.courseList" v-model="courseSelect" multiple chips persistent-hint></v-select>
+        <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="this.courseList" v-model="courseSelect" multiple chips persistent-hint v-tooltip:top="{html : 'คลิ๊กเพื่อเลือกคอร์ส'}"></v-select>
       </v-flex>
       <v-flex sm2 xs12>
         <createCourse></createCourse>
       </v-flex>
     </v-layout>
-
     <span v-for="(course,index) in loadCourse" :key="course" >
       <span v-for="select in courseSelect">
         <span v-if="course.name == select">
     <v-layout row wrap>
       <v-flex xs12 sm6>
-        <template v-if="course.edit == false">
-              <h2 class="display-1"> {{course.name}}</h2>
-        </template>
-        <template v-else>
-              <v-text-field single-line v-model="editLes[index].name"></v-text-field>
-        </template>
-      </v-flex>
 
+              <h2 class="display-1"> {{course.name}}</h2>
+
+      </v-flex>
       <v-flex xs12 sm6>
-        <div class="text-xs-right">
-          <v-btn icon primary class="white--text display:inline" @click.native="Add(course.key)"  v-tooltip:top="{html : 'เพิ่มบทความ'}">
-          <v-icon>add</v-icon>
-          </v-btn>
-          <v-btn v-if="course.edit == false"icon info class ="white--text display:inline" @click.native="course.edit = !course.edit" v-tooltip:top="{html : 'แก้ไขรายละเอียดคอร์ส'}" ><v-icon>mode_edit</v-icon></v-btn>
+        <div class="text-xs-right text-sm-right text-md-right">
+
+
+          <v-btn icon primary class="white--text display:inline" @click.native="Add(course.key)"  >
+             <v-icon>add</v-icon>
+             </v-btn>
+
+          <v-btn v-if="course.edit == false"icon info class ="white--text " @click.native="course.edit = !course.edit" v-tooltip:top="{html : 'แก้ไขรายละเอียดคอร์ส'}" ><v-icon>mode_edit</v-icon></v-btn>
           <template v-else>
-            <v-btn  icon info class ="white--text display:inline" @click.native="save(course,editLes[index])" v-tooltip:top="{html : 'บันทึก'}" ><v-icon>save</v-icon></v-btn>
-              <v-btn  icon info class ="white--text display:inline" @click.native="cancel(course,editLes[index])" v-tooltip:top="{html : 'ยกเลิก'}"><v-icon>cancel</v-icon></v-btn>
+            <v-btn  icon info class ="white--text" @click.native="save(course,editLes[index])" v-tooltip:top="{html : 'บันทึก'}" ><v-icon>save</v-icon></v-btn>
+              <v-btn  icon info class ="white--text" @click.native="cancel(course,editLes[index])" v-tooltip:top="{html : 'ยกเลิก'}"><v-icon>cancel</v-icon></v-btn>
           </template>
-          <v-btn icon error class="white--text display:inline" @click.native="RemoveC(course.name,course.key)" v-tooltip:top="{html : 'ลบคอร์ส'}">
+          <v-btn icon error class="white--text " @click.native="RemoveC(course.name,course.key)" v-tooltip:top="{html : 'ลบคอร์ส'}">
           <v-icon>delete</v-icon>
           </v-btn>
 
@@ -133,16 +129,15 @@
 <script>
 
 import axios from 'axios'
+import createLesson from './createLesson.vue'
 import createCourse from './createCourse.vue'
 import {mapGetters,mapActions} from 'vuex'
 import quil from './quill.vue'
 
 export default {
    created() {
-
     //this.editLes = editData
     //do something after creating vue instance
-
     this.editLes = this.courseData
     console.log("Created");
     console.log("editLes2: " + JSON.stringify(this.editLes));
@@ -197,7 +192,7 @@ export default {
       courseSelect : []
   }),
   components: {
-    createCourse,quil
+    createCourse,quil,createLesson
   },
   watch : {
     page(){

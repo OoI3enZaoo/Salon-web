@@ -31,15 +31,13 @@
                 </div>
 
 
-              <div class="quill-editor"
-                 v-model="course.description"
-                 v-quill:myQuillEditor="editorOption">
-            </div>
+          
+            <quil v-model="course.description"></quil>
 
-              <h3 v-text="course.description"></h3>
+
             <br><br><br><br>
 
-            <v-btn primary type ="submit" >สร้างคอร์สใหม่</v-btn>
+            <v-btn primary type ="submit" :disabled="!fromIsValid" >สร้างคอร์สใหม่</v-btn>
             </v-card-text>
 
 
@@ -74,21 +72,15 @@
 <script>
 // import VueCoreImageUpload from 'vue-core-image-upload'
 // import {db} from '../util/firebase'
-import { quillEditor } from 'vue-quill-editor'
-import { ImageImport } from '../modules/ImageImport.js'
- import { ImageResize } from '../modules/ImageResize.js'
- Quill.register('modules/imageImport', ImageImport)
- Quill.register('modules/imageResize', ImageResize)
+
+ import quil from './quill.vue'
+
 import Base64Upload from 'vue-base64-upload'
 import axios from 'axios'
 import {mapActions} from 'vuex'
-// let adminRef = db.ref('bar')
 export default {
-  // firebase :{
-  //   adminRef
-  // },
   components: {
-    quillEditor, Base64Upload
+   Base64Upload,quil
   },
   data() {
     return {
@@ -137,21 +129,17 @@ export default {
    ...mapActions([
      'addCourse'
    ])
-  }
+ },
+ computed :{
+   fromIsValid(){
+     return this.course.name !== ''
+     && this.course.price !== ''
+     && this.course.snippet !== ''
+     && this.course.description !== ''
+     && this.course.cover !== ''
+
+   }
+ }
 
 }
 </script>
-<style lang="scss">
-
-  .quill-editor {
-  height: 900px;
-    min-height: 20em;
-   padding-bottom: 1em;
-   max-height: 25em;
-  }
-  .user {
-
-  max-width: 100%;
-  max-height: 100%;
-}
-</style>

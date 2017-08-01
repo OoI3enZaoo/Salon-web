@@ -54,7 +54,7 @@
         </v-flex>
         <v-flex xs12 class ="mt-3">
 
-        <p class="grey--text" >นายนานา (เจ้าของร้านทำผม)</p>
+        <p class="grey--text" >นายนานา</p>
         </v-flex>
 
       </v-layout>

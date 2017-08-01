@@ -96,6 +96,7 @@ export const actions = {
           data.key = key2;
           console.log("datatata : " + JSON.stringify(data));
           commit('addCourse',data)
+          //commit('addCourseList',this.course.name)
       })
       .catch((error) =>{
         console.log("error to post data to firebase");

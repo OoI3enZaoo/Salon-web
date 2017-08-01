@@ -1,5 +1,5 @@
 <template >
-<v-app style=" background-image:url('https://www.clipartsgram.com/image/1845233953-website-backgrounds-e280ab289855821e280ac-e280abe280ac.jpg');  background-repeat: no-repeat;  background-size: cover; ">
+<v-app style=" background-image:url('http://www.indietarot.com/wp-content/uploads/2014/07/indie-tarot-website-background2.jpg');  background-repeat: no-repeat;  background-size: cover; ">
 
   <v-container >
   <v-layout>
