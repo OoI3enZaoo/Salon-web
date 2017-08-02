@@ -3,9 +3,7 @@
   <v-layout row justify-center>
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay="false">
 
-      <v-btn slot="activator" icon primary class="white--text display:inline" @click.native="addLesson"  >
-         <v-icon>add</v-icon>
-         </v-btn>
+      
 
 
       <form @submit.prevent="Add">

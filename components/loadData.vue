@@ -5,7 +5,7 @@
         <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="this.courseList" v-model="courseSelect" multiple chips persistent-hint v-tooltip:top="{html : 'คลิ๊กเพื่อเลือกคอร์ส'}"></v-select>
       </v-flex>
       <v-flex sm2 xs12>
-        <createCourse></createCourse>
+        <createCourse v-model="editLes"></createCourse>
       </v-flex>
     </v-layout>
     <span v-for="(course,index) in loadCourse" :key="course" >
@@ -138,11 +138,11 @@ export default {
    created() {
     //this.editLes = editData
     //do something after creating vue instance
-    this.editLes = this.courseData
-    console.log("Created");
-    console.log("editLes2: " + JSON.stringify(this.editLes));
-    console.log("courseData:2 " + JSON.stringify(this.courseData));
-    this.courseSelect  = this.courseList
+
+    console.log("Created  this.courseData: " + this.courseData);
+
+      this.courseSelect  = this.courseList
+        this.editLes = this.courseData
 
     // let arrayItem = []
     //   this.loadLesson.forEach((val,index)=>{
@@ -167,13 +167,8 @@ export default {
     //   console.log("arrayItem.length: " + Object.keys(arrayItem).length);
     //   console.log("this.currentItem: " + this.currentItem);
 
-
-
-
-
   },
   data: () => ({
-
 
     edit : false,
     editorOption: {
@@ -260,43 +255,7 @@ export default {
     //do something after mounting vue instance
 
 
-    if(this.loadCourse == '' || this.loadLesson == ''){
-      console.log("load data from firebase");
-      let les = [];
-      let allData = [];
-      axios.get('https://salon-b177d.firebaseio.com/courses.json')
-      .then((res)=>{
-        let result = res.data;
-        let arrayData = [];
-          for(let key in result){
-            result[key].key = key
-            result[key].edit = false
-            arrayData.push(result[key])
-          }
-          this.editLes = arrayData
-          this.$store.commit('setCourse',arrayData)
-          //console.log("arrayData.length: " + arrayData.length);
 
-          arrayData = []
-        //  console.log("course[key]: " + JSON.stringify(arrayData));
-
-        })
-        axios.get('https://salon-b177d.firebaseio.com/lessons.json')
-        .then((res)=>{
-            let result = res.data;
-            let arrayData = [];
-            for(let key in result){
-              result[key].key = key
-              arrayData.push(result[key])
-            }
-            this.$store.commit('setLesson',arrayData)
-            arrayData = []
-          //  console.log("lessons[key]: " + JSON.stringify(arrayData));
-
-          })
-        }else{
-          console.log("load data from store");
-        }
 
 
   },

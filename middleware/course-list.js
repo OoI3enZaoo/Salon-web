@@ -6,7 +6,7 @@ export default function ({store,isServer,req}){
       .then(res=>{
         let result = res.data
         for(let mName in result){
-            store.commit('addCourseList',result[mName].name)
+            
             console.log("result[mName].name: " + result[mName].name);
             console.log("store.state.courseLIst: " + store.getters.courseList);
         }

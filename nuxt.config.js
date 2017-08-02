@@ -17,7 +17,7 @@ module.exports = {
   //   }
   // },
   router: {
-    middleware: 'course-list'
+    middleware: 'load-data'
   },
   generate :{
     routes: [

@@ -31,7 +31,7 @@
                 </div>
 
 
-          
+
             <quil v-model="course.description"></quil>
 
 
@@ -79,8 +79,13 @@ import Base64Upload from 'vue-base64-upload'
 import axios from 'axios'
 import {mapActions} from 'vuex'
 export default {
+  props:['value'],
   components: {
    Base64Upload,quil
+  },
+  mounted() {
+    //do something after creating vue instance
+    console.log("showValue: " + this.showValue);
   },
   data() {
     return {
@@ -112,6 +117,8 @@ export default {
       this.dialog = false
       console.log("coursename: " + this.course.name);
       this.$store.commit('addCourseList',this.course.name)
+
+
         //adminRef.push(this.course)
     },
     removeItem(item){
@@ -137,7 +144,9 @@ export default {
      && this.course.snippet !== ''
      && this.course.description !== ''
      && this.course.cover !== ''
-
+   },
+   showValue(){
+     return this.value
    }
  }
 

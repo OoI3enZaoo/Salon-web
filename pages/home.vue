@@ -12,7 +12,7 @@
               <h5 class="white--text" style="display:inline;"><b>200</b></h5><br>
             </div>
             <div class="text-xs-center">
-              <p class="white--text" style="display:inline;">รายได้เดือนนี้</p>
+              <p class="white--text" style="display:inline;">รายได้วันนีั</p>
             </div>
           </v-card-text>
         </v-card>
