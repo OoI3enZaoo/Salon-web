@@ -17,8 +17,6 @@ export default function ({store,isServer,req}){
                 }
                 store.commit('setCourse',arrayData)
                 })
-
-
                 axios.get('https://salon-b177d.firebaseio.com/lessons.json')
                 .then((res)=>{
                     let result = res.data;

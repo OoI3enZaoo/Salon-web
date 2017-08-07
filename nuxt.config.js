@@ -16,9 +16,7 @@ module.exports = {
   //     .catch(callback)
   //   }
   // },
-  router: {
-    middleware: 'load-data'
-  },
+
   generate :{
     routes: [
       '/USERS/1',

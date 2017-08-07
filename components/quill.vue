@@ -49,7 +49,6 @@ methods: {
       this.$emit('input', value)
     },
     increase(){
-
     //  console.log("this.num: " + this.num);
         this.$emit('input', '5555')
     }

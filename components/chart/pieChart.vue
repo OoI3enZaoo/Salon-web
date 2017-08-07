@@ -1,16 +1,75 @@
 <template>
+<div >
+  <div id="chartdiv">
 
-<div id="chartdiv"></div>
+  </div>
+
+{{name}}
+</div>
+
 
 </template>
 <script>
+import axios from 'axios'
+  let purchase = [];
 export default {
-  name: "",
+
+async asyncData({store}){
+
+    // const {data} = await axios.get('https://salon-b177d.firebaseio.com/courses.json')
+    // const {data} = await axios.get('https://salon-b177d.firebaseio.com/purchase.json')
+
+    // .then(res=>{
+      // return data
+      // let result = res.data
+      //     for(let key in result){
+      //       console.log("result: " + JSON.stringify(result[key].name));
+      //       name.push(result[key].name)
+      //     }
+    // })
+    // await axios.get('https://salon-b177d.firebaseio.com/purchase.json')
+    // .then(res=>{
+    //     console.log("name: " + name);
+    // })
+
+
+},
+
   data (){
     return {
+
       }
     },
+    created() {
+
+        axios.get('https://salon-b177d.firebaseio.com/courses.json')
+        .then(res=>{
+          let result = res.data
+              for(let key in result){
+                console.log("result: " + JSON.stringify(result[key].name));
+                let mName = result[key].name
+                axios.get('https://salon-b177d.firebaseio.com/purchase.json')
+                .then(res2 =>{
+                  let result2 = res2.data
+                  let count = 0;
+                    for(let key2 in result2){
+                      if(result2[key2].courseId == key){
+                          count++
+                      }
+                    }
+                    purchase.push({name : mName , sold: count})
+                })
+
+              }
+        })
+          // for(let key2 in data2){
+          //   console.log("key2: " + data2[key2].courseId);
+          // }
+        //console.log("data1: " + JSON.stringify(data));
+        //console.log("data2: " + data2);
+    },
   mounted() {
+      console.log("purchase:  " + JSON.stringify(purchase));
     //do something after mounting vue instance
     AmCharts.makeChart( "chartdiv", {
     "type": "pie",

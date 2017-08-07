@@ -130,12 +130,12 @@
 </template>
 <script>
 
+import axios from 'axios'
 import loadData from '~components/loadData'
 
 //5555
 export default {
-  //middleware : 'authenticated',
-
+  middleware : 'load-data',
   components: {
     loadData
   },
