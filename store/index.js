@@ -96,6 +96,11 @@ export const actions = {
           data.key = key2;
           console.log("datatata : " + JSON.stringify(data));
           commit('addCourse',data)
+          axios.put('https://salon-b177d.firebaseio.com/courses/' + data.key + '.json',data)
+          .then(res =>{
+            console.log("res: " + JSON.stringify(res))
+          })
+
           //commit('addCourseList',this.course.name)
       })
       .catch((error) =>{

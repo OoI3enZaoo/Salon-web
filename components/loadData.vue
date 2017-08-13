@@ -135,14 +135,15 @@ import {mapGetters,mapActions} from 'vuex'
 import quil from './quill.vue'
 
 export default {
+
    created() {
     //this.editLes = editData
     //do something after creating vue instance
 
     console.log("Created  this.courseData: " + this.courseData);
 
-      this.courseSelect  = this.courseList
-        this.editLes = this.courseData
+    this.courseSelect  = this.courseList
+      this.editLes = this.courseData
 
     // let arrayItem = []
     //   this.loadLesson.forEach((val,index)=>{
@@ -189,14 +190,14 @@ export default {
   components: {
     createCourse,quil,createLesson
   },
-  watch : {
-    page(){
-      console.log("page: " + this.page);
-      this.loadLesson = this.currentItem[this.page-1]
-      //console.log("loadLesson: " + JSON.stringify(this.loadLesson.slice(1).slice(-5)  )  );
-      console.log("this.currentItem[this.page]: " + JSON.stringify(this.currentItem[this.page-1]));
-    }
-  },
+  // watch : {
+  //   page(){
+  //     console.log("page: " + this.page);
+  //     this.loadLesson = this.currentItem[this.page-1]
+  //     //console.log("loadLesson: " + JSON.stringify(this.loadLesson.slice(1).slice(-5)  )  );
+  //     console.log("this.currentItem[this.page]: " + JSON.stringify(this.currentItem[this.page-1]));
+  //   }
+  // },
   methods: {
     Add(key) {
       console.log("item: " + key);
@@ -258,6 +259,19 @@ export default {
 
 
 
+  },
+  watch: {
+    courseList : function(val)  {
+      console.log('val: ' + val);
+        if(val !== '') {
+          console.log("not null");
+          this.courseSelect  = this.courseList
+            this.editLes = this.courseData
+        }
+        else {
+          console.log('null');
+        }
+    }
   },
   computed:{
     ...mapGetters([
