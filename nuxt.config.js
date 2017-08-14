@@ -58,7 +58,15 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#3B8070' },
-
+  manifest: {
+      name: 'Salon',
+      description: 'Salon Manage System',
+      theme_color: '#188269'
+    },
+    modules: [
+      '@nuxtjs/pwa',
+      '@nuxtjs/component-cache'
+    ],
   // generate: {
   //   routes (callback) {
   //     const posts = require('static/post.json')
