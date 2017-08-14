@@ -3,60 +3,10 @@
 
   <v-container fluid>
     <v-layout row wrap>
-        </v-card>
-      <v-flex xs6 sm3>
-        <v-card class="light-green white--text">
-          <v-card-text>
-            <div class="text-xs-center">
-              <v-icon x-large dark>attach_money</v-icon>
-              <h5 class="white--text" style="display:inline;"><b>200</b></h5><br>
-            </div>
-            <div class="text-xs-center">
-              <p class="white--text" style="display:inline;">รายได้วันนีั</p>
-            </div>
-          </v-card-text>
-        </v-card>
-        <br>
-      </v-flex>
-      <v-flex xs6 sm3>
-        <v-card class="deep-orange white--text">
-          <v-card-text>
-            <div class="text-xs-center">
-              <v-icon x-large dark>attach_money</v-icon>
-              <h5 class="white--text" style="display:inline;"><b>1520</b></h5><br>
-            </div>
-            <div class="text-xs-center">
-              <p class="white--text" style="display:inline;">รายได้อาทิตย์ที่ผ่านมา</p>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-      <v-flex xs6 sm3>
-        <v-card class="amber white--text">
-          <v-card-text>
-            <div class="text-xs-center">
-              <v-icon x-large dark>attach_money</v-icon>
-              <h5 class="white--text" style="display:inline;"><b>6430</b></h5><br>
-            </div>
-            <div class="text-xs-center">
-              <p class="white--text" style="display:inline;">รายได้เดือนที่ผ่านมา</p>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-      <v-flex xs6 sm3>
-        <v-card class="purple white--text">
-          <v-card-text>
-            <div class="text-xs-center">
-              <v-icon x-large dark>attach_money</v-icon>
-              <h5 class="white--text" style="display:inline;"><b>43355</b></h5><br>
-            </div>
-            <div class="text-xs-center">
-              <p class="white--text" style="display:inline;">รายได้รวมทั้งหมด</p>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-flex>
+      <boxPrice icon="attach_money" text="รายได้วันนีั" price="200" bgColor="light-green" ></boxPrice>
+      <boxPrice icon="attach_money" text="รายได้อาทิตย์ที่ผ่านมา" price="1520" bgColor="deep-orange" ></boxPrice>
+      <boxPrice icon="attach_money" text="รายได้เดือนที่ผ่านมา" price="6430" bgColor="amber" ></boxPrice>
+      <boxPrice icon="attach_money" text="รายได้รวมทั้งหมด" price="43355" bgColor="purple" ></boxPrice>
     </v-layout>
     <br>
     <v-layout row>
@@ -124,7 +74,7 @@
 </template>
 <script>
 
-
+import boxPrice from '../components/boxPrice.vue'
 import pieChart from '../components/chart/pieChart.vue'
 import lineGraph from '../components/chart/lineGraph.vue'
 import mem from '../components/mem.vue'
@@ -145,7 +95,8 @@ export default {
   components: {
     'pieChart': pieChart,
     'lineGraph': lineGraph,
-    'mem': mem
+    'mem': mem,
+    boxPrice
   },
   data() {
     return {

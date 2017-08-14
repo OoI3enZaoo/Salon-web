@@ -16,32 +16,9 @@ module.exports = {
   //     .catch(callback)
   //   }
   // },
-
-  generate :{
-    routes: [
-      '/USERS/1',
-      '/USERS/2',
-      '/USERS/3',
-      '/USERS/4',
-      '/USERS/5',
-      '/USERS/6',
-      '/USERS/7'
-    ]
-  },
-
-
-
   head: {
     title: 'starter',
-    script: [
-      { src: 'https://www.amcharts.com/lib/3/amcharts.js' },
-      { src: 'https://www.amcharts.com/lib/3/serial.js' },
-        { src: 'https://www.amcharts.com/lib/3/plugins/export/export.min.js' },
-        { src : 'https://www.amcharts.com/lib/3/themes/light.js'},
-        {src : 'https://www.amcharts.com/lib/3/pie.js'},
-        {src : 'https://www.amcharts.com/lib/3/xy.js'}
-
-    ],
+    script: [],
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -50,7 +27,6 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://www.amcharts.com/lib/3/plugins/export/export.css' }
 
     ]
   },
@@ -59,9 +35,9 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   manifest: {
-      name: 'Salon',
+      name: 'Salon System',
       description: 'Salon Manage System',
-      theme_color: '#188269'
+      theme_color: '#2196F3'
     },
     modules: [
       '@nuxtjs/pwa',
@@ -83,6 +59,9 @@ module.exports = {
   },
   plugins: ['~plugins/vuetify.js'],
   css: [
-    { src: '~assets/style/app.styl', lang: 'styl' }
+    { src: '~assets/style/app.styl', lang: 'styl' },
+    'quill/dist/quill.snow.css',
+  	'quill/dist/quill.bubble.css',
+  	'quill/dist/quill.core.css'
   ]
 }

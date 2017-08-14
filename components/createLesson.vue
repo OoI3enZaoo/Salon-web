@@ -3,7 +3,7 @@
   <v-layout row justify-center>
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay="false">
 
-      
+
 
 
       <form @submit.prevent="Add">
@@ -77,13 +77,13 @@
 
  import quil from './quill.vue'
 
-import Base64Upload from 'vue-base64-upload'
+// import Base64Upload from 'vue-base64-upload'
 import axios from 'axios'
 import {mapActions} from 'vuex'
 export default {
   props: ['value'],
   components: {
-   Base64Upload,quil
+   quil
   },
   data() {
     return {

@@ -33,6 +33,7 @@
     "stylus-loader": "^3.0.1",
     "vue-axios": "^2.0.2",
     "vue-base64-upload": "^1.0.1",
+    "vue-echarts-v3": "^1.0.4",
     "vue-notifyjs": "^0.1.7",
     "vue-quill-editor": "^2.2.6",
     "vue-server-renderer": "latest",
