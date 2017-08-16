@@ -5,6 +5,7 @@ import VueAxios from 'vue-axios'
 import VueFire from 'vuefire'
 import { ImageImport } from '../modules/ImageImport'
  import { ImageResize } from '../modules/ImageResize'
+import VueSocketio from 'vue-socket.io'
 if (process.BROWSER_BUILD) {
   const VueQuillEditor = require('vue-quill-editor/ssr')
   Quill.register('modules/imageImport', ImageImport)
@@ -13,4 +14,5 @@ if (process.BROWSER_BUILD) {
   Vue.use(VueFire)
   Vue.use(VueAxios, axios)
   Vue.use(Vuetify)
+  Vue.use(VueSocketio, 'http://localhost:3000/')
 }

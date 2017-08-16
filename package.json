@@ -37,6 +37,7 @@
     "vue-notifyjs": "^0.1.7",
     "vue-quill-editor": "^2.2.6",
     "vue-server-renderer": "latest",
+    "vue-socket.io": "^2.1.1-a",
     "vue-toastr": "^2.0.8",
     "vue2-simplert": "^0.5.2",
     "vuefire": "^1.4.3",

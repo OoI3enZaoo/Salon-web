@@ -103,31 +103,19 @@
   </v-card>
 </div>
 
-
-
-
-
-
-
-  <!-- <v-card >
-
-    <v-text-field
-   label="พิมพ์ข้อความ"
-   single-line
-
-   light
-   hide-details
-   full-width
-  ></v-text-field>
-  </v-card> -->
-
-
-
 </div>
 </template>
 <script>
 import chat from '../components/chat'
 export default {
+  sockets:{
+    connect: function(){
+      console.log('socket connected')
+    },
+    customEmit: function(val){
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   fetch ({store}) {
    store.commit('setPage', "การติดต่อสื่อสาร")
   },
@@ -141,13 +129,20 @@ export default {
   },
   mounted() {
     //do something after mounting vue instance
+    this.$options.sockets.admin = (data) => {
+      data.message += ' data from admin'
+        console.log(data)
+
+      this.$socket.emit('toUser',data)
+      // this.message.push(data)
+    }
     if(JSON.parse(localStorage.getItem("isLogin")) == false){
     this.$store.commit('islogin',false)
     this.$router.push('/')
     }else{
       this.$store.commit('islogin',true)
       this.$router.push('/message')
-  }
+    }
   }
 }
 </script>
