@@ -15,4 +15,5 @@ if (process.BROWSER_BUILD) {
   Vue.use(VueAxios, axios)
   Vue.use(Vuetify)
   Vue.use(VueSocketio, 'https://agile-citadel-43436.herokuapp.com/')
+  
 }

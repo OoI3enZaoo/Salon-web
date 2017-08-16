@@ -1,19 +1,5 @@
 <template>
 <div>
-  <!-- <v-tabs-bar slot="activators" class="elevation-5 accent" dense standalone fixed-footer>
-      <span class="white--text">นายนานา (เจ้าของร้านทำผม)
-        <v-icon medium style="cursor:pointer">info_outline</v-icon>
-
-
-        <v-icon medium style="cursor:pointer">notifications_off</v-icon>
-
-
-        <v-icon medium style="cursor:pointer" class ="pr-5">delete</v-icon>
-      </span>
-      </v-tabs-bar>
-
-       -->
-
 
        <v-navigation-drawer  v-model="slideNavRight"  persistent  height="100%" right>
                <v-text-field
@@ -25,17 +11,17 @@
               full-width
              ></v-text-field>
                  <v-list two-line>
-                           <template>
-                             <v-list-tile avatar>
+                           <template v-for="data in userChat" >
+                             <v-list-tile avatar @click.native="setChat(data)">
                                <v-list-tile-avatar>
-                                 <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png"></v-list-tile-avatar>
+                                 <img :src="data.image"></v-list-tile-avatar>
                                </v-list-tile-avatar>
                                <v-list-tile-content>
-                                 <v-list-tile-title >Brunch this weekend?</v-list-tile-title>
-                                 <v-list-tile-sub-title><span class='grey--text text--darken-2'>Ali Connors</span> — I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</v-list-tile-sub-title>
+                                 <v-list-tile-title >{{data.name}}</v-list-tile-title>
+                                 <v-list-tile-sub-title>{{data.message}}</v-list-tile-sub-title>
                                </v-list-tile-content>
                                <v-list-tile-action>
-                                  <v-list-tile-action-text>15 นาที</v-list-tile-action-text>
+                                  <v-list-tile-action-text>{{data.tstamp}}ี</v-list-tile-action-text>
                                 </v-list-tile-action>
                              </v-list-tile>
                                <v-divider :inset ="true"></v-divider>
@@ -44,17 +30,14 @@
 
              </v-navigation-drawer>
 
-  <v-toolbar class="white" dense standalone fixed-footer>
+  <v-toolbar class="white" dense standalone fixed-footer v-if="currentChat">
     <v-toolbar-title>
-
       <v-layout row>
         <v-flex xs3>
-          <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png" width="30" height="30" class="mt-3">
-
+          <img :src="currentChat.image" width="30" height="30" class="mt-3">
         </v-flex>
         <v-flex xs12 class ="mt-3">
-
-        <p class="grey--text" >นายนานา</p>
+        <p class="grey--text" >&nbsp;&nbsp; {{currentChat.name}}</p>
         </v-flex>
 
       </v-layout>
@@ -75,33 +58,53 @@
   </v-toolbar>
 
 
+<template v-if="currentChat">
     <div class="mainn flex parent">
     <div class = "sectionn">
-      <template>
-          <v-list subheader>
-        <v-list-tile avatar>
-          <v-list-tile-avatar>
-            <img src="https://cdn.pixabay.com/photo/2016/11/08/15/21/user-1808597_960_720.png"></v-list-tile-avatar>
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-sub-title><span class='grey--text text--darken-2'>สวัสดีครับผม</span> </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-</v-list>
-      </template>
-
-
+            <v-list subheader v-for="(chat,index) in chatMessage" :key="index">
+                  <template v-if="currentChat.room == chat.room">
+                      <v-list-tile avatar>
+                        <v-list-tile-avatar>
+                            <img :src="chat.image">
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-sub-title><span class='grey--text text--darken-2'>{{chat.message}}</span> </v-list-tile-sub-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                  </template>
+            </v-list>
     </div>
-    <v-card>
-    <v-text-field
-   label="พิมพ์ข้อความ"
-   single-line
-   light
-   hide-details
-   full-width
+  </div>
+  <v-card>
+  <v-text-field
+  label="พิมพ์ข้อความ"
+  single-line
+  light
+  hide-details
+  full-width
+  @keyup.enter.native="sendMessage($event.target.value)"
+
   ></v-text-field>
   </v-card>
+</template>
+<template v-else>
+  <div class="text-xs-center">
+    <br><br>
+    <h3>ลองคุยกับใครสักคนไหม</h3>
+    <br>
+    <v-btn primary @click.native.stop="slideNavRight=true">เริ่มเลย</v-btn>
+  </div>
+</template>
+
+
+
+
+
 </div>
+<!-- <div class="text-xs-center" v-else>
+  <br>
+  <h3>เลือกคุยกับใครสักคนสิ</h3>
+</div> -->
 
 </div>
 </template>
@@ -121,7 +124,16 @@ export default {
   },
   data() {
     return {
-      slideNavRight: true,
+      slideNavRight: false,
+      userChat: [
+        {"room":"fdgsdfdsf","message":"สวัสดีครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Ben","type":"user"},
+        {"room":"-KrZTk-lCaBVZI2FH1d7","message":"แอดมินครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Max","type":"user"},
+        {"room":"bebeb","message":"มีอะไรจะปรึกษา","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Loft","type":"user"},
+        {"room":"sdfsdfdsf","message":"สอบถามหน่อย","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Au","type":"user"},
+        {"room":"asdsese","message":"ครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Peet","type":"user"}
+      ],
+      currentChat: false,
+      chatMessage: []
     }
   },
   components: {
@@ -130,11 +142,26 @@ export default {
   mounted() {
     //do something after mounting vue instance
     this.$options.sockets.admin = (data) => {
-      data.message += ' data from admin'
-        console.log(data)
+      console.log("data: " + JSON.stringify(data))
+      let check = 0
+      for (let i =0; i< this.userChat.length; i++) {
+        if(this.userChat[i].room == data.room) {
+          console.log('user.room: ' + this.userChat[i].room + ' data.room: ' + data.room);
+          console.log('true: inde: ' + i);
+           this.userChat.splice(i,1)
+           this.userChat.unshift(data)
+          check = 1
+          break;
+        }
+        else {
+          console.log('false')
+        }
+      }
+      if(check == 0){
+        this.userChat.unshift(data)
+      }
+      this.chatMessage.push(data)
 
-      this.$socket.emit('toUser',data)
-      // this.message.push(data)
     }
     if(JSON.parse(localStorage.getItem("isLogin")) == false){
     this.$store.commit('islogin',false)
@@ -142,6 +169,19 @@ export default {
     }else{
       this.$store.commit('islogin',true)
       this.$router.push('/message')
+    }
+  },
+  methods: {
+    setChat (val) {
+      console.log('test: ' + val);
+      this.currentChat = val
+    },
+    sendMessage (val) {
+      console.log('val: ' +val + ' currentChat: ' + this.currentChat.room)
+        let data = {room: this.currentChat.room, message:val, tstamp: '16/08/2017 17:15:00', image: "https://upload.wikimedia.org/wikipedia/commons/9/96/User_icon-cp.png", "name": "Admin", "type": "admin"}
+        console.log("data: " + JSON.stringify(data))
+        this.chatMessage.push(data)
+        this.$socket.emit('toUser',data)
     }
   }
 }
