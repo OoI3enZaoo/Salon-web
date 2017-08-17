@@ -245,7 +245,9 @@ export default {
     RemoveC(name,key){
       console.log("key: " + key);
       console.log("name: " +name);
-        this.removeCourse({id: key , name: name})
+      this.removeCourse({id: key , name: name})
+      this.$socket.emit('removeCourse',key)
+
     },
     loadEditCourse(index){
         return this.editLes[index]

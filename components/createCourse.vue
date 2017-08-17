@@ -82,7 +82,7 @@ export default {
   props:['value'],
   components: {
    Base64Upload,quil
-  },
+ },
   mounted() {
     //do something after creating vue instance
     console.log("showValue: " + this.showValue);
@@ -107,17 +107,17 @@ export default {
            }
            }
          }
-
     }
   },
   methods :{
     Add(){
+
       console.log("addCourse: " + this.course);
+      this.course.key = ''
       this.addCourse(this.course)
       this.dialog = false
       console.log("coursename: " + this.course.name);
       this.$store.commit('addCourseList',this.course.name)
-
 
         //adminRef.push(this.course)
     },

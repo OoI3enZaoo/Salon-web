@@ -9,7 +9,8 @@ export const state = () => ({
   lessonsData : [],
   currentCourse : {},
   currentLesson : {},
-  courseList : []
+  courseList : [],
+  checkAddData: [false,'']
 })
 
 export const getters  =  {
@@ -19,7 +20,8 @@ export const getters  =  {
   courseData : (state) => state.courseData,
   lessonsData : (state) => state.lessonsData,
   currentLesson : (state) => state.currentLesson,
-  courseList : (state) => state.courseList
+  courseList : (state) => state.courseList,
+  checkAddData: (state) => state.checkAddData
 }
 export const mutations  =  {
   islogin :(state,status) => state.islogin = status,
@@ -34,7 +36,8 @@ export const mutations  =  {
   editCourse : (state,data) =>state.courseData.filter(res => data.key === res.key ? res = data : ''),
   addCourse : (state,data) => state.courseData.push(data),
   addCourseList : (state,data)=> state.courseList.push(data),
-  setCourseList : (state,data)=> state.courseList = data
+  setCourseList : (state,data)=> state.courseList = data,
+  checkAddData: (state,data) => state.checkAddData = data
 }
 export const actions = {
   removeLesson({commit,state},id){
@@ -43,7 +46,6 @@ export const actions = {
       console.log("deleted data of firebase: " + JSON.stringify(res));
         let a = state.lessonsData.filter(data => data.key !==id);
         commit('setLesson',a)
-
     })
      //console.log('id: ' + id + " state num: " + state.number);
     //state.lessonsData.filter((data,i) => data.courseId == id ? console.log("found") : console.log("not found"));
@@ -96,9 +98,9 @@ export const actions = {
           data.key = key2;
           console.log("datatata : " + JSON.stringify(data));
           commit('addCourse',data)
-          axios.put('https://salon-b177d.firebaseio.com/courses/' + data.key + '.json',data)
-          .then(res =>{
-            console.log("res: " + JSON.stringify(res))
+          commit('checkAddData',[true,data])
+          axios.patch('https://salon-b177d.firebaseio.com/courses/' + key2 + '.json',{key: key2})
+          .then(res2 =>{
           })
 
           //commit('addCourseList',this.course.name)
@@ -120,8 +122,5 @@ export const actions = {
 
       console.log("a.name: " + a);
     })
-
   }
-
-
 }

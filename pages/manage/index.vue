@@ -136,6 +136,14 @@ import loadData from '~components/loadData'
 //5555
 export default {
   middleware : 'load-data',
+  sockets:{
+    connect: function(){
+      console.log('socket connected')
+    },
+    customEmit: function(val){
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   components: {
     loadData
   },
@@ -144,10 +152,10 @@ export default {
   }) {
     store.commit('setPage', "การจัดการ")
   },
-
   data() {
     return {
       pagination: {},
+      namena: 'benben',
       testCouses: [{
           img: "https://camo.mybb.com/e01de90be6012adc1b1701dba899491a9348ae79/687474703a2f2f7777772e6a71756572797363726970742e6e65742f696d616765732f53696d706c6573742d526573706f6e736976652d6a51756572792d496d6167652d4c69676874626f782d506c7567696e2d73696d706c652d6c69676874626f782e6a7067",
           title: "เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ"
@@ -181,15 +189,23 @@ export default {
           title: "เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ"
         }
       ],
-
       cousesItem : [''],
       lessonsItem : ['']
-
-
     }
   },
+  watch: {
+    checkData : {
+        handler: function(val) {
+          this.$socket.emit('addNewCourse', val[1])
+      }
+    }
+  },
+  computed: {
+      checkData () {
+        return this.$store.getters.checkAddData
+      }
+  },
   beforeMount() {
-
     //do something after mounting vue instance
     if (JSON.parse(localStorage.getItem("isLogin")) == false) {
       this.$store.commit('islogin', false)
