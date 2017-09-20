@@ -94,6 +94,7 @@ export default {
     mParams = params.title;
     store.commit('setPage','เรียนรู้การเป็นเจ้าของร้านแบบมืออาชีพ')
     store.commit('setCurrentLesson',mParams)
+    console.log('params.title: ' + params.title + ' params.course: ' + params.course);
     //  const filter =  store.state.lesson.filter(data => params.title == data.key ? data : undefined)
         //console.log("filters: " + filter);
         // if(filter == ''){

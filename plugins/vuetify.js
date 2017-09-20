@@ -14,8 +14,8 @@ if (process.BROWSER_BUILD) {
   Vue.use(VueQuillEditor)
   Vue.use(VueFire)
   Vue.use(VueAxios, axios)
-  Vue.use(Vuetify)
+
   Vue.use(VueSocketio, 'https://agile-citadel-43436.herokuapp.com/')
   // Vue.use(VueSocketio, 'http://localhost:3000/',store)
-
 }
+  Vue.use(Vuetify)

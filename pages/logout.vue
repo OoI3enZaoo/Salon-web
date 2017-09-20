@@ -12,8 +12,6 @@ export default {
   },
   beforeCreate() {
     //do something after mounting vue instance
-
-     localStorage.setItem('isLogin',false)
     this.$router.push('/')
 
 

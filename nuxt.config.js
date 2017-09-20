@@ -1,38 +1,31 @@
-const axios = require('axios')
 module.exports = {
   /*
   ** Headers of the page
   */
-
-  // generate :{
-  //   routes(callback){
-  //     const posts = axios.get("https://jsonplaceholder.typicode.com/users")
-  //     .then((res) =>{
-  //       let routes = res.data.map((uid) => {
-  //          return '/users/' + uid.id
-  //       })
-  //       callback(null, routes)
-  //     })
-  //     .catch(callback)
-  //   }
-  // },
+  mode: 'spa',
+  router: {
+    middleware: 'checkLogin'
+  },
   head: {
-    title: 'starter',
-    script: [],
+    title: 'salon',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { hid: 'description', name: 'description', content: 'Nuxt.js + Vuetify.js project' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' },
-
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
+  plugins: ['~/plugins/vuetify.js'],
+  css: [
+    '~/assets/style/app.styl'
+  ],
   /*
   ** Customize the progress-bar color
   */
+
   loading: { color: '#3B8070' },
   manifest: {
       name: 'Salon System',
@@ -43,25 +36,24 @@ module.exports = {
       '@nuxtjs/pwa',
       '@nuxtjs/component-cache'
     ],
-  // generate: {
-  //   routes (callback) {
-  //     const posts = require('static/post.json')
-  //     let routes = posts.map(post => `users/${post.id}`)
-  //     callback(null, routes)
-  //   }
-  // },
-
   /*
   ** Build configuration
   */
   build: {
-    vendor: ['vuetify','vue-quill-editor/ssr','axios']
-  },
-  plugins: ['~plugins/vuetify.js'],
-  css: [
-    { src: '~assets/style/app.styl', lang: 'styl' },
-    'quill/dist/quill.snow.css',
-  	'quill/dist/quill.bubble.css',
-  	'quill/dist/quill.core.css'
-  ]
+    vendor: ['vuetify','vue-quill-editor/ssr','axios'],
+    extractCSS: true
+    /*
+    ** Run ESLINT on save
+    */
+    /*extend (config, ctx) {
+      if (ctx.dev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    }*/
+  }
 }

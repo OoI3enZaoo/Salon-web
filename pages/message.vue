@@ -59,22 +59,21 @@
 
 
 <template v-if="currentChat">
-    <div class="mainn flex parent">
-    <div class = "sectionn">
-            <v-list subheader v-for="(chat,index) in chatMessage" :key="index">
+    <div id="container" style="height:80vh; background-color:white; overflow:scroll; overflow-x:hidden;" >
+            <v-list two-line subheader v-for="(chat,index) in chatMessage" :key="index">
                   <template v-if="currentChat.room == chat.room">
                       <v-list-tile avatar>
                         <v-list-tile-avatar>
                             <img :src="chat.image">
                         </v-list-tile-avatar>
                         <v-list-tile-content>
-                            <v-list-tile-sub-title><span class='grey--text text--darken-2'>{{chat.message}}</span> </v-list-tile-sub-title>
+                            <v-list-tile-title>{{chat.name}} &nbsp;&nbsp; <span class="grey--text">{{chat.tstamp}}</span> </v-list-tile-title>
+                            <v-list-tile-sub-title>{{chat.message}}</v-list-tile-sub-title>
                         </v-list-tile-content>
                       </v-list-tile>
                   </template>
             </v-list>
     </div>
-  </div>
   <v-card>
   <v-text-field
   label="พิมพ์ข้อความ"
@@ -161,14 +160,9 @@ export default {
         this.userChat.unshift(data)
       }
       this.chatMessage.push(data)
-
-    }
-    if(JSON.parse(localStorage.getItem("isLogin")) == false){
-    this.$store.commit('islogin',false)
-    this.$router.push('/')
-    }else{
-      this.$store.commit('islogin',true)
-      this.$router.push('/message')
+      setInterval(() => {
+        this.scrollToEnd()
+      }, 1)
     }
   },
   methods: {
@@ -182,35 +176,17 @@ export default {
         console.log("data: " + JSON.stringify(data))
         this.chatMessage.push(data)
         this.$socket.emit('toUser',data)
+    },
+    scrollToEnd () {
+      var container = this.$el.querySelector('#container')
+      container.scrollTop = container.scrollHeight
     }
   }
 }
 </script>
 <style>
-.mainn{
-width: 100%;
-height: 600px;
-max-height: 800px;
-display: flex;
-flex-flow: column nowrap;
-}
 
-.sectionn{
-width: 100%;
-overflow-y: scroll;
-flex: 1 auto;
-height: 100%;
-}
 
-.inputt{
-width: 100%;
-flex: 0 0 auto;
-background-color: green;
-}
 
-.textareaa{
-width: 100%;
-max-width: 100%;
-}
 
 </style>

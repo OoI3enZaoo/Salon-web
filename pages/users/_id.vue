@@ -6,14 +6,13 @@
 
 
   <div class="text-xs-center">
-              <img src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg" height="200" alt="รูป">
+              <img :src="user[0].image" height="200" alt="รูป">
 </div>
 
 
               <div class="text-xs-center">
             <br>
-            <h4 style="display:inline"><b>{{ name }}</b></h4>
-            <h5 >คอร์สเจ้าขอร้าน/ช่างตัดผม</h5>
+            <h5 style="display:inline"><b>{{ user[0].fname }} {{ user[0].lname }}</b></h5>
             <v-divider ></v-divider>
             <br>
 
@@ -23,12 +22,14 @@
                   <h6><b>ที่อยู่</b></h6><br>
                   <h6><b>อีเมล</b></h6><br>
                   <h6><b>เบอร์โทรศัพท์</b></h6><br>
+                  <h6><b>เป็นสมาชิกเมื่อ</b></h6><br>
                   </v-flex>
                   <v-flex xs6 sm6>
-                     <h6>{{ id }}</h6><br>
-                     <h6>{{ address.street}}</h6><br>
-                      <h6>{{ email}}</h6><br>
-                      <h6>{{ phone}}</h6><br>
+                     <h6>{{ user[0].birthday }}</h6><br>
+                     <h6>{{ user[0].address}}</h6><br>
+                      <h6>{{ user[0].email}}</h6><br>
+                      <h6>{{ user[0].phone}}</h6><br>
+                      <h6>{{ user[0].tstamp}}</h6><br>
                           </v-flex>
               </v-layout>
               </div>
@@ -161,7 +162,7 @@
         </v-container>
       </v-list> -->
 
-      
+
       <!-- <v-divider></v-divider>
       <v-list three-line subheader>
         <v-subheader>ตั้งค่า</v-subheader>
@@ -195,12 +196,12 @@
 
       </v-list> -->
 
-
        </v-container>
   </div>
 </template>
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 export default {
   fetch({store}){
     store.commit('setPage',"นายนานา มานา (เจ้าของร้านทำผม)")
@@ -213,82 +214,11 @@ export default {
        error({ message: 'User not found', statusCode: 404 })
      }
    },
-   mounted() {
-     //do something after mounting vue instance
-     let a = AmCharts.makeChart("chartdiv", {
-      "type": "serial",
-      "theme": "light",
-      "dataProvider": [ {
-        "country": "มกราคม",
-        "visits": 2025
-      }, {
-        "country": "กุมภาพันธ์",
-        "visits": 1882
-      }, {
-        "country": "มีนาคม",
-        "visits": 1809
-      }, {
-        "country": "เมษายน",
-        "visits": 1322
-      }, {
-        "country": "พฤษภาคม",
-        "visits": 1122
-      }, {
-        "country": "มิถุนายน",
-        "visits": 1114
-      }, {
-        "country": "กรกฎาคม",
-        "visits": 984
-      }, {
-        "country": "สิงหาคม",
-        "visits": 711
-      }, {
-        "country": "กันยายน",
-        "visits": 665
-      }, {
-        "country": "ตุลาคม",
-        "visits": 580
-      }, {
-        "country": "พฤศจิกายน",
-        "visits": 443
-      }, {
-        "country": "ธันวาคม",
-        "visits": 441
-      }
-     ],
-      "valueAxes": [ {
-        "gridColor": "#FFFFFF",
-        "gridAlpha": 0.2,
-        "dashLength": 0
-      } ],
-      "gridAboveGraphs": true,
-      "startDuration": 1,
-      "graphs": [ {
-        "balloonText": "[[category]]: <b>[[value]]</b>",
-        "fillAlphas": 0.8,
-        "lineAlpha": 0.2,
-        "type": "column",
-        "valueField": "visits"
-      } ],
-      "chartCursor": {
-        "categoryBalloonEnabled": false,
-        "cursorAlpha": 0,
-        "zoomable": false
-      },
-      "categoryField": "country",
-      "categoryAxis": {
-        "gridPosition": "start",
-        "gridAlpha": 0,
-        "tickPosition": "start",
-        "tickLength": 20
-      },
-      "export": {
-        "enabled": true
-      }
-
-     } );
-     console.log("ID MOUNTED: " + a );
-
+   computed: {
+     ...mapGetters(['getUserFromId']),
+     user () {
+       return this.getUserFromId(this.$route.params.id)
+     }
    }
 }
 </script>

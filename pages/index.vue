@@ -1,7 +1,8 @@
 <template >
 <v-app style=" background-image:url('http://www.indietarot.com/wp-content/uploads/2014/07/indie-tarot-website-background2.jpg');  background-repeat: no-repeat;  background-size: cover; ">
 
-  <v-container >
+  <v-container>
+
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <div id="center">
@@ -36,20 +37,12 @@
 </template>
 <script>
 
-
 import {db} from '../util/firebase'
-
-
-
-
 let adminRef = db.ref('admin')
-
 export default {
   firebase :{
     adminRef
   },
-
-
   data: () => ({
     user: {
       username: '',
@@ -77,16 +70,16 @@ export default {
     //       this.$router.push('/')
     //   }
 
-    if(JSON.parse(localStorage.getItem("isLogin")) == false){
-      this.$store.commit('islogin',false)
-      this.$router.push('/')
-      console.log("INDEX.vue>> false");
-    }
-    else{
-      this.$store.commit('islogin',true)
-        this.$router.push('/home')
-        console.log("INDEX.vue>> TRUE");
-    }
+    // if(JSON.parse(localStorage.getItem("isLogin")) == false){
+    //   this.$store.commit('islogin',false)
+    //   this.$router.push('/')
+    //   console.log("INDEX.vue>> false");
+    // }
+    // else{
+    //   this.$store.commit('islogin',true)
+    //     this.$router.push('/home')
+    //     console.log("INDEX.vue>> TRUE");
+    // }
   },
   methods: {
     Login(){

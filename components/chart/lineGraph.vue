@@ -1,7 +1,6 @@
 <template>
   <div class="echarts">
     <IEcharts :option="bar" @ready="onReady" @click="onClick"></IEcharts>
-    <button @click="doRandom">Random</button>
   </div>
 </template>
 <script type="text/babel">

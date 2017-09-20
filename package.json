@@ -1,50 +1,43 @@
 {
-  "name": "f",
+  "name": "salon",
   "version": "1.0.0",
   "description": "Nuxt.js + Vuetify.js project",
   "author": "OoI3enZaoO <Teerapath-Ben@hotmail.com>",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "build-check": "nuxt build --analyze",
     "start": "nuxt start",
-    "generate": "nuxt generate",
-    "heroku-postbuild": "npm run build"
-  },
-  "config": {
-    "nuxt": {
-      "host": "0.0.0.0",
-      "port": "5000"
-    }
+    "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/component-cache": "^1.0.0",
-    "@nuxtjs/pwa": "^0.2.0",
+    "@nuxtjs/component-cache": "^1.1.0",
+    "@nuxtjs/pwa": "^0.2.1",
     "axios": "^0.16.2",
-    "firebase": "^4.1.5",
+    "firebase": "^4.3.1",
     "js-cookie": "^2.1.4",
-    "jwt-decode": "^2.2.0",
     "node-sass": "^4.5.3",
-    "nuxt": "1.0.0-alpha.5",
-    "particles.js": "^2.0.0",
+    "nuxt": "^1.0.0-rc6",
     "promise-polyfill": "^6.0.2",
     "sass-loader": "^6.0.6",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
     "vue-axios": "^2.0.2",
     "vue-base64-upload": "^1.0.1",
-    "vue-echarts-v3": "^1.0.4",
-    "vue-notifyjs": "^0.1.7",
-    "vue-quill-editor": "^2.2.6",
-    "vue-server-renderer": "latest",
+    "vue-echarts-v3": "^1.0.5",
+    "vue-quill-editor": "^2.3.2",
     "vue-socket.io": "^2.1.1-a",
-    "vue-toastr": "^2.0.8",
-    "vue2-simplert": "^0.5.2",
     "vuefire": "^1.4.3",
-    "vuetify": "^0.14.5",
+    "vuetify": "^0.15.7",
     "vuex-persistedstate": "^2.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^3.1.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1"
   }

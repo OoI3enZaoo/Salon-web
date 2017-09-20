@@ -1,7 +1,6 @@
 <template>
 <div>
-
-  <v-container fluid>
+  <v-container fluid grid-list-lg>
     <v-layout row wrap>
       <boxPrice icon="attach_money" text="รายได้วันนีั" price="200" bgColor="light-green" ></boxPrice>
       <boxPrice icon="attach_money" text="รายได้อาทิตย์ที่ผ่านมา" price="1520" bgColor="deep-orange" ></boxPrice>
@@ -33,13 +32,13 @@
         <v-card>
           <v-list subheader>
             <v-subheader>คอร์สที่ถูกซื้อล่าสุด</v-subheader>
-            <v-list-tile avatar v-for="item in items" v-bind:key="item.title">
+            <v-list-tile avatar v-for="(data,index) in lastPurchase" :key="index">
               <v-list-tile-avatar>
-                <img v-bind:src="item.avatar" />
+                <img v-bind:src="data.image" />
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                <v-list-tile-sub-title><span class='grey--text text--darken-2'>ซื้อคอร์สเจ้าของร้าน เมื่อ 22 นาทีที่ผ่านมา</span></v-list-tile-sub-title>
+                <v-list-tile-title>{{data.fname}} {{data.lname}}</v-list-tile-title>
+                <v-list-tile-sub-title><span class='grey--text text--darken-2'>ซื้อคอร์ส {{data.title}} เมื่อ {{data.tstamp}}</span></v-list-tile-sub-title>
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-layout row>
@@ -50,7 +49,7 @@
                   </v-flex>
                   <v-flex xs6>
 
-                  <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer" v-tooltip:top="{html : 'รายละเอียด'}"><v-icon>info</v-icon></nuxt-link>
+                  <nuxt-link :to="'/users/' + data.user_id" tag="span" style="cursor:pointer" v-tooltip:top="{html : 'รายละเอียด'}"><v-icon>info</v-icon></nuxt-link>
 
 
                   </v-flex>
@@ -64,8 +63,6 @@
         </v-card>
 
       </v-flex>
-
-
     </v-layout>
 
 
@@ -77,11 +74,17 @@
 import boxPrice from '../components/boxPrice.vue'
 import pieChart from '../components/chart/pieChart.vue'
 import lineGraph from '../components/chart/lineGraph.vue'
-import mem from '../components/mem.vue'
 export default {
-  //middleware: 'authenticated',
   fetch ({store}) {
    store.commit('setPage', "แผงควบคุม")
+ },
+ async asyncData ({ store }) {
+   if (store.state.lastPurchase.length == 0) {
+     await store.dispatch('lastPurchase')
+   }
+   if (store.state.historyPurchase.length == 0) {
+     await store.dispatch('getHistoryPurchase')
+   }
  },
  methods: {
    meta () {
@@ -95,64 +98,19 @@ export default {
   components: {
     'pieChart': pieChart,
     'lineGraph': lineGraph,
-    'mem': mem,
     boxPrice
   },
   data() {
     return {
-      message: "message",
-      items: [{
-          active: true,
-          title: 'Jason Oner',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          active: true,
-          title: 'Ranee Carlson',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          title: 'Cindy Baker',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          title: 'Ali Connors',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          title: 'Ali Connors',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          title: 'Ali Connors',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        }
-        ,
-        {
-          title: 'Ali Connors',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        }
-        ,
-        {
-          title: 'Ali Connors',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        }
-
-      ]
+      message: "message"
+    }
+  },
+  computed: {
+    lastPurchase () {
+      return this.$store.state.lastPurchase
     }
   },
   mounted() {
-    //do something after mounting vue instance
-    // console.log("cookie: "+document.cookie)
-    // console.log("islogin : " + this.$store.getters.islogin);
-
-    if (JSON.parse(localStorage.getItem("isLogin")) == false) {
-      this.$store.commit('islogin', false)
-      this.$router.push('/')
-    } else {
-      this.$store.commit('islogin', true)
-      this.$router.push('/home')
-    }
 
   }
 }

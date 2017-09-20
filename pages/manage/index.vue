@@ -131,11 +131,19 @@
 <script>
 
 import axios from 'axios'
-import loadData from '~components/loadData'
+import loadData from '../../components/loadData2'
 
 //5555
 export default {
   middleware : 'load-data',
+  async asyncData ({store}) {
+    if (store.state.course.length == 0) {
+      store.dispatch('pullCourse')
+    }
+    if (store.state.lesson.length == 0) {
+      store.dispatch('pullLesson')
+    }
+  },
   sockets:{
     connect: function(){
       console.log('socket connected')

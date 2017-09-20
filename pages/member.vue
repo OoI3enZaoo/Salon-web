@@ -1,122 +1,102 @@
 <template>
 <div>
-    <!-- <v-toolbar dark class="primary">
-  <v-tabs dark v-model="active">
-    <v-tabs-bar slot="activators" class="primary">
-      <v-tabs-item v-for="(tab,i) in tabs" :key="i" :href="'#' + tab.name" ripple>
-        {{tab.name}}
-      </v-tabs-item>
-      <v-tabs-slider class="yellow"></v-tabs-slider>
-    </v-tabs-bar>
-
-  </v-tabs>
-</v-toolbar> -->
-
-<!--
-        <v-text-field
-       label="ค้นหาชื่อผู้ใช้ที่นี่"
-       single-line
-       append-icon="search"
-       light
-       hide-details
-       full-width
-      ></v-text-field>
+  <v-container>
+    <v-layout row>
+      <v-flex xs12>
         <v-card>
-
-
-          <v-list subheader>
+          <v-layout row wrap>
+                <v-flex xs11 sm11 lg9>
+                        <v-text-field
+                            label="ค้นหารายชื่อที่นี่"
+                            class="input-group--focused ma-2"
+                            prepend-icon="search"
+                            v-model="searchModel"
+                            single-line
+                        >
+                        </v-text-field>
+                </v-flex>
+          </v-layout>
+          <v-list subheader >
             <v-subheader>ผู้ใช้ที่สมัครคอร์สทั้งหมด</v-subheader>
-            <v-list-tile avatar v-for="item in items" v-bind:key="item.title">
-              <v-list-tile-avatar>
-                <img v-bind:src="item.avatar" />
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                <v-list-tile-sub-title><span class='grey--text text--darken-2'>Ali Connors</span></v-list-tile-sub-title>
-              </v-list-tile-content>
-              <v-list-tile-action>
-                <v-layout row>
-                  <v-flex xs6>
-                    <v-icon>chat_bubble</v-icon>
-                  </v-flex>
-                  <v-flex xs6>
-                  <nuxt-link :to="'/USERS/5'" tag="span" style="cursor:pointer"><v-icon>info</v-icon></nuxt-link>
-
-
-                  </v-flex>
-                </v-layout>
-
-
-              </v-list-tile-action>
-            </v-list-tile>
+              <v-list-tile avatar v-for="(data,index) in memberAfterSearch" :key="index" @click="">
+                <v-list-tile-avatar>
+                  <img v-bind:src="data.image" />
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title> {{data.fname}} {{data.lname}}</v-list-tile-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-layout row>
+                    <v-flex xs6>
+                      <v-btn icon v-tooltip:top="{html : 'สนทนา'}">
+                      <v-icon>chat_bubble</v-icon>
+                    </v-btn>
+                    </v-flex>
+                    <v-flex xs6>
+                    <nuxt-link :to="'/users/'+ data.user_id" tag="span" style="cursor:pointer" v-tooltip:top="{html : 'รายละเอียด'}"><v-icon>info</v-icon></nuxt-link>
+                    </v-flex>
+                  </v-layout>
+                </v-list-tile-action>
+              </v-list-tile>
           </v-list>
           <v-divider></v-divider>
-
-        </v-card> -->
-  <mem></mem>
-
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </div>
-
 </template>
 <script>
-import mem from '../components/mem.vue'
 export default {
-  fetch ({store}) {
-   store.commit('setPage', "รายชื่อสมาชิก")
+  async asyncData({ store }) {
+    if (store.state.member.length == 0) {
+      await store.dispatch('getMember')
+    }
   },
-  components: {
-    mem
+  created () {
+    this.memberAfterSearch = this.member
+  },
+  mounted () {
+    console.log('member: ' + JSON.stringify(this.$store.state.member))
+  },
+  computed: {
+    member () {
+      return this.$store.state.member
+    }
   },
   data() {
     return {
-      tabs: [
-        {name : "ผู้ที่สนใจคอร์สทั้งหมด"},
-        {name : "เจ้าของร้านทำผม"},
-        {name : "ช่างตัดผม"},
-        {name : "ผู้ช่วยช่าง"},
-        {name : "ผู้ที่สนใจกิจการร้านทำผม"}
-      ],
-      active: null,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      items: [{
-          active: true,
-          title: 'Jason Oner',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          active: true,
-          title: 'Ranee Carlson',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          title: 'Cindy Baker',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-        {
-          title: 'Ali Connors',
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-5-512.png'
-        },
-      ],
-      items2: [{
-        title: 'Travis Howard',
-        avatar: '/static/doc-images/lists/5.jpg'
-      }, ]
+      searchModel: '',
+      memberAfterSearch: []
+    }
+  },
+  watch: {
+    searchModel: function (val) {
+      this.search(val)
     }
   },
   methods: {
-    hideFrom(){
-      console.log("Chart1");
-    }
-  },
-  mounted() {
-    //do something after mounting vue instance
-    if(JSON.parse(localStorage.getItem("isLogin")) == false){
-    this.$store.commit('islogin',false)
-    this.$router.push('/')
-    }else{
-    this.$store.commit('islogin',true)
-      this.$router.push('/member')
-
+    search (val) {
+      let vmData = []
+      if (val == '') {
+        this.memberAfterSearch = this.member
+      } else {
+        console.log('val: ' + val)
+        this.memberAfterSearch = this.member
+        this.memberAfterSearch.map(res => {
+          let fname = res.fname
+          let lname = res.lname
+          let checkFname = fname.search(val)
+          let checkLname = lname.search(val)
+          if (checkFname !== -1) {
+            vmData.push(res)
+          }
+          if (checkLname !== -1) {
+            vmData.push(res)
+          }
+        })
+        this.memberAfterSearch = vmData
+      }
     }
   }
 }

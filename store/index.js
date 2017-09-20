@@ -1,4 +1,6 @@
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
+import * as Cookies from 'js-cookie'
 export const state = () => ({
   islogin : false,
   firstname : 'สมชาย',
@@ -10,9 +12,18 @@ export const state = () => ({
   currentCourse : {},
   currentLesson : {},
   courseList : [],
-  checkAddData: [false,'']
+  checkAddData: [false,''],
+  member: [],
+  lastPurchase: [],
+  historyPurchase: [],
+  course: [],
+  lesson: []
 })
-
+export const plugins = [
+  createPersistedState({
+    paths: ['islogin', 'number']
+  }),
+]
 export const getters  =  {
   islogin : (state) => state.islogin,
   page : (state) => state.page,
@@ -21,7 +32,18 @@ export const getters  =  {
   lessonsData : (state) => state.lessonsData,
   currentLesson : (state) => state.currentLesson,
   courseList : (state) => state.courseList,
-  checkAddData: (state) => state.checkAddData
+  checkAddData: (state) => state.checkAddData,
+  getMember: (state) => state.member,
+  getUserFromId: (state) => {
+    return userId =>  state.member.filter(item=>{
+      return userId == item.user_id
+    })
+  },
+  getLessonFromId: (state) => {
+    return userId =>  state.lesson.filter(item=>{
+      return userId == item.lesson_id
+    })
+  }
 }
 export const mutations  =  {
   islogin :(state,status) => state.islogin = status,
@@ -37,9 +59,26 @@ export const mutations  =  {
   addCourse : (state,data) => state.courseData.push(data),
   addCourseList : (state,data)=> state.courseList.push(data),
   setCourseList : (state,data)=> state.courseList = data,
-  checkAddData: (state,data) => state.checkAddData = data
+  checkAddData: (state,data) => state.checkAddData = data,
+  setMember: (state, data) => state.member = data,
+  addMember: (state, data) => state.member.push(data),
+  setLastPurchase: (state, data) => state.lastPurchase = data,
+  addLastPurchase: (state, data) => state.lastPurchase.push(data),
+  addHistoryPurchase: (state, data) => state.historyPurchase.push(data),
+  setCourse2: (state, data) => state.course = data,
+  setLesson2: (state, data) => state.lesson = data
 }
 export const actions = {
+  async nuxtServerInit({state, route}){
+    await console.log('nuxtServerInit')
+  },
+  async getMember ({state, commit}) {
+    await axios.get('http://localhost:4000/api/getuser/')
+    .then (res => {
+      let result = res.data
+      commit('setMember', result)
+    })
+  },
   removeLesson({commit,state},id){
     axios.delete('https://salon-b177d.firebaseio.com/lessons/' + id + '/.json')
     .then((res)=>{
@@ -121,6 +160,44 @@ export const actions = {
           commit('setCourseList',b)
 
       console.log("a.name: " + a);
+    })
+  },
+  async lastPurchase ({commit}) {
+    await axios.get('http://localhost:4000/api/getcourselist/7')
+    .then(res=> {
+      let result = res.data
+      commit('setLastPurchase', result)
+    })
+  },
+  async getHistoryPurchase ({state, commit}) {
+    console.log('getHistoryPurchase')
+      await axios.get('http://localhost:4000/api/getchartlength')
+      .then(res => {
+        let result = res.data
+        console.log('result: ' + result.length)
+        result.forEach(each => {
+          axios.get('http://localhost:4000/api/getchart/' + each.course_id)
+          .then(res2 => {
+            let result2 = res2.data
+            console.log('result2: ' + JSON.stringify(result2[0]))
+            commit('addHistoryPurchase', result2[0])
+
+        })
+      })
+    })
+  },
+  async pullCourse ({state, commit}) {
+    await axios.get('http://localhost:4000/api/getcourse')
+    .then(res => {
+      let result = res.data
+      commit('setCourse2', result)
+    })
+  },
+  async pullLesson ({state, commit}) {
+    await axios.get('http://localhost:4000/api/getlesson')
+    .then(res => {
+      let result = res.data
+      commit('setLesson2', result)
     })
   }
 }
