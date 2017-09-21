@@ -1,6 +1,5 @@
 <template>
 <div>
-  admin >>>  {{$store.state.admin}}
   <v-container fluid grid-list-lg>
     <v-layout row wrap>
       <boxPrice icon="attach_money" text="รายได้วันนีั" price="200" bgColor="light-green" ></boxPrice>
@@ -72,9 +71,11 @@
 </template>
 <script>
 
+
 import boxPrice from '../components/boxPrice.vue'
 import pieChart from '../components/chart/pieChart.vue'
 import lineGraph from '../components/chart/lineGraph.vue'
+
 export default {
   fetch ({store}) {
    store.commit('setPage', "แผงควบคุม")
@@ -86,7 +87,17 @@ export default {
    if (store.state.historyPurchase.length == 0) {
      await store.dispatch('getHistoryPurchase')
    }
+   if (store.state.chart.length == 0) {
+     await store.dispatch('getlinechart')
+   }
+
+   await store.dispatch('pullchartdata')
+   console.log('$store.state.chart: ' + store.state.chart)
+
+
+
  },
+
  methods: {
    meta () {
        return {
@@ -94,6 +105,9 @@ export default {
          description: 'A Vue JS Framework',
          keywords: 'vue, vuetify'
        }
+     },
+     testbtn () {
+       console.log('getcourse: ' + this.$store.getters.getCourseNameFromId(1));
      }
  },
   components: {

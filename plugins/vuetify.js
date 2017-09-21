@@ -7,6 +7,9 @@ import { ImageImport } from '../modules/ImageImport'
  import { ImageResize } from '../modules/ImageResize'
 import VueSocketio from 'vue-socket.io'
 import store from 'vuex'
+
+require('moment/locale/es')
+
 if (process.BROWSER_BUILD) {
 
   Vue.use(VueFire)

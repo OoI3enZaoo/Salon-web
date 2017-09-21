@@ -1,6 +1,10 @@
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
-import * as Cookies from 'js-cookie'
+import Vue from 'vue'
+const moment = require('moment')
+Vue.use(require('vue-moment'), {
+    moment
+})
 export const state = () => ({
   islogin : false,
   firstname : 'สมชาย',
@@ -18,7 +22,13 @@ export const state = () => ({
   historyPurchase: [],
   course: [],
   lesson: [],
-  admin: []
+  admin: [],
+  chart: [],
+  cData: {
+    month2: [],
+    courseItem2: [],
+    chartData2: []
+  }
 })
 export const plugins = [
   createPersistedState({
@@ -74,7 +84,9 @@ export const mutations  =  {
   setCourse2: (state, data) => state.course = data,
   setLesson2: (state, data) => state.lesson = data,
   UpdateStoreLesson: (state, data) => state.lesson.filter(res => data.lesson_id == res.lesson_id ? [res.title = data.title,res.description = data.description, res.cover = data.cover] : ''),
-  setadmin: (state, data) => state.admin.push(data)
+  setadmin: (state, data) => state.admin.push(data),
+  addChart: (state, data) => state.chart.push(data),
+  setChartsData: (state, data) => state.cData = data
 }
 export const actions = {
   async nuxtServerInit({commit}){
@@ -179,7 +191,7 @@ export const actions = {
   },
   async getHistoryPurchase ({commit}) {
     console.log('getHistoryPurchase')
-      await axios.get('http://localhost:4000/api/getchartlength')
+      await axios.get('http://localhost:4000/api/getcourselength')
       .then(res => {
         let result = res.data
         console.log('result: ' + result.length)
@@ -224,5 +236,56 @@ export const actions = {
       let result = res.data
       commit('setadmin', result[0])
     })
+  },
+  async getlinechart ({commit}) {
+    let date = Vue.moment().format()
+    await axios.get('http://localhost:4000/api/getcourselength')
+    .then(res => {
+      let result = res.data
+      result.forEach(each => {
+        axios.get('http://localhost:4000/api/yearsales/' + date + '/' + each.course_id)
+        .then (res2 => {
+          let result2 = res2.data
+          axios.get('http://localhost:4000/api/getcoursename/' + each.course_id)
+          .then (res3 => {
+            let result3 = res3.data
+            result2[0].title = result3[0].title
+            commit('addChart', result2[0])
+          })
+        })
+      })
+    })
+  },
+  async pullchartdata ({commit, state}) {
+    let month = [];
+    let courseItem = [];
+    let chartData = [];
+    await state.chart.forEach(res=> {
+      let strData = Object.values(res)
+      let courseName = strData[strData.length - 1]
+      let newData = []
+      strData.map(each => each == courseName ? '' : newData.push(each))
+        const data = {
+          name: courseName,
+          type: 'line',
+          data: newData
+        }
+        courseItem.push(courseName)
+        if (month.length == 0) {
+          month = Object.keys(res)
+        }
+        chartData.push(data)
+    })
+    await chartData.pop()
+    await month.pop()
+    console.log('month: ' + month)
+    const mData = {
+      month2: month,
+      courseItem2:courseItem,
+      chartData2:chartData
+    }
+    commit('setChartsData', mData)
+
+
   }
 }
