@@ -20,7 +20,10 @@ module.exports = {
   },
   plugins: ['~/plugins/vuetify.js'],
   css: [
-    '~/assets/style/app.styl'
+    '~/assets/style/app.styl',
+    'quill/dist/quill.snow.css',
+  	'quill/dist/quill.bubble.css',
+  	'quill/dist/quill.core.css'
   ],
   /*
   ** Customize the progress-bar color

@@ -17,7 +17,8 @@ export const state = () => ({
   lastPurchase: [],
   historyPurchase: [],
   course: [],
-  lesson: []
+  lesson: [],
+  admin: []
 })
 export const plugins = [
   createPersistedState({
@@ -43,6 +44,11 @@ export const getters  =  {
     return userId =>  state.lesson.filter(item=>{
       return userId == item.lesson_id
     })
+  },
+  getAdminFromId: (state) => {
+    return adminId => state.admin.filter(item => {
+      return adminId == item.admin_id
+    })
   }
 }
 export const mutations  =  {
@@ -66,11 +72,13 @@ export const mutations  =  {
   addLastPurchase: (state, data) => state.lastPurchase.push(data),
   addHistoryPurchase: (state, data) => state.historyPurchase.push(data),
   setCourse2: (state, data) => state.course = data,
-  setLesson2: (state, data) => state.lesson = data
+  setLesson2: (state, data) => state.lesson = data,
+  UpdateStoreLesson: (state, data) => state.lesson.filter(res => data.lesson_id == res.lesson_id ? [res.title = data.title,res.description = data.description, res.cover = data.cover] : ''),
+  setadmin: (state, data) => state.admin.push(data)
 }
 export const actions = {
-  async nuxtServerInit({state, route}){
-    await console.log('nuxtServerInit')
+  async nuxtServerInit({commit}){
+
   },
   async getMember ({state, commit}) {
     await axios.get('http://localhost:4000/api/getuser/')
@@ -169,7 +177,7 @@ export const actions = {
       commit('setLastPurchase', result)
     })
   },
-  async getHistoryPurchase ({state, commit}) {
+  async getHistoryPurchase ({commit}) {
     console.log('getHistoryPurchase')
       await axios.get('http://localhost:4000/api/getchartlength')
       .then(res => {
@@ -186,18 +194,35 @@ export const actions = {
       })
     })
   },
-  async pullCourse ({state, commit}) {
+  async pullCourse ({commit}) {
     await axios.get('http://localhost:4000/api/getcourse')
     .then(res => {
       let result = res.data
       commit('setCourse2', result)
     })
   },
-  async pullLesson ({state, commit}) {
+  async pullLesson ({commit}) {
     await axios.get('http://localhost:4000/api/getlesson')
     .then(res => {
       let result = res.data
       commit('setLesson2', result)
+    })
+  },
+  UpdateLesson ({state, commit}, payload) {
+    const data = {
+      lesson_id: payload.lesson_id,
+      title: payload.title,
+      description: payload.description,
+      cover: payload.cover
+    }
+    commit('UpdateStoreLesson', data)
+    axios.post('http://localhost:4000/api/updatelesson', data)
+  },
+  pullAdmin ({commit}) {
+    axios.get('http://localhost:4000/api/getadmin')
+    .then (res => {
+      let result = res.data
+      commit('setadmin', result[0])
     })
   }
 }

@@ -1,5 +1,6 @@
 <template>
 <div>
+  admin >>>  {{$store.state.admin}}
   <v-container fluid grid-list-lg>
     <v-layout row wrap>
       <boxPrice icon="attach_money" text="รายได้วันนีั" price="200" bgColor="light-green" ></boxPrice>

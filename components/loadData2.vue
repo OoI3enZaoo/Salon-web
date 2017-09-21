@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{loadCourse}}
     <v-layout row wrap>
       <v-flex sm10 xs12>
         <!-- <v-select label="ค้นหาคอร์สที่สนใจ" v-bind:items="this.courseList" v-model="courseSelect" multiple chips persistent-hint v-tooltip:top="{html : 'คลิ๊กเพื่อเลือกคอร์ส'}"></v-select> -->

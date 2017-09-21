@@ -53,10 +53,8 @@ export default {
       await store.dispatch('getMember')
     }
   },
-  created () {
-    this.memberAfterSearch = this.member
-  },
   mounted () {
+    this.memberAfterSearch = this.member
     console.log('member: ' + JSON.stringify(this.$store.state.member))
   },
   computed: {
@@ -73,6 +71,11 @@ export default {
   watch: {
     searchModel: function (val) {
       this.search(val)
+    },
+    memberAfterSearch: function (val) {
+      if (val.length == 0) {
+        this.memberAfterSearch = this.member
+      }
     }
   },
   methods: {

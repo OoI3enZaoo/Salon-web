@@ -12,11 +12,11 @@
                   </v-flex>
                   <v-flex xs12 sm8>
                     <div class="text-sm-left text-xs-center">
-                          <template v-if="!edit">
+                          <template v-if="!isEdit">
                               <h5 v-text="lesson[0].title"></h5>
                           </template>
                           <template v-else>
-                              <v-text-field v-model="lesson[0].title"></v-text-field>
+                              <v-text-field v-model="edit.title"></v-text-field>
                           </template>
                         <span class = "hidden-xs-only ">บทความโดย&nbsp;&nbsp;&nbsp;</span>
                         <span>นายสมชาย น มงคล</span>
@@ -28,10 +28,10 @@
                       <v-spacer></v-spacer>
                   <v-flex xs12 sm2>
                     <div class="text-sm-right text-xs-center">
-                          <v-btn v-if="edit ==false"icon info class ="white--text display:inline" @click.native="edit = !edit" v-tooltip:top="{html : 'แก้ไข'}"><v-icon>mode_edit</v-icon></v-btn>
+                          <v-btn v-if="isEdit ==false"icon info class ="white--text display:inline" @click.native="isEdit = !isEdit" v-tooltip:top="{html : 'แก้ไข'}"><v-icon>mode_edit</v-icon></v-btn>
                           <template v-else>
                             <v-btn  icon info class ="white--text display:inline" @click.native="Save" v-tooltip:top="{html : 'บันทึก'}"><v-icon>save</v-icon></v-btn>
-                              <v-btn  icon info class ="white--text display:inline" @click.native="cancel" v-tooltip:top="{html : 'ยกเลิก'}"><v-icon>cancel</v-icon></v-btn>
+                            <v-btn  icon info class ="white--text display:inline" @click.native="isEdit = !isEdit" v-tooltip:top="{html : 'ยกเลิก'}"><v-icon>cancel</v-icon></v-btn>
                           </template>
                           <v-btn icon error class ="white--text display:inline" @click.native="Remove" v-tooltip:top="{html : 'ลบ'}"><v-icon>delete</v-icon></v-btn>
 
@@ -40,22 +40,21 @@
               </v-layout>
 
             </v-card-text>
-            <template v-if="!edit">
+            <template v-if="!isEdit">
               <v-card-media height="400px" :src ="lesson[0].cover"></v-card-media>
             </template>
             <template v-else>
                   <base64-upload class="user" style="height: 400px; background-size: cover;"
-                    :imageSrc="editLes.cover"
+                    :imageSrc="edit.cover"
                     @change="onChangeImage"></base64-upload>
             </template>
             <v-card-text>
-                <br>  
+                <br>
                   <h6 class ="primary--text">เนื้อหา</h6>
-                  <span v-if="!edit">
+                  <span v-if="!isEdit">
                     <span v-html="lesson[0].description"></span>
                   </span>
-
-                          <!-- <quil v-else v-model="editLes.content"></quil> -->
+                  <quil v-else v-model="edit.description"></quil>
             </v-card-text>
             <br><br>
             <v-card-actions >
@@ -72,14 +71,11 @@
             </v-card-actions>
           </v-card>
       </v-container>
-lesson >> {{lesson}}
-
   </div>
 </template>
 <script>
 import axios from 'axios'
-
-
+import quil from '../../../components/quill.vue'
 import {mapGetters,mapActions} from 'vuex'
 import Base64Upload from 'vue-base64-upload'
 let mParams;
@@ -104,24 +100,29 @@ export default {
         // return data;
     },
     methods: {
-      Remove(){
-          this.$router.push('/manage')
-          this.removeLesson(mParams)
-      },
-     ...mapActions([
-        'editLesson','removeLesson'
-     ]),
      onChangeImage(file) {
-       this.dataImg = 'data:image/jpeg;base64,'+file.base64;
+       this.edit.cover = 'data:image/jpeg;base64,'+file.base64;
      },
-     cancel (){
-          this.editLes.title = this.currentLesson[0].title
-          this.editLes.description = this.currentLesson[0].description
-          this.editLes.content = this.currentLesson[0].content
-          this.editLes.cover = this.currentLesson[0].cover
-          this.edit = !this.edit
+     Save () {
+       console.log('this.edit.description: ' + this.edit.description + ' this.lesson[0].description: ' + this.lesson[0].description);
+       if (this.edit.title != this.lesson[0].title ||  this.edit.description != this.lesson[0].description || this.edit.cover != this.lesson[0].cover) {
+         const data = {
+           lesson_id: this.$route.params.lesson,
+           title: this.edit.title,
+           description: this.edit.description,
+           cover: this.edit.cover
+         }
+         this.$store.dispatch('UpdateLesson', data)
+         this.mylesson = this.$store.getters.getLessonFromId(this.$route.params.lesson)
+       }
+       this.isEdit = false
      }
-
+},
+mounted () {
+  this.edit.title = this.lesson[0].title
+  this.edit.description = this.lesson[0].description
+  this.edit.cover = this.lesson[0].cover
+  this.mylesson = this.lesson
 },
 watch: {
       top (val) {
@@ -139,7 +140,8 @@ watch: {
 
     },
 components: {
-  Base64Upload
+  Base64Upload,
+  quil
 },
 computed:{
    mContent(){
@@ -153,8 +155,7 @@ computed:{
    ]),
    lesson () {
      return this.getLessonFromId(this.$route.params.lesson)
-   },
-
+   }
 },
 created() {
   //do something after mounting vue instance
@@ -172,7 +173,13 @@ created() {
 },
 data(){
   return {
-    edit : false,
+    isEdit : false,
+    edit: {
+      title: '',
+      cover: '',
+      description: ''
+    },
+    mylesson: '',
     editLes :[],
     dataImg : '',
     description: 'Hello'

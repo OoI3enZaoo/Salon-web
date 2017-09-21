@@ -11,4 +11,7 @@ export default function ({store,isServer,req,route,redirect}){
       redirect('/home')
     }
   }
+  if (store.state.admin.length == 0) {
+    store.dispatch('pullAdmin')
+  }
 }
