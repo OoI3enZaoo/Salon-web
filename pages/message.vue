@@ -59,7 +59,7 @@
 
 
 <template v-if="currentChat">
-    <div id="container" style="height:80vh; background-color:white; overflow:scroll; overflow-x:hidden;" >
+    <div id="mycontainer" style="height:80vh; background-color:white; overflow:scroll; overflow-x:hidden;" >
             <v-list two-line subheader v-for="(chat,index) in chatMessage" :key="index">
                   <template v-if="currentChat.room == chat.room">
                       <v-list-tile avatar>
@@ -86,14 +86,7 @@
   ></v-text-field>
   </v-card>
 </template>
-<template v-else>
-  <div class="text-xs-center">
-    <br><br>
-    <h3>ลองคุยกับใครสักคนไหม</h3>
-    <br>
-    <v-btn primary @click.native.stop="slideNavRight=true">เริ่มเลย</v-btn>
-  </div>
-</template>
+
 
 
 
@@ -123,7 +116,7 @@ export default {
   },
   data() {
     return {
-      slideNavRight: false,
+      slideNavRight: true,
       userChat: [
         {"room":"fdgsdfdsf","message":"สวัสดีครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Ben","type":"user"},
         {"room":"-KrZTk-lCaBVZI2FH1d7","message":"แอดมินครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Max","type":"user"},
@@ -178,7 +171,7 @@ export default {
         this.$socket.emit('toUser',data)
     },
     scrollToEnd () {
-      var container = this.$el.querySelector('#container')
+      var container = this.$el.querySelector('#mycontainer')
       container.scrollTop = container.scrollHeight
     }
   }

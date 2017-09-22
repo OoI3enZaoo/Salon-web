@@ -2,7 +2,7 @@
 <div>
 
 
-  <v-container>
+  <v-container grid-list-lg>
 
 <loadData></loadData>
     <!-- <ul>

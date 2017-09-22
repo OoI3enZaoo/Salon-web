@@ -7,16 +7,10 @@ Vue.use(require('vue-moment'), {
 })
 export const state = () => ({
   islogin : false,
+  adminData: {},
   firstname : 'สมชาย',
   lastname : 'น มงคล',
   page : '',
-  number : 1,
-  courseData : [],
-  lessonsData : [],
-  currentCourse : {},
-  currentLesson : {},
-  courseList : [],
-  checkAddData: [false,''],
   member: [],
   lastPurchase: [],
   historyPurchase: [],
@@ -24,15 +18,43 @@ export const state = () => ({
   lesson: [],
   admin: [],
   chart: [],
-  cData: {
-    month2: [],
-    courseItem2: [],
-    chartData2: []
-  }
+  loadChart: true,
+  bar: {
+    title: {
+        text: 'รายได้รวมใน 1 ปี '
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data: []
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: []
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: []
+  },
+  sumPurchase: []
 })
 export const plugins = [
   createPersistedState({
-    paths: ['islogin', 'number']
+    paths: ['islogin', 'number', 'adminData']
   }),
 ]
 export const getters  =  {
@@ -64,20 +86,7 @@ export const getters  =  {
 export const mutations  =  {
   islogin :(state,status) => state.islogin = status,
   setPage : (state,page) => state.page = page,
-  setNumber :(state,number) => state.number += number,
-  setLesson :(state,data) => state.lessonsData = data,
-  setCourse : (state,data) => state.courseData = data,
-  addLesson : (state,data) => state.lessonsData.push(data),
-  setCurrentLesson : (state,data) =>state.currentLesson = state.lessonsData.filter(res => data == res.key),
-  //removeLesson : (state,data) =>  state.loadLesson.filter((data,i) => data.key == item ? this.loadLesson.splice(i,1) : '');
-  editLesson :(state,data) => state.lessonsData.filter(res => data.key == res.key ? res = data : ''),
-  editCourse : (state,data) =>state.courseData.filter(res => data.key === res.key ? res = data : ''),
-  addCourse : (state,data) => state.courseData.push(data),
-  addCourseList : (state,data)=> state.courseList.push(data),
-  setCourseList : (state,data)=> state.courseList = data,
-  checkAddData: (state,data) => state.checkAddData = data,
   setMember: (state, data) => state.member = data,
-  addMember: (state, data) => state.member.push(data),
   setLastPurchase: (state, data) => state.lastPurchase = data,
   addLastPurchase: (state, data) => state.lastPurchase.push(data),
   addHistoryPurchase: (state, data) => state.historyPurchase.push(data),
@@ -86,7 +95,14 @@ export const mutations  =  {
   UpdateStoreLesson: (state, data) => state.lesson.filter(res => data.lesson_id == res.lesson_id ? [res.title = data.title,res.description = data.description, res.cover = data.cover] : ''),
   setadmin: (state, data) => state.admin.push(data),
   addChart: (state, data) => state.chart.push(data),
-  setChartsData: (state, data) => state.cData = data
+  setChartsData: (state, data) => {
+    state.bar.legend.data = data.courseItem2
+    state.bar.xAxis.data = data.month2
+    state.bar.series = data.chartData2
+  },
+  setLoadChart: (state, data) => state.loadChart = data,
+  addSumPurchase: (state, data) => state.sumPurchase.push(data),
+  addAdminData: (state, data) => state.adminData = data
 }
 export const actions = {
   async nuxtServerInit({commit}){
@@ -97,89 +113,6 @@ export const actions = {
     .then (res => {
       let result = res.data
       commit('setMember', result)
-    })
-  },
-  removeLesson({commit,state},id){
-    axios.delete('https://salon-b177d.firebaseio.com/lessons/' + id + '/.json')
-    .then((res)=>{
-      console.log("deleted data of firebase: " + JSON.stringify(res));
-        let a = state.lessonsData.filter(data => data.key !==id);
-        commit('setLesson',a)
-    })
-     //console.log('id: ' + id + " state num: " + state.number);
-    //state.lessonsData.filter((data,i) => data.courseId == id ? console.log("found") : console.log("not found"));
-  },
-  addLesson({commit},data){
-    console.log("data: " + data);
-    axios.post('https://salon-b177d.firebaseio.com/lessons.json',data)
-    .then((res)=>{
-      let key2 = res.data.name;
-        console.log("posted to firebase");
-        data.key = key2;
-        console.log("datatata : " + JSON.stringify(data));
-        commit('addLesson',data)
-    })
-    .catch((error) =>{
-      console.log("error to post data to firebase");
-    })
-  },
-  editLesson({commit},{params,data}){
-    console.log("params: " + params);
-    console.log("data: " + JSON.stringify(data));
-    axios.put('https://salon-b177d.firebaseio.com/lessons/' + params + '.json',data)
-    .then((res)=>{
-      let result = res.data;
-      result.key = params
-      console.log("res2: " + JSON.stringify(result));
-        commit('editLesson',result)
-    })
-  },
-  setCourse({commit},{key,data}){
-    console.log("key: " + key);
-    console.log("data: " + JSON.stringify(data));
-    axios.put('https://salon-b177d.firebaseio.com/courses/' +  key+'.json',data)
-    .then(res=>{
-        let result = res;
-        result.key = key
-        result.edit = false
-        console.log("res: " + JSON.stringify(res));
-        commit('editCourse',result)
-    })
-  },
-  addCourse({commit,state},data){
-    console.log("data: " + JSON.stringify(data));
-      data.author = state.firstname + ' ' + state.lastname
-      data.edit = false;
-      axios.post('https://salon-b177d.firebaseio.com/courses.json',data)
-      .then((res)=>{
-          let key2 = res.data.name;
-          console.log("posted to firebase");
-          data.key = key2;
-          console.log("datatata : " + JSON.stringify(data));
-          commit('addCourse',data)
-          commit('checkAddData',[true,data])
-          axios.patch('https://salon-b177d.firebaseio.com/courses/' + key2 + '.json',{key: key2})
-          .then(res2 =>{
-          })
-
-          //commit('addCourseList',this.course.name)
-      })
-      .catch((error) =>{
-        console.log("error to post data to firebase");
-      })
-  },
-    removeCourse({commit,state},{id,name}){
-    console.log("id: " + id);
-    console.log("name: " + name);
-    axios.delete('https://salon-b177d.firebaseio.com/courses/' + id + '/.json')
-    .then((res)=>{
-      console.log("deleted data of firebase: " + JSON.stringify(res));
-          let a = state.courseData.filter(data => data.key !==id);
-          commit('setCourse',a)
-          let b = state.courseList.filter(data => data !== name);
-          commit('setCourseList',b)
-
-      console.log("a.name: " + a);
     })
   },
   async lastPurchase ({commit}) {
@@ -199,7 +132,6 @@ export const actions = {
           axios.get('http://localhost:4000/api/getchart/' + each.course_id)
           .then(res2 => {
             let result2 = res2.data
-            console.log('result2: ' + JSON.stringify(result2[0]))
             commit('addHistoryPurchase', result2[0])
 
         })
@@ -237,12 +169,13 @@ export const actions = {
       commit('setadmin', result[0])
     })
   },
-  async getlinechart ({commit}) {
+  async getlinechart ({commit, dispatch}) {
     let date = Vue.moment().format()
     await axios.get('http://localhost:4000/api/getcourselength')
     .then(res => {
       let result = res.data
-      result.forEach(each => {
+      let count = 0
+      result.forEach((each,index,array) => {
         axios.get('http://localhost:4000/api/yearsales/' + date + '/' + each.course_id)
         .then (res2 => {
           let result2 = res2.data
@@ -251,6 +184,10 @@ export const actions = {
             let result3 = res3.data
             result2[0].title = result3[0].title
             commit('addChart', result2[0])
+            count ++
+            if(count == array.length) {
+              dispatch('pullchartdata')
+            }
           })
         })
       })
@@ -276,16 +213,44 @@ export const actions = {
         }
         chartData.push(data)
     })
-    await chartData.pop()
     await month.pop()
-    console.log('month: ' + month)
     const mData = {
       month2: month,
       courseItem2:courseItem,
       chartData2:chartData
     }
     commit('setChartsData', mData)
-
-
+    commit('setLoadChart', false)
+  },
+  async pullSumPurchase ({ commit }) {
+    await axios.get('http://localhost:4000/api/getlastpurchase/7')
+    .then (res => {
+      commit('addSumPurchase', res.data[0].sum)
+    })
+    await axios.get('http://localhost:4000/api/getlastpurchase/30')
+    .then (res => {
+      commit('addSumPurchase', res.data[0].sum)
+    })
+    await axios.get('http://localhost:4000/api/getlastpurchase/180')
+    .then (res => {
+      commit('addSumPurchase', res.data[0].sum)
+    })
+    await axios.get('http://localhost:4000/api/getlastpurchase/')
+    .then (res => {
+      commit('addSumPurchase', res.data[0].sum)
+    })
+  },
+  checkLogin ({commit, dispatch}, payload) {
+    axios.get('http://localhost:4000/api/checklogin/' + payload.username + '/' + payload.password)
+    .then(res => {
+      let result = res.data
+      if (Object.keys(result).length == 1) {
+        console.log('login true')
+        commit('addAdminData', result[0])
+        commit('islogin', true)
+      } else {
+        console.log('login false')
+      }
+    })
   }
 }

@@ -6,7 +6,6 @@ import VueFire from 'vuefire'
 import { ImageImport } from '../modules/ImageImport'
  import { ImageResize } from '../modules/ImageResize'
 import VueSocketio from 'vue-socket.io'
-import store from 'vuex'
 
 require('moment/locale/es')
 

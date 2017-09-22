@@ -2,17 +2,21 @@
 <div>
   <v-app id="example-3">
     <div v-if="$store.getters.islogin">
-      <v-navigation-drawer v-model="slideNavLeft" persistent absolute height="100%">
+      <v-navigation-drawer v-model="slideNavLeft" absolute persistent absolute height="100%">
         <v-card>
           <v-card-media class="white--text" src="http://images.all-free-download.com/images/graphiclarge/nostalgic_blue_background_06_hd_pictures_169782.jpg">
             <v-layout row>
-              <v-flex xs2>
-                <img src="https://www.thinkbusinessplan.com/img/user-icon.png" alt="ผู้ใช้" class="ma-4">
-              </v-flex>
-              <v-flex xs7>
+              <div class="ma-3">
+                <v-flex xs1>
+                  <v-avatar side="13px;">
+                    <img :src="$store.state.adminData.avatar" alt="ผู้ใช้" class="ma-4">
+                  </v-avatar>
+                </v-flex>
+              </div>
+              <v-flex xs10>
                 <br>
-                <span class="ml-4">นายสมชาย น มงคล</span><br>
-                <span class="ml-4">ผู้ดูแล</span>
+                <span class="ml-4">{{$store.state.adminData.fname}} {{$store.state.adminData.lname}}</span><br>
+                <span class="ml-4">{{$store.state.adminData.email}}</span>
               </v-flex>
             </v-layout>
           </v-card-media>
@@ -97,7 +101,7 @@ export default {
         },
         {
           title: "ลงชื่อออก",
-          icon: "insert_invitation",
+          icon: "fa-sign-out",
           link: "/logout",
           divider : 'true'
         }

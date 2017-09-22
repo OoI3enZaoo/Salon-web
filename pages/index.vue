@@ -9,7 +9,11 @@
       <v-card>
 
         <v-card-media src = "https://www.sketchappsources.com/resources/source-images-plus2/material-design-icon-patterns-2.png" height="150px" class="primary lighten-4--text">
-          <h6 style="text-align:center; margin-top: 60px;" class="white--text">ระบบจัดการ Salon & Academy</h6>
+          <v-card-text>
+            <div class="text-xs-center" >
+              <h6  class="white--text" style="margin-top: 60px;">ระบบจัดการ Salon & Academy</h6>
+            </div>
+          </v-card-text>
         </v-card-media>
         <v-card-title primary-title>
           <v-flex xs12 sm12>
@@ -37,12 +41,7 @@
 </template>
 <script>
 
-import {db} from '../util/firebase'
-let adminRef = db.ref('admin')
 export default {
-  firebase :{
-    adminRef
-  },
   data: () => ({
     user: {
       username: '',
@@ -50,12 +49,7 @@ export default {
     },
     defaultImage : ''
   }),
-  watch :{
 
-    // ref.on('child_added', function(childSnapshot, prevChildKey) {
-    //
-    // });
-  },
   mounted(){
 
       // console.log("cookie: "+document.cookie)
@@ -82,31 +76,26 @@ export default {
     // }
   },
   methods: {
-    Login(){
-      console.log("Login2");
-      if(this.user.password != '' || this.user.username != ''){
-          adminRef.on('value' , (snapshot) => {
-          snapshot.forEach((data)=>{
-              let res = data.val()
-              console.log("username: " + res.username + " password: " + res.password);
-              if(this.user.username == res.username && this.user.password == res.password){
-                console.log("true");
-                  this.$store.commit('islogin',true)
-                  localStorage.setItem('isLogin',true)
-                  console.log("localStorage: " + localStorage.getItem("isLogin"));
-                  this.$router.push('/home')
-                return true
-              }else{
-                console.log("not found");
-                toastr.info('Are you the 6 fingered man?')
-              }
-
-          })
-
-          })
-        }else{
+    Login () {
+      if(this.user.password != '' || this.user.username != '') {
+          this.$store.dispatch('checkLogin', this.user)
+          this.user.username = ''
+          this.user.password = ''
+        } else {
           console.log("enter");
         }
+    }
+  },
+  watch: {
+    isLogin: function (val) {
+      if (val == true) {
+        this.$router.push('/home')
+      }
+    }
+  },
+  computed: {
+    isLogin () {
+      return this.$store.state.islogin
     }
   }
 }

@@ -16,6 +16,9 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
+    ],
+    script: [
+      { src: 'https://use.fontawesome.com/eed138f88e.js' }
     ]
   },
   plugins: ['~/plugins/vuetify.js'],
@@ -43,7 +46,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vuetify','vue-quill-editor/ssr','axios'],
+    vendor: ['vuetify','vue-quill-editor/ssr','axios', './modules/ImageImport','./modules/ImageResize'],
     extractCSS: true
     /*
     ** Run ESLINT on save

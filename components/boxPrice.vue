@@ -3,7 +3,7 @@
       <v-card :class="bgColor">
         <v-card-text>
           <div class="text-xs-center">
-            <v-icon x-large dark>{{icon}}</v-icon>
+            <p class="white--text headline" style="display:inline; padding-right:4px;">฿</p>
             <h5 class="white--text" style="display:inline;"><b>{{price}}</b></h5><br>
           </div>
           <div class="text-xs-center">

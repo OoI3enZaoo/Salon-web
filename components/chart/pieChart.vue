@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import IEcharts from 'vue-echarts-v3/src/full.vue';
+import IEcharts from 'vue-echarts-v3/src/full.vue'
 export default {
   components: {
     IEcharts
@@ -15,7 +15,7 @@ export default {
         oldData: [],
         option : {
           title : {
-              text: 'จำนวนคอร์สที่ขายไปทั้งหมด',
+              text: 'คอร์สที่ขายได้',
               subtext: 'กราฟวงกลม',
               x:'center'
           },

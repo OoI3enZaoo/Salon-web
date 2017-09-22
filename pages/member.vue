@@ -52,6 +52,7 @@ export default {
     if (store.state.member.length == 0) {
       await store.dispatch('getMember')
     }
+    store.commit('setPage', 'รายชื่อสมาชิก')
   },
   mounted () {
     this.memberAfterSearch = this.member

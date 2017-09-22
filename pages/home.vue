@@ -2,10 +2,10 @@
 <div>
   <v-container fluid grid-list-lg>
     <v-layout row wrap>
-      <boxPrice icon="attach_money" text="รายได้วันนีั" price="200" bgColor="light-green" ></boxPrice>
-      <boxPrice icon="attach_money" text="รายได้อาทิตย์ที่ผ่านมา" price="1520" bgColor="deep-orange" ></boxPrice>
-      <boxPrice icon="attach_money" text="รายได้เดือนที่ผ่านมา" price="6430" bgColor="amber" ></boxPrice>
-      <boxPrice icon="attach_money" text="รายได้รวมทั้งหมด" price="43355" bgColor="purple" ></boxPrice>
+      <boxPrice icon="attach_money" text="รายได้ 7 วันที่ผ่านมา" :price="$store.state.sumPurchase[0]" bgColor="light-green" ></boxPrice>
+      <boxPrice icon="attach_money" text="รายได้ 30 วันที่ผ่านมา" :price="$store.state.sumPurchase[1]" bgColor="deep-orange" ></boxPrice>
+      <boxPrice icon="attach_money" text="รายได้ 6 เดือนที่ผ่านมา" :price="$store.state.sumPurchase[2]" bgColor="amber" ></boxPrice>
+      <boxPrice icon="attach_money" text="รายได้รวมทั้งหมด" :price="$store.state.sumPurchase[3]" bgColor="purple" ></boxPrice>
     </v-layout>
     <br>
     <v-layout row>
@@ -32,7 +32,7 @@
         <v-card>
           <v-list subheader>
             <v-subheader>คอร์สที่ถูกซื้อล่าสุด</v-subheader>
-            <v-list-tile avatar v-for="(data,index) in lastPurchase" :key="index">
+            <v-list-tile avatar v-for="(data,index) in lastPurchase" :key="index" @click="">
               <v-list-tile-avatar>
                 <img v-bind:src="data.image" />
               </v-list-tile-avatar>
@@ -90,9 +90,9 @@ export default {
    if (store.state.chart.length == 0) {
      await store.dispatch('getlinechart')
    }
-
-   await store.dispatch('pullchartdata')
-   console.log('$store.state.chart: ' + store.state.chart)
+   if (store.state.sumPurchase.length == 0) {
+     await store.dispatch('pullSumPurchase')
+   }
 
 
 
