@@ -46,7 +46,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vuetify','vue-quill-editor/ssr','axios', './modules/ImageImport','./modules/ImageResize'],
+    vendor: ['vuetify','axios', './modules/ImageImport','./modules/ImageResize'],
     extractCSS: true
     /*
     ** Run ESLINT on save

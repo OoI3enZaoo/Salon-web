@@ -50,7 +50,10 @@ export const state = () => ({
     },
     series: []
   },
-  sumPurchase: []
+  sumPurchase: [],
+  chat: [],
+  messageChat: [],
+  userCourse: []
 })
 export const plugins = [
   createPersistedState({
@@ -81,6 +84,16 @@ export const getters  =  {
     return adminId => state.admin.filter(item => {
       return adminId == item.admin_id
     })
+  },
+  getMessageChat: (state) => {
+    return userId => state.messageChat.filter(item =>{
+      return userId == item.user_id
+    })
+  },
+  getUserCourseFromId: (state, userId) => {
+    return userId => state.userCourse.filter(item => {
+      return userId == item[0].user_id
+    })
   }
 }
 export const mutations  =  {
@@ -102,7 +115,57 @@ export const mutations  =  {
   },
   setLoadChart: (state, data) => state.loadChart = data,
   addSumPurchase: (state, data) => state.sumPurchase.push(data),
-  addAdminData: (state, data) => state.adminData = data
+  addAdminData: (state, data) => state.adminData = data,
+  addChat: (state, data) => state.chat.push(data),
+  unshiftChat: (state, data) => {
+    console.log('val: ' + data.text);
+    for (let i = 0; i< state.chat.length; i++) {
+      if (data.user_id == state.chat[i].user_id) {
+        state.chat.splice(i,1)
+      }
+    }
+    let newData = data
+    newData.text = 'คุณ: ' + data.adminText
+    state.chat.unshift(newData)
+  },
+  addMessageChat1: (state, data) => {
+    let a = state.messageChat[0]
+    let b = data
+    let c = a.concat(b)
+    state.messageChat = [c]
+  },
+  addMessageChat: (state, data) => state.messageChat.push(data),
+  addNewChat: (state, data) => {
+    // console.log('data: ' + JSON.stringify(data))
+    // for (let i = 0; i < state.chat.length; i ++) {
+    //   console.log('gogogo : state.chat[i].user_id: ' + state.chat[i].user_id + " data.user_id: " + data.user_id)
+    //   if (state.chat[i].user_id == data.user_id) {
+    //       console.log('true')
+    //       state.chat.unshift(state.chat[i])
+    //       state.chat.splice(i, 1)
+    //       console.log('state.chat: ' + JSON.stringify(state.chat))
+    //       break
+    //   } else {
+    //
+    //   }
+    // }
+  },
+  addUserCourse: (state, data) => state.userCourse.push(data),
+  addUserCourse2: (state, data) => {
+    let a = state.userCourse[0]
+    let b = data
+    let c = a.concat(b)
+    state.userCourse = [c]
+  },
+  changeEditCourse: (state, courseId) => {
+    console.log('courseId: ' + courseId)
+    state.course.map(res => res.course_id == courseId ? res.isEdit = !res.isEdit : '' )
+  },
+  updateCourse: (state, payload) => {
+    payload.description = payload.afterEdit
+    delete payload.afterEdit
+    state.course.map(res => res.course_id == payload.course_id ? [res = payload,res.isEdit = !res.isEdit] : '')
+  }
 }
 export const actions = {
   async nuxtServerInit({commit}){
@@ -142,6 +205,7 @@ export const actions = {
     await axios.get('http://localhost:4000/api/getcourse')
     .then(res => {
       let result = res.data
+      result.map(res => res.isEdit = false)
       commit('setCourse2', result)
     })
   },
@@ -245,12 +309,113 @@ export const actions = {
     .then(res => {
       let result = res.data
       if (Object.keys(result).length == 1) {
-        console.log('login true')
         commit('addAdminData', result[0])
         commit('islogin', true)
       } else {
-        console.log('login false')
       }
+    })
+  },
+  async pullLastChat ({commit}) {
+    axios.get('http://localhost:4000/api/getlastchat/')
+    .then (res => {
+      let result = res.data
+      result.map(each => {
+        axios.get('http://localhost:4000/api/getlastchat/' + each.user_id)
+        .then (res2 => {
+          let result2 = res2.data
+          if (result2[0].type == 'admin') {
+            result2[0].text = 'คุณ: ' + result2[0].text
+          }
+          commit('addChat', result2[0])
+        })
+      })
+    })
+  },
+  insertChat ({state, commit}, payload) {
+    const data = {
+      admin_id: payload.admin_id,
+      user_id: payload.user_id,
+      text: payload.message,
+      tstamp: Vue.moment().format('YYYY-MM-DD HH:mm:ss'),
+      type: payload.type
+    }
+    // console.log('state.messageChat: ' + JSON.stringify(state.messageChat[0].push(data)))
+    commit('addMessageChat1', data)
+    axios.post('http://localhost:4000/api/postchat', data)
+    .then (res => {
+      console.log('result: ' + JSON.stringify(res))
+    })
+  },
+  async getChat ({commit, state}, userId) {
+    let isCheck = false
+    if (state.messageChat.length != 0) {
+      for (let i = 0; i< state.messageChat[0].length; i++) {
+        console.log('user_id: ' + state.messageChat[0][i].user_id + ' userId: ' + userId)
+        if (state.messageChat[0][i].user_id == userId) {
+          isCheck = true
+          console.log('true')
+          break;
+        } else {
+          console.log('false')
+          isCheck = false
+        }
+        if(i == state.messageChat[0].length - 1 && isCheck === false) {
+          console.log('get again')
+          axios.get('http://localhost:4000/api/getchat/' + userId)
+          .then (res => {
+            let result = res.data
+            let reverse = result.reverse()
+            commit('addMessageChat1', reverse)
+          })
+          break;
+        }
+      }
+    } else {
+      await axios.get('http://localhost:4000/api/getchat/' + userId)
+      .then (res => {
+        let result = res.data
+        let reverse = result.reverse()
+        commit('addMessageChat', reverse)
+      })
+    }
+  },
+  addNewChat ({commit, getters}, userId) {
+    let data = getters.getUserFromId(userId)
+    commit('addNewChat', data[0])
+  },
+  getUserCourse ({commit, state}, userId) {
+    if (state.userCourse.length == 0) {
+      axios.get('http://localhost:4000/api/usercourse/' + userId)
+      .then (res => {
+        let result = res.data
+        commit('addUserCourse', result)
+      })
+    } else {
+      for (let i = 0; i < state.userCourse[0].length; i++) {
+        let isCheck = false
+        if (state.userCourse[0][i].user_id == userId) {
+          isCheck = true
+          console.log('true')
+          break
+        } else {
+          isCheck = false
+          console.log('false')
+        }
+        if (i == state.userCourse[0].length - 1 && isCheck == false) {
+          axios.get('http://localhost:4000/api/usercourse/' + userId)
+          .then (res => {
+            let result = res.data
+            commit('addUserCourse2', result)
+          })
+        }
+      }
+    }
+  },
+  UpdateCourse ({commit}, payload) {
+    commit('updateCourse', payload)
+    axios.post('http://localhost:4000/api/updatecourse/', payload)
+    .then (res => {
+      console.log('result: ' + JSON.stringify(res))
     })
   }
 }

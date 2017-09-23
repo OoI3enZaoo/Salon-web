@@ -6,9 +6,8 @@
 
 
   <div class="text-xs-center">
-              <img :src="user[0].image" height="200" alt="รูป">
+              <img :src="user[0].avatar" height="200" alt="รูป">
 </div>
-
 
               <div class="text-xs-center">
             <br>
@@ -23,6 +22,7 @@
                   <h6><b>อีเมล</b></h6><br>
                   <h6><b>เบอร์โทรศัพท์</b></h6><br>
                   <h6><b>เป็นสมาชิกเมื่อ</b></h6><br>
+                  <h6><b>คอร์สที่ซื้อ</b></h6><br>
                   </v-flex>
                   <v-flex xs6 sm6>
                      <h6>{{ user[0].birthday }}</h6><br>
@@ -30,6 +30,16 @@
                       <h6>{{ user[0].email}}</h6><br>
                       <h6>{{ user[0].phone}}</h6><br>
                       <h6>{{ user[0].tstamp}}</h6><br>
+                      <h6>
+                        <template v-for="data in $store.state.userCourse[0]">
+                            <ul v-if="data.user_id == $route.params.id">
+                              <li>{{data.title}}</li>
+                            </ul>
+
+                        </template>
+
+                      </h6> <br>
+
                           </v-flex>
               </v-layout>
               </div>
@@ -203,21 +213,19 @@
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 export default {
+  async asyncData ({store, route}) {
+    await store.dispatch('getUserCourse', route.params.id)
+  },
   fetch({store}){
     store.commit('setPage',"นายนานา มานา (เจ้าของร้านทำผม)")
   },
-   async asyncData ({ params, error }) {
-     try {
-         const { data } = await axios.get(`https://jsonplaceholder.typicode.com/users/${params.id}`)
-         return data
-     } catch (e) {
-       error({ message: 'User not found', statusCode: 404 })
-     }
-   },
    computed: {
-     ...mapGetters(['getUserFromId']),
+     ...mapGetters(['getUserFromId', 'getUserCourseFromId']),
      user () {
        return this.getUserFromId(this.$route.params.id)
+     },
+     userCourse () {
+       return this.getUserCourseFromId(this.$route.params.id)
      }
    }
 }

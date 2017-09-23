@@ -131,7 +131,7 @@
 <script>
 
 import axios from 'axios'
-import loadData from '../../components/loadData2'
+import loadData from '../../components/loadData'
 
 //5555
 export default {

@@ -17,7 +17,7 @@ if (process.BROWSER_BUILD) {
   Vue.use(VueSocketio, 'https://agile-citadel-43436.herokuapp.com/')
   // Vue.use(VueSocketio, 'http://localhost:3000/',store)
 }
-const VueQuillEditor = require('vue-quill-editor/ssr')
+import VueQuillEditor  from 'vue-quill-editor/ssr'
 Quill.register('modules/imageImport', ImageImport)
 Quill.register('modules/imageResize', ImageResize)
 Vue.use(VueQuillEditor)

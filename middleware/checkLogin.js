@@ -14,4 +14,7 @@ export default function ({store,isServer,req,route,redirect}){
   if (store.state.admin.length == 0) {
     store.dispatch('pullAdmin')
   }
+  if (store.state.member.length == 0) {
+    store.dispatch('getMember')
+  }
 }

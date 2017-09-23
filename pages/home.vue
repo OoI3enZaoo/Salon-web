@@ -34,7 +34,7 @@
             <v-subheader>คอร์สที่ถูกซื้อล่าสุด</v-subheader>
             <v-list-tile avatar v-for="(data,index) in lastPurchase" :key="index" @click="">
               <v-list-tile-avatar>
-                <img v-bind:src="data.image" />
+                <img v-bind:src="data.avatar" />
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title>{{data.fname}} {{data.lname}}</v-list-tile-title>

@@ -20,7 +20,7 @@
             <v-subheader>ผู้ใช้ที่สมัครคอร์สทั้งหมด</v-subheader>
               <v-list-tile avatar v-for="(data,index) in memberAfterSearch" :key="index" @click="">
                 <v-list-tile-avatar>
-                  <img v-bind:src="data.image" />
+                  <img v-bind:src="data.avatar" />
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title> {{data.fname}} {{data.lname}}</v-list-tile-title>
@@ -28,7 +28,7 @@
                 <v-list-tile-action>
                   <v-layout row>
                     <v-flex xs6>
-                      <v-btn icon v-tooltip:top="{html : 'สนทนา'}">
+                      <v-btn icon v-tooltip:top="{html : 'สนทนา'}" @click.native='chat(data.user_id)'>
                       <v-icon>chat_bubble</v-icon>
                     </v-btn>
                     </v-flex>
@@ -49,9 +49,6 @@
 <script>
 export default {
   async asyncData({ store }) {
-    if (store.state.member.length == 0) {
-      await store.dispatch('getMember')
-    }
     store.commit('setPage', 'รายชื่อสมาชิก')
   },
   mounted () {
@@ -80,6 +77,11 @@ export default {
     }
   },
   methods: {
+    chat (user_id) {
+      console.log('user_id: ' + user_id)
+      this.$store.dispatch('addNewChat', user_id)
+      this.$router.push('./message')
+    },
     search (val) {
       let vmData = []
       if (val == '') {

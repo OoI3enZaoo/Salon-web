@@ -1,6 +1,5 @@
 <template>
 <div>
-
        <v-navigation-drawer  v-model="slideNavRight"  persistent  height="100%" right>
                <v-text-field
               label="ค้นหาชื่อผู้ใช้ที่นี่"
@@ -11,14 +10,14 @@
               full-width
              ></v-text-field>
                  <v-list two-line>
-                           <template v-for="data in userChat" >
-                             <v-list-tile avatar @click.native="setChat(data)">
+                           <template v-for="data in chat" >
+                             <v-list-tile avatar @click.native="setChat(data)" @click="">
                                <v-list-tile-avatar>
-                                 <img :src="data.image"></v-list-tile-avatar>
+                                 <img :src="data.avatar"></v-list-tile-avatar>
                                </v-list-tile-avatar>
                                <v-list-tile-content>
-                                 <v-list-tile-title >{{data.name}}</v-list-tile-title>
-                                 <v-list-tile-sub-title>{{data.message}}</v-list-tile-sub-title>
+                                 <v-list-tile-title >{{data.fname}} {{data.lname}}</v-list-tile-title>
+                                 <v-list-tile-sub-title>{{data.text}}</v-list-tile-sub-title>
                                </v-list-tile-content>
                                <v-list-tile-action>
                                   <v-list-tile-action-text>{{data.tstamp}}ี</v-list-tile-action-text>
@@ -34,18 +33,17 @@
     <v-toolbar-title>
       <v-layout row>
         <v-flex xs3>
-          <img :src="currentChat.image" width="30" height="30" class="mt-3">
+          <img :src="currentChat.avatar" width="30" height="30" class="mt-3">
         </v-flex>
         <v-flex xs12 class ="mt-3">
-        <p class="grey--text" >&nbsp;&nbsp; {{currentChat.name}}</p>
+        <p class="grey--text" >&nbsp;&nbsp; {{currentChat.fname}} {{currentChat.lname}}</p>
         </v-flex>
 
       </v-layout>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-icon medium style="cursor:pointer">info_outline</v-icon>
-      <v-icon medium style="cursor:pointer">notifications_off</v-icon>
+      <v-btn icon nuxt :to ="'/users/' + currentChat.user_id"><v-icon medium style="cursor:pointer">info_outline</v-icon></v-btn>
       <v-icon medium style="cursor:pointer">delete</v-icon>
     </v-toolbar-items>
 
@@ -60,25 +58,39 @@
 
 <template v-if="currentChat">
     <div id="mycontainer" style="height:80vh; background-color:white; overflow:scroll; overflow-x:hidden;" >
-            <v-list two-line subheader v-for="(chat,index) in chatMessage" :key="index">
-                  <template v-if="currentChat.room == chat.room">
-                      <v-list-tile avatar>
-                        <v-list-tile-avatar>
-                            <img :src="chat.image">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{chat.name}} &nbsp;&nbsp; <span class="grey--text">{{chat.tstamp}}</span> </v-list-tile-title>
-                            <v-list-tile-sub-title>{{chat.message}}</v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                  </template>
+            <v-list two-line subheader v-for="(chat,index) in $store.state.messageChat" :key="index">
+              <template v-for="chat2 in chat">
+                  <template v-if="currentChat.user_id == chat2.user_id">
+                    <template v-if="chat2.type == 'user'">
+                        <v-list-tile avatar>
+                          <v-list-tile-avatar>
+                              <img :src="currentChat.avatar">
+                          </v-list-tile-avatar>
+                          <v-list-tile-content>
+                              <v-list-tile-title>{{chat2.name}} &nbsp;&nbsp; <span class="grey--text">{{chat2.tstamp}}</span> </v-list-tile-title>
+                              <v-list-tile-sub-title>{{chat2.text}}</v-list-tile-sub-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                      </template>
+                      <template v-else>
+                        <v-list-tile avatar>
+                          <v-list-tile-avatar>
+                              <img :src="$store.getters.getAdminFromId(chat2.admin_id)[0].avatar">
+                          </v-list-tile-avatar>
+                          <v-list-tile-content>
+                              <v-list-tile-title>{{$store.getters.getAdminFromId(chat2.admin_id)[0].name}} &nbsp;&nbsp; <span class="grey--text">{{chat2.tstamp}}</span> </v-list-tile-title>
+                              <v-list-tile-sub-title>{{chat2.text}}</v-list-tile-sub-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                      </template>
+                </template>
+              </template>
             </v-list>
     </div>
   <v-card>
   <v-text-field
   label="พิมพ์ข้อความ"
   single-line
-  light
   hide-details
   full-width
   @keyup.enter.native="sendMessage($event.target.value)"
@@ -102,6 +114,7 @@
 </template>
 <script>
 import chat from '../components/chat'
+import { mapGetters } from 'vuex'
 export default {
   sockets:{
     connect: function(){
@@ -109,6 +122,11 @@ export default {
     },
     customEmit: function(val){
       console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
+  async asyncData ({store}) {
+    if (store.state.chat.length == 0) {
+      await store.dispatch('pullLastChat')
     }
   },
   fetch ({store}) {
@@ -132,15 +150,14 @@ export default {
     chat
   },
   mounted() {
-    //do something after mounting vue instance
     this.$options.sockets.admin = (data) => {
       console.log("data: " + JSON.stringify(data))
       let check = 0
-      for (let i =0; i< this.userChat.length; i++) {
+      for (let i = 0; i < this.userChat.length; i++) {
         if(this.userChat[i].room == data.room) {
-          console.log('user.room: ' + this.userChat[i].room + ' data.room: ' + data.room);
+          console.log('user.room: ' + this.userChat[i].room + ' data.room: ' + data.room)
           console.log('true: inde: ' + i);
-           this.userChat.splice(i,1)
+           this.userChat.splice(i, 1)
            this.userChat.unshift(data)
           check = 1
           break;
@@ -153,27 +170,51 @@ export default {
         this.userChat.unshift(data)
       }
       this.chatMessage.push(data)
-      setInterval(() => {
-        this.scrollToEnd()
-      }, 1)
     }
   },
   methods: {
-    setChat (val) {
+    async setChat (val) {
       console.log('test: ' + val);
+      await this.$store.dispatch('getChat', val.user_id)
       this.currentChat = val
+      console.log('val: ' + JSON.stringify(val))
+      console.log('getMessageChat: ' + this.getMessageChat(val.user_id));
+      this.onBottom()
     },
     sendMessage (val) {
-      console.log('val: ' +val + ' currentChat: ' + this.currentChat.room)
-        let data = {room: this.currentChat.room, message:val, tstamp: '16/08/2017 17:15:00', image: "https://upload.wikimedia.org/wikipedia/commons/9/96/User_icon-cp.png", "name": "Admin", "type": "admin"}
-        console.log("data: " + JSON.stringify(data))
-        this.chatMessage.push(data)
-        this.$socket.emit('toUser',data)
+      console.log('adminData: ' + JSON.stringify(this.$store.state.adminData))
+        let data = {
+          admin_id: this.$store.state.adminData.admin_id,
+          user_id: this.currentChat.user_id,
+          message: val,
+          tstamp: '16/08/2017 17:15:00',
+          avatar: this.$store.state.adminData.avatar,
+          name: this.$store.state.adminData.fname + ' ' + this.$store.state.adminData.lname,
+          type: "admin"
+        }
+        let newD = ''
+        newD = this.currentChat
+        // let newData = this.currentChat
+        // newData.text = val
+        this.currentChat.adminText = val
+        this.$store.commit('unshiftChat', this.currentChat)
+        this.$store.dispatch('insertChat', data)
+        this.onBottom()
+        // this.$socket.emit('toUser',data)
     },
-    scrollToEnd () {
-      var container = this.$el.querySelector('#mycontainer')
-      container.scrollTop = container.scrollHeight
+    onBottom () {
+      console.log('onBottom')
+      setTimeout(()=>{
+        var container = this.$el.querySelector('#mycontainer')
+        container.scrollTop = container.scrollHeight
+      }, 70)
     }
+  },
+  computed: {
+    chat () {
+      return this.$store.state.chat
+    },
+    ...mapGetters(['getMessageChat'])
   }
 }
 </script>
