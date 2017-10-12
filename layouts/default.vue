@@ -2,27 +2,23 @@
 <div>
   <v-app id="example-3">
     <div v-if="$store.getters.islogin">
-      <v-navigation-drawer v-model="slideNavLeft" absolute persistent absolute height="100%">
-        <v-card>
-          <v-card-media class="white--text" src="http://images.all-free-download.com/images/graphiclarge/nostalgic_blue_background_06_hd_pictures_169782.jpg">
-            <v-layout row>
-              <div class="ma-3">
-                <v-flex xs1>
-                  <v-avatar side="13px;">
-                    <img :src="$store.state.adminData.avatar" alt="ผู้ใช้" class="ma-4">
-                  </v-avatar>
-                </v-flex>
-              </div>
-              <v-flex xs10>
-                <br>
-                <span class="ml-4">{{$store.state.adminData.fname}} {{$store.state.adminData.lname}}</span><br>
-                <span class="ml-4">{{$store.state.adminData.email}}</span>
-              </v-flex>
-            </v-layout>
-          </v-card-media>
-        </v-card>
-        <v-list class="show-sm-only">
-
+      <v-navigation-drawer v-model="slideNavLeft" app  persistent enable-resize-watcher floating>
+        <v-toolbar flat class="transparent">
+        <v-list class="pa-0">
+          <v-list-tile>
+            <v-list-tile-avatar> <img src="http://images.all-free-download.com/images/graphiclarge/nostalgic_blue_background_06_hd_pictures_169782.jpg"></v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                {{$store.state.adminData.fname}} {{$store.state.adminData.lname}}
+              </v-list-tile-title>
+              <v-list-tile-sub-title>
+                {{$store.state.adminData.email}}
+              </v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+        <v-list class="show-sm-only pa-0" dense>
           <template v-for="(item,i) in menuItem"  >
               <v-divider v-if="item.divider"> </v-divider>
           <v-list-tile :key="i" nuxt :to="item.link">
@@ -40,12 +36,12 @@
           </template>
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar class="primary">
+      <v-toolbar app class="primary">
 
         <v-toolbar-side-icon dark @click.native.stop="slideNavLeft = !slideNavLeft" ></v-toolbar-side-icon>
 
         <v-toolbar-title>
-          <div v-text="$store.getters.page" class="white--text text-xs-center">d</div>
+          <div v-text="$store.getters.page" class="white--text text-xs-center"></div>
         </v-toolbar-title>
         <v-toolbar-items>
           <!-- <v-btn flat @click.native="slideNavRight = !slideNavRight">RightNav</v-btn>       -->
@@ -53,7 +49,9 @@
       </v-toolbar>
 
       <main>
+        <v-content>
         <nuxt />
+        </v-content>
       </main>
     </div>
 

@@ -1,129 +1,44 @@
 <template>
 <div>
 
-
   <v-container grid-list-lg>
-
-<loadData></loadData>
-    <!-- <ul>
-        <li v-for="item in cousesRef" :key="item" >
-
-          ชื่อคอร์ส {{item.key}} {{i}}ผู้สอน {{item.author}} รายละเอียด {{item.description}}
-          <v-btn icon primary @click.native="addLesson(item['.key'])">
-            <v-icon class="white--text">add</v-icon>
-          </v-btn>
-
-
-
-
-
-
-        <ul>
-          <li  v-for="lesson in lessonRef"  v-if="item['.key'] == lesson.courseId">
-                  <td><p>{{lesson.number}}</p></td>
-                  <td><v-btn icon primary @click.native="removeLesson(lesson)">
-                    <v-icon error class="white--text" >remove</v-icon>
-                  </v-btn></td>
-          </li>
-                  </ul>
-
-
-
-
-
-      </li>
-    </ul> -->
-
-
-
-
-
-
-
-
-
-    <!-- <v-layout row wrap>
-      <v-flex xs12 sm6>
-        <h2 class="display-1">  คอร์สเจ้าของร้านทำผม</h2>
-      </v-flex>
-      <v-flex xs12 sm6>
-        <div class="text-xs-right">
-          <v-btn icon primary class="white--text display:inline">
-            <v-icon>add</v-icon>
-          </v-btn>
-          <v-btn icon info class="white--text display:inline">
-            <v-icon>mode_edit</v-icon>
-          </v-btn>
-          <v-btn icon error class="white--text display:inline">
-            <v-icon>delete</v-icon>
-          </v-btn>
-
-        </div>
-      </v-flex>
-    </v-layout>
-
-    <blockquote>Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant
-      invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat.</blockquote>
-
     <div class="text-xs-right">
-      <p style="display:inline">
-        <v-icon large>attach_money</v-icon> 2500</p>&nbsp;&nbsp;
-      <p style="display:inline">
-        <v-icon large>shopping_cart</v-icon>50</p> &nbsp;&nbsp;
-
+      <createCourse></createCourse>
     </div>
-
-    <br>
-    <v-divider></v-divider>
     <br>
     <v-layout row wrap>
-      <template v-for="item in testCouses">
-      <v-flex xs12 sm6>
-        <nuxt-link tag ="span" type="span" :to="'/manage/hello/sawasdee_kub'" style ="cursor:pointer;" >
-        <v-card class ="elevation-1">
-          <v-layout row>
-              <v-flex xs4>
-
-                  <v-card-media height="200px" :src="item.img"> </v-card-media>
-
-
-              </v-flex>
-              <v-flex xs8>
-                  <v-card-title>
-                    <h6 class="headline grey.darken--text">{{item.title}}</h6>
-                    <p class ="item-description" style="-webkit-box-orient:vertical;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                  </v-card-title>
-                  <v-card-actions >
-                  <p><v-icon>access_time</v-icon>&nbsp;2017/7/27&nbsp;20:36</p>&nbsp;&nbsp;
-                  <p><v-icon>remove_red_eye</v-icon>&nbsp;652</p>&nbsp;&nbsp;
-                    <p><v-icon>favorite</v-icon>&nbsp;50</p>&nbsp;&nbsp;
-                </v-card-actions>
-              </v-flex>
-          </v-layout>
-        </v-card>
-        <br>
-      </nuxt-link>
-      </v-flex>
+      <template v-for="data in $store.state.course">
+         <v-flex xs12 lg6>
+           <nuxt-link :to="'/manage/course/' + data.course_id" tag="span" style="cursor:pointer;">
+              <v-card>
+                <v-layout row wrap>
+                  <v-flex lg3 xs12>
+                    <v-card-media :src="data.cover" height="200"></v-card-media>
+                  </v-flex>
+                  <v-flex lg5 xs12>
+                    <v-card-text>
+                      <p class="headline">ddffdหกดหกดหกดหdfs</p>
+                      <p class="grey--text">{{data.fname}} {{data.lname}}</p>
+                    </v-card-text>
+                  </v-flex>
+                  <v-flex lg4 xs12 text-xs-right>
+                    <v-card-text>
+                      <span class="grey--text">{{data.ts}}</span><br>
+                          <div class="mt-5">
+                              <h6><b>ราคา: {{data.price}}</b></h6>
+                          </div>
+                      </v-card-text>
+                  </v-flex>
+                </v-layout>
+              </v-card>
+              <br>
+            </nuxt-link>
+         </v-flex>
       </template>
     </v-layout>
-    <br>
 
 
-    <div class="text-xs-center">
-      <v-pagination v-bind:length.number="4" circle></v-pagination>
-    </div>
-
-
-
-
-
-
-
-    <br>
-    <v-divider></v-divider>
-    <br> -->
-
+    <!-- <loadData></loadData> -->
 
   </v-container>
 </div>
@@ -132,17 +47,12 @@
 
 import axios from 'axios'
 import loadData from '../../components/loadData'
+import createCourse from '../../components/createCourse.vue'
 
 //5555
 export default {
-  middleware : 'load-data',
-  async asyncData ({store}) {
-    if (store.state.course.length == 0) {
-      store.dispatch('pullCourse')
-    }
-    if (store.state.lesson.length == 0) {
-      store.dispatch('pullLesson')
-    }
+  asyncData ({store}) {
+    store.dispatch('pullCourse')
   },
   sockets:{
     connect: function(){
@@ -153,7 +63,8 @@ export default {
     }
   },
   components: {
-    loadData
+    loadData,
+    createCourse
   },
   fetch({
     store

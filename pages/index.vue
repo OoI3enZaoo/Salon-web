@@ -30,7 +30,6 @@
         </v-card-actions>
       </v-card>
 
-<vue-toastr ref="toastr"></vue-toastr>
 
 </div>
     </v-flex>
@@ -88,6 +87,7 @@ export default {
   },
   watch: {
     isLogin: function (val) {
+      console.log('val: ' + val)
       if (val == true) {
         this.$router.push('/home')
       }

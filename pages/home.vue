@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-container fluid grid-list-lg>
+  <v-container  grid-list-lg>
     <v-layout row wrap>
       <boxPrice icon="attach_money" text="รายได้ 7 วันที่ผ่านมา" :price="$store.state.sumPurchase[0]" bgColor="light-green" ></boxPrice>
       <boxPrice icon="attach_money" text="รายได้ 30 วันที่ผ่านมา" :price="$store.state.sumPurchase[1]" bgColor="deep-orange" ></boxPrice>

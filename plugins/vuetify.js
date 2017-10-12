@@ -22,3 +22,6 @@ Quill.register('modules/imageImport', ImageImport)
 Quill.register('modules/imageResize', ImageResize)
 Vue.use(VueQuillEditor)
   Vue.use(Vuetify)
+
+  import VueYouTubeEmbed from 'vue-youtube-embed'
+Vue.use(VueYouTubeEmbed)
