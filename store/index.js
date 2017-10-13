@@ -14,6 +14,7 @@ export default () => {
       page : '',
       member: [],
       lastPurchase: [],
+      courseLastPurchase: [],
       historyPurchase: [],
       course: [],
       lesson: [],

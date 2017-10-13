@@ -34,3 +34,8 @@ export default {
   }
 }
 </script>
+<style>
+  .quill-editor {
+    height: 300px;
+  }
+</style>

@@ -30,7 +30,7 @@
      <hr>
        <!-- ภาพรวม -->
        <v-tabs-content id='tab-0'>
-           <overall></overall>
+           <overall :course="course"></overall>
        </v-tabs-content>
 
        <!-- รายละเอียดเนื้อหา -->
@@ -54,6 +54,7 @@ export default {
   async asyncData ({store, route}) {
     await store.dispatch('pullCourse', route.params.course_id)
     await store.dispatch('pullLesson', route.params.course_id)
+    await store.dispatch('pullUserPurchase', route.params.course_id)
   },
   components: {
     parallax,

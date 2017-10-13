@@ -5,8 +5,8 @@ export default {
   setLastPurchase: (state, data) => state.lastPurchase = data,
   addLastPurchase: (state, data) => state.lastPurchase.push(data),
   addHistoryPurchase: (state, data) => state.historyPurchase.push(data),
-  addCourse: (state, data) => state.course.push(...data),
-  addLesson: (state, data) => state.lesson.push(...data),
+  addCourse: (state, data) => state.course.unshift(...data),
+  addLesson: (state, data) => state.lesson.unshift(...data),
   UpdateStoreLesson: (state, data) => state.lesson.filter(res => data.lesson_id == res.lesson_id ? [res.title = data.title,res.description = data.description, res.cover = data.cover] : ''),
   setadmin: (state, data) => state.admin.push(data),
   addChart: (state, data) => state.chart.push(data),
@@ -20,23 +20,13 @@ export default {
   addAdminData: (state, data) => state.adminData = data,
   addChat: (state, data) => state.chat.push(data),
   unshiftChat: (state, data) => {
-    console.log('val: ' + data.text);
-    for (let i = 0; i< state.chat.length; i++) {
-      if (data.user_id == state.chat[i].user_id) {
-        state.chat.splice(i,1)
-      }
-    }
+    console.log('val: ' + JSON.stringify(data));
     let newData = data
+    state.chat.map((f,i) => data.user_id == f.user_id ? state.chat.splice(i,1) : '')
     newData.text = 'คุณ: ' + data.adminText
     state.chat.unshift(newData)
   },
-  addMessageChat1: (state, data) => {
-    let a = state.messageChat[0]
-    let b = data
-    let c = a.concat(b)
-    state.messageChat = [c]
-  },
-  addMessageChat: (state, data) => state.messageChat.push(data),
+  addMessageChat: (state, data) => state.messageChat.push(...data),
   addNewChat: (state, data) => {
     // console.log('data: ' + JSON.stringify(data))
     // for (let i = 0; i < state.chat.length; i ++) {
@@ -67,5 +57,27 @@ export default {
     payload.description = payload.afterEdit
     delete payload.afterEdit
     state.course.map(res => res.course_id == payload.course_id ? [res = payload,res.isEdit = !res.isEdit] : '')
-  }
+  },
+  UpdateLesson: (state, payload) => state.lesson.map(l => {
+    if (l.lesson_id == payload.lesson_id) {
+      l.title  = payload.title
+      l.description = payload.description
+      l.cover = payload.cover
+    }
+  }),
+  DeleteLesson: (state, lesson_id) => state.lesson.map((l,i) => {
+    if (l.lesson_id == lesson_id) {
+      state.lesson.splice(i,1)
+    }
+  }),
+  UpdateCourse: (state, payload) => state.course.map(l => {
+    if (l.course_id == payload.course_id) {
+      l.title  = payload.title
+      l.description = payload.description
+      l.cover = payload.cover
+      l.price = payload.price
+      l.youtube = payload.youtube
+    }
+  }),
+  AddCourseLastPurchase: (state, data) => state.courseLastPurchase.push(...data)
 }

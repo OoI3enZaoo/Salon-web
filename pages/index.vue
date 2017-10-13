@@ -2,7 +2,6 @@
 <v-app style=" background-image:url('http://www.indietarot.com/wp-content/uploads/2014/07/indie-tarot-website-background2.jpg');  background-repeat: no-repeat;  background-size: cover; ">
 
   <v-container>
-
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <div id="center">
@@ -39,63 +38,34 @@
 </v-app>
 </template>
 <script>
-
+import axios from 'axios'
 export default {
-  data: () => ({
-    user: {
-      username: '',
-      password: ''
-    },
-    defaultImage : ''
-  }),
-
-  mounted(){
-
-      // console.log("cookie: "+document.cookie)
-      // console.log("Islogin: " +this.$store.getters.islogin);
-    // const isLogin = localStorage.getItem("isLogin")
-    // this.$store.commit('setLogin',isLogin)
-    // console.log("localStorage: " + isLogin);
-    // console.log("isLogin: " + this.$store.getters.isLogin);
-    // if(isLogin == true){
-    //     this.$router.push('/home')
-    //   }else{
-    //       this.$router.push('/')
-    //   }
-
-    // if(JSON.parse(localStorage.getItem("isLogin")) == false){
-    //   this.$store.commit('islogin',false)
-    //   this.$router.push('/')
-    //   console.log("INDEX.vue>> false");
-    // }
-    // else{
-    //   this.$store.commit('islogin',true)
-    //     this.$router.push('/home')
-    //     console.log("INDEX.vue>> TRUE");
-    // }
+  data () {
+    return {
+      user: {
+        username: '',
+        password: ''
+      },
+      defaultImage : ''
+    }
   },
   methods: {
     Login () {
       if(this.user.password != '' || this.user.username != '') {
-          this.$store.dispatch('checkLogin', this.user)
+          axios.get('http://localhost:4000/api/checklogin/' + this.user.username + '/' + this.user.password)
+          .then(res => {
+            let result = res.data
+            if (Object.keys(result).length == 1) {
+              this.$store.commit('addAdminData', result[0])
+              this.$store.commit('islogin', true)
+              this.$router.push('/home')
+            }
+          })
           this.user.username = ''
           this.user.password = ''
         } else {
           console.log("enter");
         }
-    }
-  },
-  watch: {
-    isLogin: function (val) {
-      console.log('val: ' + val)
-      if (val == true) {
-        this.$router.push('/home')
-      }
-    }
-  },
-  computed: {
-    isLogin () {
-      return this.$store.state.islogin
     }
   }
 }

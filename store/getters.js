@@ -47,5 +47,15 @@ export default {
     return courseId => state.lesson.filter(item => {
       return courseId == item.course_id
     })
+  },
+  courseLastPurchase (state) {
+    return courseId => state.courseLastPurchase.filter(item => {
+      return courseId == item.course_id
+    })
+  },
+  getCurrentChat (state) {
+    return userId => state.messageChat.filter(item => {
+      return userId == item.user_id
+    })
   }
 }

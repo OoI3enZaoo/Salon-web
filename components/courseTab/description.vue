@@ -14,32 +14,127 @@
                   <v-flex xs8>
                     <p class="headline">{{course.title}}</p>
                     <p>คอร์สโดย {{course.fname}} {{course.lname}}</p>
-                    <p>ราคาที่ขาย {{course.price}}</p>
+                    <template v-if="!isEdit">
+                      <p>ราคาที่ขาย {{course.price}}</p>
+                    </template>
+                    <template v-else>
+                      <v-text-field type="number" label="เปลี่ยนราคา" :value="data.price" v-model="data.price"></v-text-field>
+                    </template>
                   </v-flex>
                   <v-flex text-xs-right>
-                    <v-btn icon dark color="primary"><v-icon>edit</v-icon></v-btn>
+                    <template v-if="!isEdit">
+                      <v-btn icon dark color="primary" @click.native="isEdit = true"><v-icon>edit</v-icon></v-btn>
+                    </template>
+                    <template v-else>
+                      <v-btn icon dark color="primary" @click.native="SaveData"><v-icon>save</v-icon></v-btn>
+                      <v-btn icon dark color="primary" @click.native="isEdit = false"><v-icon>cancel</v-icon></v-btn>
+                    </template>
                   </v-flex>
                 </v-layout>
-                <iframe width="650" height="400" :src="course.youtube"> </iframe>
-              </v-card-text>
+                <hr>
+                <br>
+                <v-layout row wrap>
+                  <v-flex xs6>
+                    <div class="text-xs-center">
+                      <p class="headline info--text">วีดีโอ</p>
+                    </div>
+                    <template v-if="!isEdit">
+                      <iframe width="100%" height="500" :src="course.youtube"> </iframe>
+                    </template>
+                    <template v-else>
+                      <iframe width="100%" height="500" :src="youtube"> </iframe>
+                      <v-text-field label="ใส่ลิงค์ Youtube ที่นี่" :value="youtube" v-model="youtube"></v-text-field>
+                    </template>
+                  </v-flex>
+                  <v-flex xs6>
+                    <div class="text-xs-center">
+                      <p class="headline info--text">ภาพหน้าปก</p>
+                    </div>
+                      <template v-if="!isEdit">
+                        <v-card-media :src="course.cover" height="500"></v-card-media>
+                      </template>
+                      <template v-else>
+                        <base64-upload class="user" style="height: 500px; background-size: cover;"
+                          :imageSrc="data.cover"
+                          @change="onChangeImage"></base64-upload>
+                          <div class="text-xs-center">
+                            <p class="info--warning" style="text-decoration:underline;">กดคลิ๊กที่ภาพเพื่อเปลี่ยนภาพหน้าปก</p>
+                          </div>
+                      </template>
+                  </v-flex>
+                </v-layout>
 
+              </v-card-text>
               <v-card-text>
                 <p class="headline info--text">เนื้อหารายละเอียด</p>
-                <p v-html="course.description"></p>
-                <v-layout><v-flex text-xs-right>
-                  <v-btn dark color="primary">บันทึก</v-btn>
-                </v-flex></v-layout>
+                <template v-if="!isEdit">
+                  <p v-html="course.description"></p>
+                </template>
+                <template v-else>
+                  <quill v-model="data.description"></quill>
+                </template>
+                <v-layout>
+                  <v-flex text-xs-right>
+                    <template v-if="!isEdit">
+                      <v-btn dark color="primary" @click.native="isEdit = true">แก้ไข</v-btn>
+                    </template>
+                    <template v-else>
+                      <v-btn dark color="primary" @click.native="SaveData">บันทึก</v-btn>
+                      <v-btn dark color="primary" @click.native="isEdit = false">ยกเลิก</v-btn>
+                    </template>
+                </v-flex>
+              </v-layout>
               </v-card-text>
             </v-card>
-
         </v-flex>
       </v-layout>
-
     </v-container>
   </div>
 </template>
 <script>
+import quill from '../quill.vue'
+import Base64Upload from 'vue-base64-upload'
 export default {
-  props: ['course']
+  props: ['course'],
+  components: {
+    quill,
+    Base64Upload
+  },
+  created () {
+    this.setData()
+  },
+  data () {
+    return {
+      isEdit: false,
+      data: {},
+      youtube: ''
+    }
+  },
+  methods: {
+    setData () {
+      this.data.title = this.course.title
+      this.data.description = this.course.description
+      this.data.cover = this.course.cover
+      this.data.price = this.course.price
+      this.youtube = this.course.youtube
+      console.log('this.data: ' + JSON.stringify(this.data))
+    },
+    onChangeImage(file) {
+      this.data.cover = 'data:image/jpeg;base64,'+ file.base64;
+    },
+    SaveData () {
+      this.data.youtube = this.youtube
+      this.data.course_id = this.$route.params.course_id
+      this.$store.commit('UpdateCourse', this.data)
+      this.$store.dispatch('UpdateCourse', this.data)
+      this.isEdit = false
+    }
+  },
+  watch: {
+    youtube: function (val) {
+      console.log(val)
+      this.youtube = val.replace('watch?v=','embed/')
+    }
+  }
 }
 </script>

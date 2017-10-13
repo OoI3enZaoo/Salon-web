@@ -1,6 +1,6 @@
 <template>
 <div>
-       <v-navigation-drawer  v-model="slideNavRight"  persistent  height="100%" right>
+       <v-navigation-drawer app v-model="slideNavRight"  persistent  height="100%" right>
                <v-text-field
               label="ค้นหาชื่อผู้ใช้ที่นี่"
               single-line
@@ -57,34 +57,30 @@
 
 
 <template v-if="currentChat">
-    <div id="mycontainer" style="height:80vh; background-color:white; overflow:scroll; overflow-x:hidden;" >
-            <v-list two-line subheader v-for="(chat,index) in $store.state.messageChat" :key="index">
-              <template v-for="chat2 in chat">
-                  <template v-if="currentChat.user_id == chat2.user_id">
-                    <template v-if="chat2.type == 'user'">
-                        <v-list-tile avatar>
-                          <v-list-tile-avatar>
-                              <img :src="currentChat.avatar">
-                          </v-list-tile-avatar>
-                          <v-list-tile-content>
-                              <v-list-tile-title>{{chat2.name}} &nbsp;&nbsp; <span class="grey--text">{{chat2.tstamp}}</span> </v-list-tile-title>
-                              <v-list-tile-sub-title>{{chat2.text}}</v-list-tile-sub-title>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                      </template>
-                      <template v-else>
-                        <v-list-tile avatar>
-                          <v-list-tile-avatar>
-                              <img :src="$store.getters.getAdminFromId(chat2.admin_id)[0].avatar">
-                          </v-list-tile-avatar>
-                          <v-list-tile-content>
-                              <v-list-tile-title>{{$store.getters.getAdminFromId(chat2.admin_id)[0].name}} &nbsp;&nbsp; <span class="grey--text">{{chat2.tstamp}}</span> </v-list-tile-title>
-                              <v-list-tile-sub-title>{{chat2.text}}</v-list-tile-sub-title>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                      </template>
+    <div id="mycontainer" style="height:75vh; background-color:white; overflow:scroll; overflow-x:hidden;" >
+            <v-list two-line subheader v-for="(chat,index) in $store.getters.getCurrentChat(currentChat.user_id)" :key="index">
+              <template v-if="chat.type == 'user'">
+                  <v-list-tile avatar>
+                    <v-list-tile-avatar>
+                        <img :src="currentChat.avatar">
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{currentChat.fname}} {{currentChat.lname}} &nbsp;&nbsp; <span class="grey--text">{{chat.tstamp}}</span> </v-list-tile-title>
+                        <v-list-tile-sub-title>{{chat.text}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
                 </template>
-              </template>
+                <template v-else>
+                  <v-list-tile avatar>
+                    <v-list-tile-avatar>
+                        <img :src="$store.getters.getAdminFromId(chat.admin_id)[0].avatar">
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{$store.getters.getAdminFromId(chat.admin_id)[0].name}} &nbsp;&nbsp; <span class="grey--text">{{chat.tstamp}}</span> </v-list-tile-title>
+                        <v-list-tile-sub-title>{{chat.text}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </template>
             </v-list>
     </div>
   <v-card>
@@ -94,16 +90,10 @@
   hide-details
   full-width
   @keyup.enter.native="sendMessage($event.target.value)"
-
+  style="border: 1px black solid "
   ></v-text-field>
   </v-card>
 </template>
-
-
-
-
-
-
 </div>
 <!-- <div class="text-xs-center" v-else>
   <br>
@@ -182,7 +172,6 @@ export default {
       this.onBottom()
     },
     sendMessage (val) {
-      console.log('adminData: ' + JSON.stringify(this.$store.state.adminData))
         let data = {
           admin_id: this.$store.state.adminData.admin_id,
           user_id: this.currentChat.user_id,
@@ -197,7 +186,7 @@ export default {
         // let newData = this.currentChat
         // newData.text = val
         this.currentChat.adminText = val
-        this.$store.commit('unshiftChat', this.currentChat)
+        this.$store.commit('unshiftChat', newD)
         this.$store.dispatch('insertChat', data)
         this.onBottom()
         // this.$socket.emit('toUser',data)

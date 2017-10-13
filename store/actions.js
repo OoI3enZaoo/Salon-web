@@ -13,7 +13,7 @@ export default {
     })
   },
   async lastPurchase ({commit}) {
-    await axios.get('http://172.104.189.169:4000/api/getcourselist/7')
+    await axios.get('http://172.104.189.169:4000/api/getcoursepurchase/7')
     .then(res=> {
       let result = res.data
       commit('setLastPurchase', result)
@@ -37,7 +37,7 @@ export default {
   },
    pullCourse ({commit, state}) {
     if (state.course.length == 0) {
-      axios.get('http://localhost:4000/api/getcourse')
+      axios.get('http://172.104.189.169:4000/api/getcourse')
       .then(res => {
         let result = res.data
         result.map(r => r.youtube = r.youtube.replace('watch?v=','embed/'))
@@ -51,7 +51,7 @@ export default {
     state.lesson.find(f => f.course_id == courseId ? isCheck = true : '')
     if (isCheck == false) {
       console.log('load lesson from api')
-      axios.get('http://localhost:4000/api/getlesson/' + courseId)
+      axios.get('http://172.104.189.169:4000/api/getlesson/' + courseId)
       .then(res => {
         let result = res.data
         commit('addLesson', result)
@@ -146,16 +146,6 @@ export default {
       commit('addSumPurchase', res.data[0].sum)
     })
   },
-  checkLogin ({commit, dispatch}, payload) {
-    axios.get('http://172.104.189.169:4000/api/checklogin/' + payload.username + '/' + payload.password)
-    .then(res => {
-      let result = res.data
-      if (Object.keys(result).length == 1) {
-        commit('addAdminData', result[0])
-        commit('islogin', true)
-      }
-    })
-  },
   async pullLastChat ({commit}) {
     axios.get('http://172.104.189.169:4000/api/getlastchat/')
     .then (res => {
@@ -180,8 +170,7 @@ export default {
       tstamp: Vue.moment().format('YYYY-MM-DD HH:mm:ss'),
       type: payload.type
     }
-    // console.log('state.messageChat: ' + JSON.stringify(state.messageChat[0].push(data)))
-    commit('addMessageChat1', data)
+    commit('addMessageChat', [data])
     axios.post('http://172.104.189.169:4000/api/postchat', data)
     .then (res => {
       console.log('result: ' + JSON.stringify(res))
@@ -189,30 +178,9 @@ export default {
   },
   async getChat ({commit, state}, userId) {
     let isCheck = false
-    if (state.messageChat.length != 0) {
-      for (let i = 0; i< state.messageChat[0].length; i++) {
-        console.log('user_id: ' + state.messageChat[0][i].user_id + ' userId: ' + userId)
-        if (state.messageChat[0][i].user_id == userId) {
-          isCheck = true
-          console.log('true')
-          break;
-        } else {
-          console.log('false')
-          isCheck = false
-        }
-        if(i == state.messageChat[0].length - 1 && isCheck === false) {
-          console.log('get again')
-          axios.get('http://172.104.189.169:4000/api/getchat/' + userId)
-          .then (res => {
-            let result = res.data
-            let reverse = result.reverse()
-            commit('addMessageChat1', reverse)
-          })
-          break;
-        }
-      }
-    } else {
-      await axios.get('http://172.104.189.169:4000/api/getchat/' + userId)
+    state.messageChat.find(f => f.user_id == userId ? isCheck = true : '')
+    if (isCheck == false) {
+      axios.get('http://172.104.189.169:4000/api/getchat/' + userId)
       .then (res => {
         let result = res.data
         let reverse = result.reverse()
@@ -259,10 +227,41 @@ export default {
       console.log('result: ' + JSON.stringify(res))
     })
   },
-  insertCourse ({commit}, payload) {
-    axios.post('http://localhost:4000/api/insertcourse/', payload)
+  InsertCourse ({commit}, payload) {
+    axios.post('http://172.104.189.169:4000/api/insertcourse/', payload)
     .then (res => {
       console.log('result: ' + JSON.stringify(res))
     })
+  },
+  UpdateLesson ({commit}, payload) {
+    console.log('UpdateLesson: ' + JSON.stringify(payload))
+    axios.post('http://172.104.189.169:4000/api/updatelesson/', payload)
+    .then (res => {
+    })
+  },
+  DeleteLesson ({commit},payload) {
+    const data = {
+      lesson_id: payload
+    }
+    axios.post('http://172.104.189.169:4000/api/deletelesson', data)
+  },
+  InsertLesson ({commit},payload) {
+    console.log('payload: ' + JSON.stringify(payload))
+    axios.post('http://172.104.189.169:4000/api/insertlesson', payload)
+  },
+  UpdateCourse ({commit}, payload) {
+    axios.post('http://172.104.189.169:4000/api/updatecourse', payload)
+    console.log('UpdateCourse: ' + JSON.stringify(payload))
+  },
+  pullUserPurchase ({commit, state}, courseId) {
+    let isCheck = false
+    state.courseLastPurchase.find(f => f.course_id == courseId ? isCheck = true : '')
+    if (isCheck == false) {
+      axios.get('http://172.104.189.169:4000/api/userpurchase_by_course_id/' + courseId)
+      .then(res => {
+        let result = res.data
+        commit('AddCourseLastPurchase', result)
+      })
+    }
   }
 }

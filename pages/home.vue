@@ -43,13 +43,13 @@
               <v-list-tile-action>
                 <v-layout row>
                   <v-flex xs6>
-                    <v-btn icon v-tooltip:top="{html : 'สนทนา'}">
+                    <v-btn icon>
                     <v-icon>chat_bubble</v-icon>
                   </v-btn>
                   </v-flex>
                   <v-flex xs6>
 
-                  <nuxt-link :to="'/users/' + data.user_id" tag="span" style="cursor:pointer" v-tooltip:top="{html : 'รายละเอียด'}"><v-icon>info</v-icon></nuxt-link>
+                  <nuxt-link :to="'/users/' + data.user_id" tag="span" style="cursor:pointer"><v-icon>info</v-icon></nuxt-link>
 
 
                   </v-flex>

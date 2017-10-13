@@ -1,9 +1,7 @@
 <template>
 
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" overlay=false>
-
       <v-btn class="primary white--text" large slot="activator" > สร้างคอร์สใหม่ </v-btn>
-      <form @submit.prevent="Add">
       <v-card>
         <v-toolbar dark class="primary">
           <v-btn icon @click.native="dialog = false" dark>
@@ -29,35 +27,15 @@
                     @change="onChangeImage"></base64-upload>
                 </div>
 
-
-
             <quil v-model="course.description"></quil>
-
-
             <br><br><br><br>
-
-            <v-btn primary type ="submit" :disabled="!fromIsValid" >สร้างคอร์สใหม่</v-btn>
+            <v-btn primary @click.native="Add" :disabled="!fromIsValid" >สร้างคอร์สใหม่</v-btn>
             </v-card-text>
-
-
-      <!-- <ul>
-        <li v-for ="item in adminRef">
-          <v-btn error @click.native="removeItem(item)">ลบ</v-btn>
-           Title > {{item.title }} <br>
-           price > {{item.price }}<br>
-           snippet > {{item.snippet }}<br>
-           description > <span v-html="item.description"></span><br>
-           cover > <div v-if="item.imageCover">
-             <img :src ="item.imageCover" width="500" height="330">
-           </div>
-         </li>
-      </ul> -->
 
           </v-card>
         </v-container>
         <v-divider></v-divider>
       </v-card>
-    </form>
     </v-dialog>
 
   <!-- <div class="quill-editor"
@@ -103,24 +81,16 @@ export default {
         youtube: '',
         ts: ''
       },
-        cover: 'https://static.esea.net/global/images/users/675235.1476314733.jpg',
-        editorOption: {
-          modules: {
-             imageImport: true,
-             imageResize: {
-             displaySize: true
-           }
-           }
-         }
+      cover: 'https://static.esea.net/global/images/users/675235.1476314733.jpg'
     }
   },
   methods :{
-    Add(){
+    Add () {
       this.course.youtube = this.course.youtube.replace('watch?v=','embed/')
       this.course.ts = Vue.moment().format('YYYY-MM-DD HH:mm:ss')
       this.course.course_id = (new Date().getTime())
       this.course.admin_id = this.$store.state.adminData.admin_id
-      this.$store.dispatch('insertCourse', this.course)
+      this.$store.dispatch('InsertCourse', this.course)
       this.course.fname = this.$store.state.adminData.fname
       this.course.lname = this.$store.state.adminData.lname
       this.course.avatar = this.$store.state.adminData.avatar
@@ -131,14 +101,6 @@ export default {
       // adminRef.push(this.course)
       this.dialog = false
     },
-    removeItem(item){
-      adminRef.child(item['.key']).remove()
-    },
-    imageuploaded(res) {
-     if (res.errcode == 0) {
-       this.src = res.data.src;
-     }
-   },
    onChangeImage(file) {
      console.log("fiel.base64: " + file.base64);
      this.course.cover = 'data:image/jpeg;base64,'+file.base64
