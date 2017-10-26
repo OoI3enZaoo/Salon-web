@@ -17,7 +17,7 @@
            <nuxt-link :to="'/manage/course/' + data.course_id" tag="span" style="cursor:pointer;">
               <v-card>
                 <v-layout row wrap>
-                  <v-flex lg3 xs12>
+                  <v-flex lg4 xs12>
                     <v-card-media :src="data.cover" height="200"></v-card-media>
                   </v-flex>
                   <v-flex lg5 xs12>
@@ -26,7 +26,7 @@
                       <p class="grey--text">{{data.fname}} {{data.lname}}</p>
                     </v-card-text>
                   </v-flex>
-                  <v-flex lg4 xs12 text-xs-right>
+                  <v-flex lg3 xs12 text-xs-right>
                     <v-card-text>
                       <span class="grey--text">{{data.ts}}</span><br>
                           <div class="mt-5">

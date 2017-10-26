@@ -53,7 +53,7 @@ export default () => {
         series: []
       },
       sumPurchase: [],
-      chat: [],
+      lastChat: [],
       messageChat: [],
       userCourse: []
     },

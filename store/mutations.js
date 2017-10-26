@@ -18,15 +18,22 @@ export default {
   setLoadChart: (state, data) => state.loadChart = data,
   addSumPurchase: (state, data) => state.sumPurchase.push(data),
   addAdminData: (state, data) => state.adminData = data,
-  addChat: (state, data) => state.chat.push(data),
+  addChat: (state, data) => state.lastChat.push(data),
   unshiftChat: (state, data) => {
     console.log('val: ' + JSON.stringify(data));
     let newData = data
-    state.chat.map((f,i) => data.user_id == f.user_id ? state.chat.splice(i,1) : '')
+    state.lastChat.map((f,i) => data.user_id == f.user_id ? state.lastChat.splice(i,1) : '')
     newData.text = 'คุณ: ' + data.adminText
-    state.chat.unshift(newData)
+    state.lastChat.unshift(newData)
   },
-  addMessageChat: (state, data) => state.messageChat.push(...data),
+  unshiftChatUser: (state, data) => {
+    state.lastChat.map((f,i) => data.user_id == f.user_id ? state.lastChat.splice(i,1) : '')
+    state.lastChat.unshift(data)
+  },
+  addMessageChat: (state, data) => {
+    console.log('addMessageChat: ' + JSON.stringify(data))
+    state.messageChat.push(...data)
+  },
   addNewChat: (state, data) => {
     // console.log('data: ' + JSON.stringify(data))
     // for (let i = 0; i < state.chat.length; i ++) {

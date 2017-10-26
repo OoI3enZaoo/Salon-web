@@ -96,6 +96,7 @@ export default {
       this.course.avatar = this.$store.state.adminData.avatar
       console.log(this.course)
       this.$store.commit('addCourse', [this.course])
+      this.$socket.emit('course', this.course)
       // this.dialog = false
       // this.$store.commit('addCourseList',this.course.name)
       // adminRef.push(this.course)

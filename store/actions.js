@@ -147,6 +147,7 @@ export default {
     })
   },
   async pullLastChat ({commit}) {
+    console.log('pullLastChat')
     axios.get('http://172.104.189.169:4000/api/getlastchat/')
     .then (res => {
       let result = res.data
@@ -166,7 +167,7 @@ export default {
     const data = {
       admin_id: payload.admin_id,
       user_id: payload.user_id,
-      text: payload.message,
+      text: payload.text,
       tstamp: Vue.moment().format('YYYY-MM-DD HH:mm:ss'),
       type: payload.type
     }

@@ -1,6 +1,6 @@
 <template>
 <div>
-       <v-navigation-drawer app v-model="slideNavRight"  persistent  height="100%" right>
+       <v-navigation-drawer v-model="slideNavRight"  persistent  height="100%" right>
                <v-text-field
               label="ค้นหาชื่อผู้ใช้ที่นี่"
               single-line
@@ -10,7 +10,7 @@
               full-width
              ></v-text-field>
                  <v-list two-line>
-                           <template v-for="data in chat" >
+                           <template v-for="data in lastChat" >
                              <v-list-tile avatar @click.native="setChat(data)" @click="">
                                <v-list-tile-avatar>
                                  <img :src="data.avatar"></v-list-tile-avatar>
@@ -26,7 +26,6 @@
                                <v-divider :inset ="true"></v-divider>
                            </template>
                          </v-list>
-
              </v-navigation-drawer>
 
   <v-toolbar class="white" dense standalone fixed-footer v-if="currentChat">
@@ -105,17 +104,14 @@
 <script>
 import chat from '../components/chat'
 import { mapGetters } from 'vuex'
+import Vue from 'vue'
+const moment = require('moment')
+Vue.use(require('vue-moment'), {
+    moment
+})
 export default {
-  sockets:{
-    connect: function(){
-      console.log('socket connected')
-    },
-    customEmit: function(val){
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-    }
-  },
   async asyncData ({store}) {
-    if (store.state.chat.length == 0) {
+    if (store.state.lastChat.length == 0) {
       await store.dispatch('pullLastChat')
     }
   },
@@ -125,13 +121,7 @@ export default {
   data() {
     return {
       slideNavRight: true,
-      userChat: [
-        {"room":"fdgsdfdsf","message":"สวัสดีครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Ben","type":"user"},
-        {"room":"-KrZTk-lCaBVZI2FH1d7","message":"แอดมินครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Max","type":"user"},
-        {"room":"bebeb","message":"มีอะไรจะปรึกษา","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Loft","type":"user"},
-        {"room":"sdfsdfdsf","message":"สอบถามหน่อย","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Au","type":"user"},
-        {"room":"asdsese","message":"ครับ","tstamp":"16/08/2017 17:15:00","image":"https://www.shareicon.net/download/2016/05/29/772558_user_512x512.png","name":"Peet","type":"user"}
-      ],
+      userChat: [],
       currentChat: false,
       chatMessage: []
     }
@@ -139,29 +129,7 @@ export default {
   components: {
     chat
   },
-  mounted() {
-    this.$options.sockets.admin = (data) => {
-      console.log("data: " + JSON.stringify(data))
-      let check = 0
-      for (let i = 0; i < this.userChat.length; i++) {
-        if(this.userChat[i].room == data.room) {
-          console.log('user.room: ' + this.userChat[i].room + ' data.room: ' + data.room)
-          console.log('true: inde: ' + i);
-           this.userChat.splice(i, 1)
-           this.userChat.unshift(data)
-          check = 1
-          break;
-        }
-        else {
-          console.log('false')
-        }
-      }
-      if(check == 0){
-        this.userChat.unshift(data)
-      }
-      this.chatMessage.push(data)
-    }
-  },
+
   methods: {
     async setChat (val) {
       console.log('test: ' + val);
@@ -175,10 +143,11 @@ export default {
         let data = {
           admin_id: this.$store.state.adminData.admin_id,
           user_id: this.currentChat.user_id,
-          message: val,
-          tstamp: '16/08/2017 17:15:00',
+          text: val,
+          tstamp: Vue.moment().format('YYYY-MM-DD HH:mm:ss'),
           avatar: this.$store.state.adminData.avatar,
-          name: this.$store.state.adminData.fname + ' ' + this.$store.state.adminData.lname,
+          fname: this.$store.state.adminData.fname,
+          lname: this.$store.state.adminData.lname,
           type: "admin"
         }
         let newD = ''
@@ -189,7 +158,7 @@ export default {
         this.$store.commit('unshiftChat', newD)
         this.$store.dispatch('insertChat', data)
         this.onBottom()
-        // this.$socket.emit('toUser',data)
+        this.$socket.emit('toUser',data)
     },
     onBottom () {
       console.log('onBottom')
@@ -200,10 +169,9 @@ export default {
     }
   },
   computed: {
-    chat () {
-      return this.$store.state.chat
-    },
-    ...mapGetters(['getMessageChat'])
+    lastChat () {
+      return this.$store.state.lastChat
+    }
   }
 }
 </script>

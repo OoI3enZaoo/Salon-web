@@ -14,9 +14,10 @@ if (process.BROWSER_BUILD) {
   Vue.use(VueFire)
   Vue.use(VueAxios, axios)
 
-  Vue.use(VueSocketio, 'https://agile-citadel-43436.herokuapp.com/')
-  // Vue.use(VueSocketio, 'http://localhost:3000/',store)
+
 }
+// Vue.use(VueSocketio, 'http://172.104.189.169:4000')
+Vue.use(VueSocketio, 'http://localhost:4000')
 import VueQuillEditor  from 'vue-quill-editor/ssr'
 Quill.register('modules/imageImport', ImageImport)
 Quill.register('modules/imageResize', ImageResize)

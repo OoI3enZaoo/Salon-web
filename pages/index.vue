@@ -55,6 +55,7 @@ export default {
           axios.get('http://localhost:4000/api/checklogin/' + this.user.username + '/' + this.user.password)
           .then(res => {
             let result = res.data
+            console.log(result);
             if (Object.keys(result).length == 1) {
               this.$store.commit('addAdminData', result[0])
               this.$store.commit('islogin', true)

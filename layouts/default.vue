@@ -60,6 +60,15 @@
           <nuxt />
       </main>
     </div>
+    <v-snackbar
+    right
+      :timeout="6000"
+      color="cyan darken-2"
+      v-model="snackbar"
+    >
+      {{textNotification}}
+      <v-btn dark flat @click.native="snackbar = false">ปิด</v-btn>
+    </v-snackbar>
 
   </v-app>
 </div>
@@ -70,10 +79,15 @@ import {
 } from 'vuex'
 
 export default {
-
-  name: "example-3",
-
-  data() {
+  mounted() {
+    this.$options.sockets.admin = (data) => {
+      this.$store.commit('unshiftChatUser', data)
+      this.$store.commit('addMessageChat', [data])
+      this.textNotification = 'คุณได้รับข้อความใหม่จาก ' + data.fname + ' ' + data.lname
+      this.snackbar = true
+    }
+  },
+  data () {
     return {
       slideNavLeft: true,
 
@@ -103,7 +117,9 @@ export default {
           link: "/logout",
           divider : 'true'
         }
-      ]
+      ],
+      snackbar: false,
+      textNotification: ''
     }
   }
 
