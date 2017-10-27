@@ -52,7 +52,7 @@ export default {
   methods: {
     Login () {
       if(this.user.password != '' || this.user.username != '') {
-          axios.get('http://localhost:4000/api/checklogin/' + this.user.username + '/' + this.user.password)
+          axios.get('http://172.104.189.169:4000/api/checklogin/' + this.user.username + '/' + this.user.password)
           .then(res => {
             let result = res.data
             console.log(result);

@@ -14,7 +14,10 @@
       </v-layout>
     </parallax>
 <br>
-  <v-container grid-list-lg>
+<template v-for="a in 5">
+  <expansion :data="a"></expansion>
+</template>
+  <!-- <v-container grid-list-lg>
     <v-layout>
       <v-flex xs12>
         <v-card>
@@ -90,7 +93,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-container>
+  </v-container> -->
   </div>
 </template>
 <script>
@@ -98,6 +101,7 @@ import parallax from '../../../../../components/parallax.vue'
 import mycourse from '../index.vue'
 import Base64Upload from 'vue-base64-upload'
 import quill from '../../../../../components/quill.vue'
+import expansion from '../../../../../components/lesson/expansion.vue'
 export default {
   async asyncData ({store, route}) {
     await store.dispatch('pullCourse', route.params.course_id)
@@ -110,7 +114,8 @@ export default {
   components: {
     parallax,
     Base64Upload,
-    quill
+    quill,
+    expansion
   },
   data () {
     return {

@@ -15,12 +15,9 @@
             </v-card-title>
             <v-card-text>
                 <v-text-field v-model="lesson.title" label="ชื่อบทเรียน"></v-text-field><br>
-                <base64-upload style="width: 300px;"
-                  imageSrc="https://t3.ftcdn.net/jpg/00/80/37/56/240_F_80375661_O3L2isjdQdnloGOANUFe5NB99nMQMpra.jpg"
-                  @change="onChangeImage"></base64-upload><br>
-                <quill v-model="lesson.description"></quill>
-                <br><br><br><br>
-                <v-btn color="primary" :disabled ="!fromIsValid" @click.native="AddLesson">สร้างบทเรียน</v-btn>
+
+                <MultipleFileUploader @myupload="myupload"  successMessagePath="" errorMessagePath=""></MultipleFileUploader>
+
             </v-card-text>
           </v-card>
         </v-container>
@@ -29,19 +26,18 @@
     </v-dialog>
 </template>
 <script>
- import quill from './quill.vue'
-import Base64Upload from 'vue-base64-upload'
+
 import axios from 'axios'
 import Vue from 'vue'
+import MultipleFileUploader from '../lesson/MultipleFileUploader.vue'
 const moment = require('moment')
 Vue.use(require('vue-moment'), {
     moment
 })
 export default {
   components: {
-   Base64Upload,
-   quill
- },
+    MultipleFileUploader
+  },
   data() {
     return {
       dialog: false,
@@ -74,14 +70,19 @@ export default {
       // this.lesson.title = ''
       // this.lesson.description = ''
       // this.lesson.cover = ''
-    }
-  },
- computed: {
-   fromIsValid () {
-     return this.lesson.title !== ''
-     && this.lesson.description !== ''
-     && this.lesson.cover !== ''
-   }
- }
+    },
+    myupload (str) {
+        console.log('createcourse: ' + JSON.stringify(str))
+        this.dialog = false
+        let data = {
+          title: this.lesson.title,
+          files: str.files,
+          data: str.data
+        }
+        this.$emit('mylesson', data)
+        // this.content.title = ''
+        // this.content.description = ''
+      }
+  }
 }
 </script>

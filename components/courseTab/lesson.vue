@@ -3,19 +3,15 @@
     <v-container grid-list-lg>
         <template v-if="lesson.length > 0">
               <div class="text-xs-right ">
-                <createLesson></createLesson>
+
+                <createLesson @mylesson="getDataLesson"></createLesson>
               </div>
               <v-layout row wrap>
-                <template v-for="data in lesson">
-                    <v-flex xs12 sm6 md4>
-                      <nuxt-link :to="'/manage/course/' + $route.params.course_id + '/' + data.lesson_id" tag="span" style="cursor:pointer;">
-                        <v-card>
-                          <v-card-media :src = "data.cover" height="200"></v-card-media>
-                          <v-card-title>{{data.title}}</v-card-title>
-                        </v-card>
-                      </nuxt-link>
-                    </v-flex>
-                </template>
+                <v-flex xs12>
+                  <template v-for="data in $store.getters.lessonFromCourseId(this.$route.params.course_id)">
+                      <expansion :data="data"></expansion>
+                  </template>
+                </v-flex>
               </v-layout>
           </template>
           <template v-else>
@@ -30,7 +26,7 @@
                             </v-flex>
                             <v-flex xs12 md5 text-md-left text-xs-center mt-4>
                               <h5>คุณยังไม่มีบทเรียนเลย ไม่ลองสร้างสักบทเรียนล่ะ</h5>
-                                <createLesson></createLesson>
+                                <createLesson @mylesson="getDataLesson"></createLesson>
                             </v-flex>
                           </v-layout>
                       </div>
@@ -44,10 +40,27 @@
   </div>
 </template>
 <script>
-import createLesson from '../createLesson.vue'
+import createLesson from '../lesson/createLesson.vue'
+import expansion from '../lesson/expansion.vue'
+import Vue from 'vue'
+const moment = require('moment')
+Vue.use(require('vue-moment'), {
+    moment
+})
 export default {
   components: {
-    createLesson
+    createLesson,
+    expansion
+  },
+  methods: {
+    getDataLesson (str) {
+      console.log('getDataLesson')
+      let data = str
+      data.course_id = this.$route.params.course_id
+      data.tstamp = Vue.moment().format('YYYY-MM-DD HH:mm:ss')
+      data.admin_id = this.$store.state.adminData.admin_id
+      this.$store.dispatch('AddNewLesson', data)
+    }
   },
   computed: {
     lesson () {

@@ -93,9 +93,6 @@ export default {
    if (store.state.sumPurchase.length == 0) {
      await store.dispatch('pullSumPurchase')
    }
-
-
-
  },
 
  methods: {
@@ -124,9 +121,6 @@ export default {
     lastPurchase () {
       return this.$store.state.lastPurchase
     }
-  },
-  mounted() {
-
   }
 }
 </script>

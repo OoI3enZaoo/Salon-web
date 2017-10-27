@@ -6,7 +6,7 @@ import VueFire from 'vuefire'
 import { ImageImport } from '../modules/ImageImport'
  import { ImageResize } from '../modules/ImageResize'
 import VueSocketio from 'vue-socket.io'
-
+import store from '../store'
 require('moment/locale/es')
 
 if (process.BROWSER_BUILD) {
@@ -17,7 +17,7 @@ if (process.BROWSER_BUILD) {
 
 }
 // Vue.use(VueSocketio, 'http://172.104.189.169:4000')
-Vue.use(VueSocketio, 'http://localhost:4000')
+Vue.use(VueSocketio, 'http://localhost:4000', store)
 import VueQuillEditor  from 'vue-quill-editor/ssr'
 Quill.register('modules/imageImport', ImageImport)
 Quill.register('modules/imageResize', ImageResize)

@@ -1,8 +1,8 @@
 export default function ({store,isServer,req,route,redirect}){
   if (isServer && !req) return
-  console.log('islogin: ' + store.getters.islogin)
+  console.log('islogin: ' + store.state.islogin)
 
-  if (store.getters.islogin == false) {
+  if (store.state.islogin == false) {
     if (route.path != '/') {
       redirect('/')
     }
