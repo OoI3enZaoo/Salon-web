@@ -86,6 +86,16 @@ export default {
       this.textNotification = 'คุณได้รับข้อความใหม่จาก ' + data.fname + ' ' + data.lname
       this.snackbar = true
     }
+    this.$options.sockets.purchaseCourse = (data) => {
+      this.textNotification = 'คุณได้รับข้อความใหม่จาก ' + data.fname + ' ' + data.lname
+      this.snackbar = true
+    }
+    this.$options.sockets.viewlesson = (data) => {
+      this.$store.commit('addViewAmountLesson', data.lesson_id)
+    }
+    this.$options.sockets.favoritelesson = (data) => {
+      this.$store.commit('addFavoriteAmountLesson', data.lesson_id)
+    }
   },
   data () {
     return {

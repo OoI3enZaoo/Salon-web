@@ -129,7 +129,7 @@ export default {
   methods: {
     openFile (name) {
       console.log(' filename: ' + name + ' contentId: ' + this.contentId)
-      let url = 'http://localhost:4000/api/getfile/' + name
+      let url = 'http://172.104.189.169:4000/api/getfile/' + name
       window.open(url, '_blank');
     },
     Edit () {

@@ -327,15 +327,20 @@ export default {
       payload.lname = state.adminData.lname
       payload.avatar = state.adminData.avatar
       payload.view = 0
+      payload.video = null
+      commit('addCourse', [payload])
       axios.post('http://172.104.189.169:4000/api/courseupload/' + result.course_id, filesData)
       .then((res) => {
-        console.log('successMsg: ' + res.data.video)
-        payload.video = res.data.video
-        commit('addCourse', [payload])
+        console.log('successMsg: ')        
+        state.course.map(c => c.course_id == payload.course_id ? c.video = res.data.video : '')
       })
       .catch((error) => {
         console.log('error');
       })
     })
   },
+  DeleteCourse ({commit}, payload) {
+    commit('DeleteCourse', payload.course_id)
+    axios.post('http://localhost:4000/api/deletecourse', payload)
+  }
 }

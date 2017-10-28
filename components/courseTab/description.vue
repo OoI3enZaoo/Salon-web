@@ -29,6 +29,20 @@
                       <v-btn icon dark color="primary" @click.native="SaveData"><v-icon>save</v-icon></v-btn>
                       <v-btn icon dark color="primary" @click.native="isEdit = false"><v-icon>cancel</v-icon></v-btn>
                     </template>
+                    <v-dialog v-model="dialog" persistent>
+                      <v-btn icon dark color="error" slot="activator"><v-icon>delete</v-icon></v-btn>
+                      <v-card>
+                        <v-card-title class="headline">ลบคอร์ส</v-card-title>
+                        <v-card-text>กรอกชื่อคอร์ส(<span style="background-color: #FFCDD2; border: 2px solid #FFCDD2; border-radius:5px; color:blue;">{{course.title}}</span>)ของคุณเพื่อเป็นการยืนยันการลบ
+                          <v-text-field v-model="courseConfirm" hint="ชื่อคอร์ส"></v-text-field>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn outline color="primary" @click.native="dialog = false">ยกเลิก</v-btn>
+                          <v-btn color="error" :disabled="courseConfirm !== course.title" @click.native="remove">ลบ</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
                   </v-flex>
                 </v-layout>
                 <hr>
@@ -109,6 +123,8 @@ export default {
   data () {
     return {
       isEdit: false,
+      dialog: false,
+      courseConfirm: '',
       data: {},
       video: {
         sources: [{
@@ -142,6 +158,13 @@ export default {
       this.$store.commit('UpdateCourse', this.data)
       this.$store.dispatch('UpdateCourse', this.data)
       this.isEdit = false
+    },
+    remove () {
+      const data = {
+        course_id: this.$route.params.course_id
+      }
+      this.$store.dispatch('DeleteCourse', data)
+      this.$router.push('/manage')
     }
   }
 }
