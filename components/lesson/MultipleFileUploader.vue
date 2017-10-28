@@ -10,7 +10,7 @@
                   <div class="uploadBoxMain" v-if="!itemsAdded">
                       <div class="form-group">
                           <div class="dropArea" @ondragover="onChange">
-                              <input type="file" id="items" name="items[]" required multiple @change="onChange">
+                              <input type="file" id="items" name="items[]" multiple @change="onChange">
                               <p class="help-block">วางไฟล์วีดีโอของคุณที่นี่</p>
                           </div>
                       </div>
@@ -50,7 +50,7 @@
                   </div>
               </v-card>
               <div class="text-xs-right mt-2">
-                <v-btn primary type="submit"  class="btn btn-primary btn-black btn-round" :disabled="itemsAdded < minItems || itemsAdded > maxItems">
+                <v-btn primary type="submit"  class="btn btn-primary btn-black btn-round" >
                     สร้างบทเรียน
                 </v-btn>
               </div>

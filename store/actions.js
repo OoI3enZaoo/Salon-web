@@ -252,7 +252,7 @@ export default {
     state.lesson.find(f => f.course_id == courseId ? isCheck = true : '')
     if (isCheck == false) {
       console.log('load lesson from api')
-      axios.get('http://localhost:4000/api/getlesson/' + courseId)
+      axios.get('http://172.104.189.169:4000/api/getlesson/' + courseId)
       .then(res => {
         let result = res.data
         commit('addLesson', result)
@@ -263,7 +263,7 @@ export default {
     console.log('AddNewLesson: ' + JSON.stringify(payload))
     let filesData = payload.data
     delete payload["data"]
-    axios.post('http://localhost:4000/api/insertlesson', payload)
+    axios.post('http://172.104.189.169:4000/api/insertlesson', payload)
     .then (res => {
       let result = res.data
       console.log('result: ' + JSON.stringify(result))
@@ -272,8 +272,8 @@ export default {
       payload.love = 0
       payload.fname = state.adminData.fname
       payload.lname = state.adminData.lname
-      payload.avatar = state.adminData.user_img
-      axios.post('http://localhost:4000/api/myupload/' + result.lesson_id, filesData)
+      payload.avatar = state.adminData.avatar
+      axios.post('http://172.104.189.169:4000/api/myupload/' + result.lesson_id, filesData)
       .then((res) => {
         console.log('successMsg: ' + res.data.video)
         payload.video = res.data.video
@@ -286,10 +286,21 @@ export default {
   },
   editLesson ({commit, state}, payload) {
     console.log('editLesson')
-    axios.post('http://localhost:4000/api/editlesson/' + payload.lesson_id + '/' + payload.title , payload.data)
+    axios.post('http://172.104.189.169:4000/api/editlesson/' + payload.lesson_id + '/' + payload.title , payload.data)
     .then((res) => {
       console.log('success editlesson')
       state.lesson.map(l => l.lesson_id == payload.lesson_id ? [l.video = res.data.video,l.title = payload.title] : '')
+    })
+    .catch((error) => {
+      console.log('error');
+    })
+  },
+  editTitleLesson ({commit, state}, payload) {
+    console.log('editTitleLesson')
+    axios.post('http://172.104.189.169:4000/api/edittitlelesson/' , payload)
+    .then((res) => {
+      console.log('success editTitleLesson')
+      state.lesson.map(l => l.lesson_id == payload.lesson_id ? l.title = payload.title : '')
     })
     .catch((error) => {
       console.log('error');
@@ -300,6 +311,6 @@ export default {
       lesson_id: payload
     }
     state.lesson.map((l,i) => l.lesson_id == payload.lesson_id ? state.lesson.splice(i, 1) : '')
-    axios.post('http://localhost:4000/api/deletelesson', data.lesson_id)
+    axios.post('http://172.104.189.169:4000/api/deletelesson', data.lesson_id)
   },
 }

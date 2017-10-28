@@ -19,8 +19,8 @@ importScripts('workbox-sw.prod.v1.3.0.js');
  */
 const fileManifest = [
   {
-    "url": "/_nuxt/app.3b8ace29c2c73d9a0650.js",
-    "revision": "069dc571698ba2379853e2f1b2f634c9"
+    "url": "/_nuxt/app.f4879b330255a39ef102.js",
+    "revision": "31b159c8b57e5968e477548a8ae6d3dc"
   },
   {
     "url": "/_nuxt/common.710d6b607581cc17a8a8.js",
@@ -35,8 +35,8 @@ const fileManifest = [
     "revision": "2a15766331046c84fc0c6fb90c76f5b2"
   },
   {
-    "url": "/_nuxt/manifest.aaa566377c771e9512fe.js",
-    "revision": "79f8735b3d4cf6a4822973a4319423fe"
+    "url": "/_nuxt/manifest.c810280644e618c968d5.js",
+    "revision": "bccb343652a995abe142c34081d1b1b3"
   },
   {
     "url": "/_nuxt/pages/home.e3297259e62e18bf02d8.js",
@@ -51,12 +51,12 @@ const fileManifest = [
     "revision": "a6a2d41661e4b099bbd220704a9e8920"
   },
   {
-    "url": "/_nuxt/pages/manage\\course\\_course_id\\_lesson_id\\index.5cc20606ec7e1e3b9da8.js",
-    "revision": "865ca19a1eb6a2a7774a229e31279784"
+    "url": "/_nuxt/pages/manage\\course\\_course_id\\_lesson_id\\index.326385b7bb4bb6215dac.js",
+    "revision": "e9595bf98e45e31dfcaa7dab0c19cacc"
   },
   {
-    "url": "/_nuxt/pages/manage\\course\\_course_id\\index.aa0afbc9097c5dd922fc.js",
-    "revision": "3b708142b1b200b7429ad902034067eb"
+    "url": "/_nuxt/pages/manage\\course\\_course_id\\index.9db64b0bc26f6c11bed7.js",
+    "revision": "240403a5a020d3962fcc0a7f343423cb"
   },
   {
     "url": "/_nuxt/pages/manage\\index.8fa0a148e67e34a4bbd3.js",

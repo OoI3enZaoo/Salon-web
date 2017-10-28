@@ -169,7 +169,7 @@ video::-webkit-media-controls-enclosure {
     <div id="app">
         <div class="container">
             <div class="__cov-video-container" @mouseenter="mouseEnterVideo" @mouseleave="mouseLeaveVideo">
-                <video :class="{ 'hide-cursor': !state.contrlShow }" :src="'http://localhost:4000/api/getfile/' + videoname" class="__cov-video" :poster="options.poster">
+                <video :class="{ 'hide-cursor': !state.contrlShow }" :src="'http://172.104.189.169:4000/api/getfile/' + videoname" class="__cov-video" :poster="options.poster">
                     <!-- <source v-for="source in sources" :src="'http://localhost:4000/api/getfile/' + $store.getters.lessonFromId(lessonId)[0].video" :type="source.type">
 
                     </source> -->

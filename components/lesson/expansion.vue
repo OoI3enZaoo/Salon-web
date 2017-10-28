@@ -1,84 +1,88 @@
 <template>
-  <div>
-    <v-flex xs12>
-      <v-expansion-panel   class="elevation-4"  @click.native="checkbug">
-            <v-expansion-panel-content>
-                <div slot="header">
-                <v-container>
-                    <v-layout>
-                      <v-flex xs10>
-                        <template v-if="!isEdit">
-                          <span class="grey--text">{{data.title}}</span><br>
-                        </template>
-                        <template v-else>
-                          <v-text-field :value="data.title" v-model="data.title" label="หัวข้อ"></v-text-field>
-                        </template>
-                      </v-flex>
-                      <v-flex xs2 text-xs-right>
-                        <span class="grey--text">{{data.tstamp}}</span>
-                      </v-flex>
-                    </v-layout>
-                </v-container>
-              </div>
-              <v-card>
-                <v-card-text>
-                  <v-layout>
-                    <v-flex text-xs-left>
-                      <div class="mt-3"><v-icon>fa-link</v-icon>&nbsp;&nbsp;<a  @click="openFile(data.video)"><span class="blue--text"  style="cursor:pointer;">ดาวน์โหลดวีดีโอ {{data.video}}</span></a></div>
-                    </v-flex>
-                    <v-flex text-xs-right>
-                      <template v-if="!isEdit">
-                          <v-btn primary @click.native="Edit"><v-icon dark>edit</v-icon>&nbsp;แก้ไข</v-btn>
-                      </template>
-                      <template v-else>
-                        <v-btn primary @click.native="Close"><v-icon dark>close</v-icon>&nbsp;ปิด</v-btn>
-                      </template>
-                      <v-dialog v-model="dialog" persistent>
-                        <v-btn error slot="activator" ><v-icon dark>delete</v-icon>&nbsp;ลบ</v-btn>
-                        <v-card>
-                          <v-card-title class="headline">การลบบทเรียน</v-card-title>
-                          <v-card-text>คุณแน่ใจใช่ไหมว่าจะลบบทเรียนนี้ออกจากระบบ</v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="green darken-1" flat @click.native="dialog = false">เฮ้ย อย่าเพึง</v-btn>
-                            <v-btn error flat @click.native="Delete">ลบเลย</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
 
-                    </v-flex>
-                  </v-layout>
+    <v-flex xs6>
+      <v-card>
+        <v-card-text>
+          <v-list>
+            <v-subheader>อันดับที่ {{number}}</v-subheader>
+            <v-list-tile>
+              <v-list-tile-avatar>
+                <img :src="data.avatar">
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title v-text="data.fname + ' ' + data.lname"> </v-list-tile-title>
+                <v-list-tile-sub-title>{{data.tstamp | moment('from','now', true)}}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-list-tile-action-text>
                   <template v-if="!isEdit">
-                      <my-video ref="myvideo"  :videoname="data.video" :options="video.options" :lessonId = "data.lesson_id" ></my-video>
-
+                    <v-tooltip top>
+                      <v-btn icon primary @click.native="Edit" slot="activator"><v-icon dark>edit</v-icon></v-btn>
+                      <span>แก้ไข</span>
+                    </v-tooltip>
                   </template>
                   <template v-else>
-                      <MultipleFileUploader ref="upload" @myupload="myupload"  successMessagePath="" errorMessagePath=""></MultipleFileUploader>
+                    <v-tooltip top>
+                      <v-btn icon primary @click.native="Close" slot="activator"><v-icon dark>close</v-icon></v-btn>
+                      <span>ปิด</span>
+                    </v-tooltip>
                   </template>
-                </v-card-text>
-              </v-card>
-          </v-expansion-panel-content>
-      </v-expansion-panel>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <v-dialog v-model="dialog" persistent>
+                    <v-btn icon error slot="activator" ><v-icon dark>delete</v-icon></v-btn>
+                    <v-card>
+                      <v-card-title class="headline">การลบบทเรียน</v-card-title>
+                      <v-card-text>คุณแน่ใจใช่ไหมว่าจะลบบทเรียนนี้ออกจากระบบ</v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="green darken-1" flat @click.native="dialog = false">เฮ้ย อย่าเพึง</v-btn>
+                        <v-btn error flat @click.native="Delete">ลบเลย</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-list-tile-action-text>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+          <v-card-title>
+            <template v-if="!isEdit">
+              <h6>{{data.title}}</h6>
+            </template>
+            <template v-else>
+              <v-text-field :value="data.title" v-model="data.title" label="หัวข้อ"></v-text-field>
+            </template>
+          </v-card-title>
+          <div class="ml-3"><v-icon primary>fa-link</v-icon>&nbsp;&nbsp;<a  @click="openFile(data.video)"><span class="blue--text"  style="cursor:pointer;">ดาวน์โหลดวีดีโอ {{data.video}}</span></a></div>
+          <template v-if="!isEdit">
+              <my-video ref="myvideo"  :videoname="data.video" :options="video.options" :lessonId = "data.lesson_id" ></my-video>
+          </template>
+          <template v-else>
+              <MultipleFileUploader ref="upload" @myupload="myupload"  successMessagePath="" errorMessagePath=""></MultipleFileUploader>
+          </template>
+          <div class="ml-3">
+            <v-icon>remove_red_eye</v-icon> {{data.view}} &nbsp;&nbsp;&nbsp; <v-icon>favorite</v-icon> {{data.love}}
+          </div>
+        </v-card-text>
+      </v-card>
     </v-flex>
-  </div>
+
 </template>
 <script>
 import myVideo from '../myvideo.vue'
-import VueDPlayer from 'vue-dplayer'
 import MultipleFileUploader from './MultipleFileUploader.vue'
+import Vue from 'vue'
 export default {
-  props: ['data'],
+  props: ['data', 'number'],
   components: {
     myVideo,
-    MultipleFileUploader,
-    'd-player': VueDPlayer
+    MultipleFileUploader
   },
   data () {
     return {
       dialog: false,
       video: {
         sources: [{
-            src: 'http://localhost:4000/api/getfile/' + this.data.video,
+            src: 'http://172.104.189.169:4000/api/getfile/' + this.data.video,
             type: 'video/mp4'
         }],
         options: {
@@ -126,14 +130,24 @@ export default {
       this.dialog = false
     },
     myupload (str) {
+      console.log('myupload: ' + JSON.stringify(str))
       this.isEdit = false
-      let data = {
-        title: this.data.title,
-        files: str.files,
-        data: str.data,
-        lesson_id: this.data.lesson_id
+      if (str.files.length == 0) {
+        let data = {
+          title: this.data.title,
+          lesson_id: this.data.lesson_id
+        }
+        this.$store.dispatch('editTitleLesson', data)
+      } else {
+        let data = {
+          title: this.data.title,
+          files: str.files,
+          data: str.data,
+          lesson_id: this.data.lesson_id
+        }
+        this.$store.dispatch('editLesson', data)
       }
-      this.$store.dispatch('editLesson', data)
+
     },
     checkbug () {
       console.log(this.$refs.upload)

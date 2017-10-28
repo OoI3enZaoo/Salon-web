@@ -7,11 +7,9 @@
                 <createLesson @mylesson="getDataLesson"></createLesson>
               </div>
               <v-layout row wrap>
-                <v-flex xs12>
-                  <template v-for="data in $store.getters.lessonFromCourseId(this.$route.params.course_id)">
-                      <expansion :data="data"></expansion>
+                  <template v-for="(data, i) in $store.getters.lessonFromCourseId(this.$route.params.course_id)">
+                      <expansion :data="data" :number="i+1"></expansion>
                   </template>
-                </v-flex>
               </v-layout>
           </template>
           <template v-else>
