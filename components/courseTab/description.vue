@@ -6,7 +6,7 @@
             <v-card>
               <v-card-text>
                 <v-layout>
-                  <v-flex xs2>
+                  <v-flex xs4 sm3 md2>
                     <v-avatar size="80px">
                       <img :src="course.avatar" alt="avatar" >
                     </v-avatar>
@@ -34,7 +34,7 @@
                 <hr>
                 <br>
                 <v-layout row wrap>
-                  <v-flex xs6>
+                  <v-flex xs12 sm12 md6>
                     <div class="text-xs-center">
                       <p class="headline info--text">วีดีโอ</p>
                     </div>
@@ -47,7 +47,7 @@
                       <!-- <v-text-field label="ใส่ลิงค์ Youtube ที่นี่" :value="youtube" v-model="youtube"></v-text-field> -->
                     </template>
                   </v-flex>
-                  <v-flex xs6>
+                  <v-flex xs12 sm12 md6>
                     <div class="text-xs-center">
                       <p class="headline info--text">ภาพหน้าปก</p>
                     </div>

@@ -262,21 +262,23 @@ export default {
     console.log('AddNewLesson: ' + JSON.stringify(payload))
     let filesData = payload.data
     delete payload["data"]
+    payload.view = 0
+    payload.love = 0
+    payload.fname = state.adminData.fname
+    payload.lname = state.adminData.lname
+    payload.avatar = state.adminData.avatar
+
     axios.post('http://172.104.189.169:4000/api/insertlesson', payload)
     .then (res => {
       let result = res.data
       console.log('result: ' + JSON.stringify(result))
       payload.lesson_id = result.lesson_id
-      payload.view = 0
-      payload.love = 0
-      payload.fname = state.adminData.fname
-      payload.lname = state.adminData.lname
-      payload.avatar = state.adminData.avatar
+      payload.video = null
+      commit('addLesson', [payload])
       axios.post('http://172.104.189.169:4000/api/lessonupload/' + result.lesson_id, filesData)
       .then((res) => {
         console.log('successMsg: ' + res.data.video)
-        payload.video = res.data.video
-        commit('addLesson', [payload])
+        state.lesson.map(l => l.lesson_id == result.lesson_id ? l.video = res.data.video : '')
       })
       .catch((error) => {
         console.log('error');

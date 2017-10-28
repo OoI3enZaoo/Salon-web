@@ -1,7 +1,7 @@
 <template>
 
-    <v-flex xs6>
-      <v-card>
+    <v-flex xs12 sm12 md6>
+      <v-card v-if="data.video !== null">
         <v-card-text>
           <v-list>
             <v-subheader>อันดับที่ {{number}}</v-subheader>
@@ -64,6 +64,21 @@
           </div>
         </v-card-text>
       </v-card>
+      <v-card v-else height="743px">
+        <v-card-text>
+          <div class="text-xs-center" style="margin-top:300px;">
+            <v-layout row wrap>
+              <v-flex xs5 md3 offset-xs1 offset-xs2>
+                  <img :src="workIcon" height="100px">
+              </v-flex>
+              <v-flex xs5>
+                <h6>ระบบกำลังทำการสร้าง...</h6>
+                <v-progress-circular indeterminate v-bind:size="50" color="primary"></v-progress-circular>
+              </v-flex>
+            </v-layout>
+          </div>
+        </v-card-text>
+      </v-card>
     </v-flex>
 
 </template>
@@ -94,7 +109,8 @@ export default {
       isEdit: false,
       edit: {
         title: ''
-      }
+      },
+      workIcon: require('../../static/work.png')
     }
   },
   computed: {
@@ -105,7 +121,7 @@ export default {
   watch: {
     videoo: function (val) {
         console.log('not null');
-        this.video.sources[0].src = 'http://localhost:4000/api/getfile/' + this.data.video
+        this.video.sources[0].src = 'http://172.104.189.169:4000/api/getfile/' + this.data.video
         console.log('video: '+   this.video.sources[0].src)
 
     }

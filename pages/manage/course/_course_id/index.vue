@@ -7,7 +7,7 @@
             <img :src="course.cover" height="150">
         </v-flex>
         <v-flex sm9 xs6>
-          <h4 class="white--text" ><v-btn dark icon nuxt to="/manage"><v-icon dark large>insert_invitation</v-icon></v-btn> / <b>{{course.title}} </b></h4>
+          <h4 class="white--text" ><v-btn dark icon nuxt to="/manage" slot="activator"><v-icon dark large>insert_invitation</v-icon></v-btn> / <b>{{course.title}} </b></h4>
           <h6 class="white--text">ผู้สร้าง {{course.fname}} {{course.lname}}</h6>
           <h6 class="white--text">สร้างเมื่อ: {{course.tstamp}}</h6>
           <h6 class="white--text">ราคา {{course.price}}</h6>
