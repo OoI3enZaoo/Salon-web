@@ -54,7 +54,7 @@
           </v-card-title>
           <div class="ml-3"><v-icon primary>fa-link</v-icon>&nbsp;&nbsp;<a  @click="openFile(data.video)"><span class="blue--text"  style="cursor:pointer;">ดาวน์โหลดวีดีโอ {{data.video}}</span></a></div>
           <template v-if="!isEdit">
-              <my-video ref="myvideo"  :videoname="data.video" :options="video.options" :lessonId = "data.lesson_id" ></my-video>
+              <my-video ref="myvideo"  :videoname="data.video" :options="video.options" ></my-video>
           </template>
           <template v-else>
               <MultipleFileUploader ref="upload" @myupload="myupload"  successMessagePath="" errorMessagePath=""></MultipleFileUploader>

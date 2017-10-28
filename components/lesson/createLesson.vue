@@ -6,7 +6,7 @@
           <v-btn icon @click.native="dialog = false" dark>
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>เพิ่มคอร์สใหม่</v-toolbar-title>
+          <v-toolbar-title>เพิ่มบทเรียนของคอร์ส</v-toolbar-title>
         </v-toolbar>
         <v-container>
           <v-card>
@@ -16,7 +16,7 @@
             <v-card-text>
                 <v-text-field v-model="lesson.title" label="ชื่อบทเรียน"></v-text-field><br>
 
-                <MultipleFileUploader @myupload="myupload"  successMessagePath="" errorMessagePath=""></MultipleFileUploader>
+                <MultipleFileUploader @myupload="myupload"  :buttonStatus="!fromIsValid"></MultipleFileUploader>
 
             </v-card-text>
           </v-card>
@@ -42,9 +42,7 @@ export default {
     return {
       dialog: false,
       lesson: {
-        title: '',
-        description: '',
-        cover: ''
+        title: ''
       }
     }
   },
@@ -82,7 +80,10 @@ export default {
         this.$emit('mylesson', data)
         // this.content.title = ''
         // this.content.description = ''
-      }
+    },
+    fromIsValid () {
+      return this.lesson.title !== ''
+    }
   }
 }
 </script>

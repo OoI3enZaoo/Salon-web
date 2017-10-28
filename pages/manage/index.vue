@@ -7,7 +7,7 @@
             <v-text-field v-model= "searchModel" solo label="ค้นหาคอร์ส"></v-text-field>
         </v-flex>
         <v-flex text-xs-right>
-          <createCourse></createCourse>
+          <createCourse @mycourse="mycourse"></createCourse>
         </v-flex>
       </v-layout>
     <br>
@@ -48,6 +48,11 @@
 <script>
 import axios from 'axios'
 import createCourse from '../../components/createCourse.vue'
+import Vue from 'vue'
+const moment = require('moment')
+Vue.use(require('vue-moment'), {
+    moment
+})
 export default {
   async asyncData ({store}) {
     await store.dispatch('pullCourse')
@@ -92,6 +97,12 @@ export default {
         })
         this.afterSearch = vmData
       }
+    },
+    mycourse (str) {
+      let data = str
+      data.tstamp = Vue.moment().format('YYYY-MM-DD HH:mm:ss')
+      data.admin_id = this.$store.state.adminData.admin_id
+      this.$store.dispatch('AddNewCourse', data)
     }
   },
   computed: {

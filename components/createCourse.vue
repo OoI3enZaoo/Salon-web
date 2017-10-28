@@ -20,7 +20,8 @@
               <v-text-field  label="กรอกชื่อคอร์สที่ต้องการ" hint ="กรอกเป็นภาษาใดก็ได้" v-model = "course.title" required></v-text-field>
               <v-text-field  type = "number" label="กรอกราคา"  hint="ไม่ควรเกิน 10000 บาท" v-model = "course.price" required></v-text-field>
               <!-- <v-text-field label="รายละเอียดแบบย่อ"  hint="รายละเอียดสั้นๆ" v-model ="course.snippet" required></v-text-field> -->
-              <v-text-field label="ลิงค์ยูทูป"  hint="รายละเอียดสั้นๆ" v-model ="course.youtube" required></v-text-field>
+              <!-- <v-text-field label="ลิงค์ยูทูป"  hint="รายละเอียดสั้นๆ" v-model ="course.youtube" required></v-text-field> -->
+              <p>คลิ๊กที่รูปเพื่อเลือกภาพหน้าปกของคอร์ส</p>
               <div class = "text-xs-center text-sm-center">
                   <base64-upload class="user" style="width: 300px;"
                     imageSrc="https://t3.ftcdn.net/jpg/00/80/37/56/240_F_80375661_O3L2isjdQdnloGOANUFe5NB99nMQMpra.jpg"
@@ -28,8 +29,9 @@
                 </div>
 
             <quil v-model="course.description"></quil>
-            <br><br><br><br>
-            <v-btn primary @click.native="Add" :disabled="!fromIsValid" >สร้างคอร์สใหม่</v-btn>
+            <br><br>
+            <FileUpload @myupload="myupload" :buttonStatus="!fromIsValid"></FileUpload>
+            <br>
             </v-card-text>
 
           </v-card>
@@ -49,8 +51,8 @@
 // import VueCoreImageUpload from 'vue-core-image-upload'
 // import {db} from '../util/firebase'
 
- import quil from './quill.vue'
-
+import quil from './quill.vue'
+import FileUpload from './lesson/MultipleFileUploader.vue'
 import Base64Upload from 'vue-base64-upload'
 import axios from 'axios'
 import Vue from 'vue'
@@ -61,7 +63,9 @@ Vue.use(require('vue-moment'), {
 export default {
   props:['value'],
   components: {
-   Base64Upload,quil
+   Base64Upload,
+   quil,
+   FileUpload
  },
   mounted() {
     //do something after creating vue instance
@@ -105,6 +109,20 @@ export default {
    onChangeImage(file) {
      console.log("fiel.base64: " + file.base64);
      this.course.cover = 'data:image/jpeg;base64,'+file.base64
+   },
+   myupload (str) {
+     console.log('myupload')
+     console.log('createcourse: ' + JSON.stringify(str))
+     this.dialog = false
+     let data = {
+       title: this.course.title,
+       price: this.course.price,
+       description: this.course.description,
+       cover: this.course.cover,
+       files: str.files,
+       data: str.data
+     }
+     this.$emit('mycourse', data)
    }
  },
  computed :{
@@ -113,7 +131,6 @@ export default {
      && this.course.price !== ''
      && this.course.description !== ''
      && this.course.cover !== ''
-     && this.course.yotube !== ''
    },
    showValue(){
      return this.value

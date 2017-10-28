@@ -49,9 +49,9 @@
                 </v-card-text>
                   </div>
               </v-card>
-              <div class="text-xs-right mt-2">
-                <v-btn primary type="submit"  class="btn btn-primary btn-black btn-round" >
-                    สร้างบทเรียน
+              <div class="text-xs-left mt-3">
+                <v-btn primary type="submit"  :disabled="buttonStatus" class="btn btn-primary btn-black btn-round" >
+                    บันทึก
                 </v-btn>
               </div>
 
@@ -88,12 +88,13 @@ export default {
             default: ''
         },
         successMessagePath: {
-            type: String,
-            required: true
+            type: String
         },
         errorMessagePath: {
-            type: String,
-            required: true
+            type: String
+        },
+        buttonStatus: {
+          type: Boolean
         }
     },
 

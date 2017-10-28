@@ -39,11 +39,12 @@
                       <p class="headline info--text">วีดีโอ</p>
                     </div>
                     <template v-if="!isEdit">
-                      <iframe width="100%" height="500" :src="course.youtube"> </iframe>
+                      <!-- <iframe width="100%" height="500" :src="course.youtube"> </iframe> -->
+                      <my-video ref="myvideo"  :videoname="course.video" :options="video.options" ></my-video>
                     </template>
                     <template v-else>
-                      <iframe width="100%" height="500" :src="youtube"> </iframe>
-                      <v-text-field label="ใส่ลิงค์ Youtube ที่นี่" :value="youtube" v-model="youtube"></v-text-field>
+                      <!-- <iframe width="100%" height="500" :src="youtube"> </iframe> -->
+                      <!-- <v-text-field label="ใส่ลิงค์ Youtube ที่นี่" :value="youtube" v-model="youtube"></v-text-field> -->
                     </template>
                   </v-flex>
                   <v-flex xs6>
@@ -51,7 +52,7 @@
                       <p class="headline info--text">ภาพหน้าปก</p>
                     </div>
                       <template v-if="!isEdit">
-                        <v-card-media :src="course.cover" height="500"></v-card-media>
+                        <v-card-media :src="course.cover" height="300" class="mt-4"></v-card-media>
                       </template>
                       <template v-else>
                         <base64-upload class="user" style="height: 500px; background-size: cover;"
@@ -92,13 +93,15 @@
   </div>
 </template>
 <script>
+import myVideo from '../myvideo.vue'
 import quill from '../quill.vue'
 import Base64Upload from 'vue-base64-upload'
 export default {
   props: ['course'],
   components: {
     quill,
-    Base64Upload
+    Base64Upload,
+    myVideo
   },
   created () {
     this.setData()
@@ -107,7 +110,18 @@ export default {
     return {
       isEdit: false,
       data: {},
-      youtube: ''
+      video: {
+        sources: [{
+            src: 'http://172.104.189.169:4000/api/getfile/' + this.course.video,
+            type: 'video/mp4'
+        }],
+        options: {
+            autoplay: false,
+            volume: 0.6,
+            poster: 'http://gw2101.gtm.guildwars2.com/global/includes/images/video-poster.jpg'
+        }
+      }
+      // youtube: ''
     }
   },
   methods: {
@@ -116,24 +130,18 @@ export default {
       this.data.description = this.course.description
       this.data.cover = this.course.cover
       this.data.price = this.course.price
-      this.youtube = this.course.youtube
+      // this.youtube = this.course.youtube
       console.log('this.data: ' + JSON.stringify(this.data))
     },
     onChangeImage(file) {
       this.data.cover = 'data:image/jpeg;base64,'+ file.base64;
     },
     SaveData () {
-      this.data.youtube = this.youtube
+      // this.data.youtube = this.youtube
       this.data.course_id = this.$route.params.course_id
       this.$store.commit('UpdateCourse', this.data)
       this.$store.dispatch('UpdateCourse', this.data)
       this.isEdit = false
-    }
-  },
-  watch: {
-    youtube: function (val) {
-      console.log(val)
-      this.youtube = val.replace('watch?v=','embed/')
     }
   }
 }

@@ -40,7 +40,6 @@ export default {
       axios.get('http://172.104.189.169:4000/api/getcourse')
       .then(res => {
         let result = res.data
-        result.map(r => r.youtube = r.youtube.replace('watch?v=','embed/'))
         commit('addCourse', result)
       })
     }
@@ -273,7 +272,7 @@ export default {
       payload.fname = state.adminData.fname
       payload.lname = state.adminData.lname
       payload.avatar = state.adminData.avatar
-      axios.post('http://172.104.189.169:4000/api/myupload/' + result.lesson_id, filesData)
+      axios.post('http://172.104.189.169:4000/api/lessonupload/' + result.lesson_id, filesData)
       .then((res) => {
         console.log('successMsg: ' + res.data.video)
         payload.video = res.data.video
@@ -312,5 +311,29 @@ export default {
     }
     state.lesson.map((l,i) => l.lesson_id == payload.lesson_id ? state.lesson.splice(i, 1) : '')
     axios.post('http://172.104.189.169:4000/api/deletelesson', data.lesson_id)
+  },
+  AddNewCourse ({commit, state}, payload) {
+    console.log('AddNewCourse: ' + JSON.stringify(payload))
+    let filesData = payload.data
+    delete payload["data"]
+    axios.post('http://172.104.189.169:4000/api/insertcourse', payload)
+    .then (res => {
+      let result = res.data
+      console.log('result: ' + JSON.stringify(result))
+      payload.course_id = result.course_id
+      payload.fname = state.adminData.fname
+      payload.lname = state.adminData.lname
+      payload.avatar = state.adminData.avatar
+      payload.view = 0
+      axios.post('http://172.104.189.169:4000/api/courseupload/' + result.course_id, filesData)
+      .then((res) => {
+        console.log('successMsg: ' + res.data.video)
+        payload.video = res.data.video
+        commit('addCourse', [payload])
+      })
+      .catch((error) => {
+        console.log('error');
+      })
+    })
   },
 }
