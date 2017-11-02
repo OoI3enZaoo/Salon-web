@@ -122,6 +122,11 @@ export default {
           link: "/manage"
         },
         {
+          title: "รายชื่อผู้แนะนำ",
+          icon: "face",
+          link: "/recommend"
+        },
+        {
           title: "ลงชื่อออก",
           icon: "fa-sign-out",
           link: "/logout",

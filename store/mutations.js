@@ -89,5 +89,7 @@ export default {
   AddCourseLastPurchase: (state, data) => state.courseLastPurchase.push(...data),
   DeleteCourse: (state, course_id) =>  state.course.map((c,i) => c.course_id == course_id ? state.course.splice(i,1) : ''),
   addViewAmountLesson: (state, lesson_id) => stat.lesson.map(l => l.lesson_id == lesson_id ? l.view += 1 : ''),
-  addFavoriteAmountLesson: (state, lesson_id) => stat.lesson.map(l => l.lesson_id == lesson_id ? l.love += 1 : '')
+  addFavoriteAmountLesson: (state, lesson_id) => stat.lesson.map(l => l.lesson_id == lesson_id ? l.love += 1 : ''),
+  addRecommend: (state, data) => state.recommend.push(data),
+  setRecommend: (state, data) => state.recommend.map(r => r.user_id == data.user_id ? r.status = data : '')
 }

@@ -55,7 +55,8 @@ export default () => {
       sumPurchase: [],
       lastChat: [],
       messageChat: [],
-      userCourse: []
+      userCourse: [],
+      recommend: []
     },
     plugins: [
       createPersistedState({

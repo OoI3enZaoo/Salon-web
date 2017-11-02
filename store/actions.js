@@ -331,7 +331,7 @@ export default {
       commit('addCourse', [payload])
       axios.post('http://172.104.189.169:4000/api/courseupload/' + result.course_id, filesData)
       .then((res) => {
-        console.log('successMsg: ')        
+        console.log('successMsg: ')
         state.course.map(c => c.course_id == payload.course_id ? c.video = res.data.video : '')
       })
       .catch((error) => {
@@ -341,6 +341,19 @@ export default {
   },
   DeleteCourse ({commit}, payload) {
     commit('DeleteCourse', payload.course_id)
-    axios.post('http://localhost:4000/api/deletecourse', payload)
+    axios.post('http://172.104.189.169:4000/api/deletecourse', payload)
+  },
+  pullRecommend ({commit, state}) {
+    if (state.recommend.length == 0) {
+      axios.get('http://172.104.189.169:4000/api/getrecommend')
+      .then (res => {
+        let result = res.data
+        commit('addRecommend', result)
+      })
+    }
+  },
+  setRecommend ({commit}, payload) {
+    axios.post('http://172.104.189.169:4000/api/setrecommend', payload)
+    commit('setRecommend', payload)
   }
 }
