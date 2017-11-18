@@ -41,6 +41,9 @@ export default {
   async asyncData ({store}) {
     store.dispatch('pullRecommend')
   },
+  fetch ({store}) {
+   store.commit('setPage', "รายชื่อผู้แนะนำ")
+ },
   data () {
     return {
       pagination: {},

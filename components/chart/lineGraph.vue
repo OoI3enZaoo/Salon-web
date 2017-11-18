@@ -14,7 +14,7 @@
 </template>
 
 <script type="text/babel">
-  import IEcharts from 'vue-echarts-v3/src/full.vue';
+  import IEcharts from 'vue-echarts-v3';
   export default {
     components: {
       IEcharts

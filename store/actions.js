@@ -275,7 +275,7 @@ export default {
       payload.lesson_id = result.lesson_id
       payload.video = null
       commit('addLesson', [payload])
-      axios.post('http://172.104.189.169:4000/api/lessonupload/' + result.lesson_id, filesData)
+      axios.post('http://172.104.189.169:4400/api/lessonupload/' + result.lesson_id, filesData)
       .then((res) => {
         console.log('successMsg: ' + res.data.video)
         state.lesson.map(l => l.lesson_id == result.lesson_id ? l.video = res.data.video : '')
@@ -287,7 +287,7 @@ export default {
   },
   editLesson ({commit, state}, payload) {
     console.log('editLesson')
-    axios.post('http://172.104.189.169:4000/api/editlesson/' + payload.lesson_id + '/' + payload.title , payload.data)
+    axios.post('http://172.104.189.169:4400/api/editlesson/' + payload.lesson_id + '/' + payload.title , payload.data)
     .then((res) => {
       console.log('success editlesson')
       state.lesson.map(l => l.lesson_id == payload.lesson_id ? [l.video = res.data.video,l.title = payload.title] : '')
@@ -298,7 +298,7 @@ export default {
   },
   editTitleLesson ({commit, state}, payload) {
     console.log('editTitleLesson')
-    axios.post('http://172.104.189.169:4000/api/edittitlelesson/' , payload)
+    axios.post('http://172.104.189.169:4400/api/edittitlelesson/' , payload)
     .then((res) => {
       console.log('success editTitleLesson')
       state.lesson.map(l => l.lesson_id == payload.lesson_id ? l.title = payload.title : '')
@@ -329,7 +329,7 @@ export default {
       payload.view = 0
       payload.video = null
       commit('addCourse', [payload])
-      axios.post('http://172.104.189.169:4000/api/courseupload/' + result.course_id, filesData)
+      axios.post('http://172.104.189.169:4400/api/courseupload/' + result.course_id, filesData)
       .then((res) => {
         console.log('successMsg: ')
         state.course.map(c => c.course_id == payload.course_id ? c.video = res.data.video : '')
