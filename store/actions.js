@@ -226,9 +226,17 @@ export default {
     .then (res => {
     })
   },
-  InsertLesson ({commit},payload) {
+  InsertLesson ({commit, state},payload) {
     console.log('payload: ' + JSON.stringify(payload))
-    axios.post('http://172.104.189.169:4000/api/insertlesson', payload)
+    axios.post('http://localhost:4000/api/insertlesson', payload)
+    .then (res => {
+      payload.lesson_id = res.data.lesson_id,
+      payload.fname = state.adminData.fname,
+      payload.lname = state.adminData.lname,
+      payload.avatar = state.adminData.avatar
+      commit('addLesson', [payload])
+      // console.log(payload)
+    })
   },
   UpdateCourse ({commit}, payload) {
     axios.post('http://172.104.189.169:4000/api/updatecourse', payload)
@@ -245,40 +253,55 @@ export default {
       })
     }
   },
-  pullLesson ({commit, state}, courseId) {
+  async pullLesson ({commit, state}, courseId) {
     console.log('courseId: ' + courseId)
     let isCheck = false
     state.lesson.find(f => f.course_id == courseId ? isCheck = true : '')
     if (isCheck == false) {
       console.log('load lesson from api')
-      axios.get('http://172.104.189.169:4000/api/getlesson/' + courseId)
+      let lesson
+      await axios.get('http://localhost:4000/api/getlesson/' + courseId)
       .then(res => {
-        let result = res.data
-        commit('addLesson', result)
+        lesson = res.data
+      })
+      lesson.map(l => {
+        console.log('lesson_id: ' + l.lesson_id)
+        axios.get('http://localhost:4000/api/getvideo/' + l.lesson_id)
+        .then (res => {
+          console.log('res.data.video: ' + JSON.stringify(res.data))
+          if (res.data[0].video == undefined) {
+            l.video = []
+          } else {
+            l.video = res.data
+          }
+          commit('addLesson', [l])
+        })
       })
     }
   },
-  AddNewLesson ({commit, state}, payload) {
-    console.log('AddNewLesson: ' + JSON.stringify(payload))
+  AddNewVideo ({commit, state}, payload) {
+    console.log('AddNewVideo');
     let filesData = payload.data
     delete payload["data"]
-    payload.view = 0
-    payload.love = 0
-    payload.fname = state.adminData.fname
-    payload.lname = state.adminData.lname
-    payload.avatar = state.adminData.avatar
-
-    axios.post('http://172.104.189.169:4000/api/insertlesson', payload)
+    let {lesson_id, title, tstamp} = payload
+    axios.post('http://localhost:4000/api/insertvideo', {lesson_id, title, tstamp})
     .then (res => {
       let result = res.data
-      console.log('result: ' + JSON.stringify(result))
-      payload.lesson_id = result.lesson_id
-      payload.video = null
-      commit('addLesson', [payload])
-      axios.post('http://172.104.189.169:4400/api/lessonupload/' + result.lesson_id, filesData)
+      payload.file_id = result.file_id
+      axios.post('http://localhost:4400/api/videoupload/' + result.file_id, filesData)
       .then((res) => {
         console.log('successMsg: ' + res.data.video)
-        state.lesson.map(l => l.lesson_id == result.lesson_id ? l.video = res.data.video : '')
+        payload.video = res.data.video
+        console.log(payload)
+        let videoData = {
+          file_id: payload.file_id,
+          lesson_id: payload.lesson_id,
+          title: payload.title,
+          tstamp: payload.tstamp,
+          video: payload.video
+        }
+        // let {file_id, lesson_id, title, tstamp, video} = payload
+        commit('addvideo', videoData)
       })
       .catch((error) => {
         console.log('error');
@@ -318,7 +341,7 @@ export default {
     console.log('AddNewCourse: ' + JSON.stringify(payload))
     let filesData = payload.data
     delete payload["data"]
-    axios.post('http://172.104.189.169:4000/api/insertcourse', payload)
+    axios.post('http://localhost:4000/api/insertcourse', payload)
     .then (res => {
       let result = res.data
       console.log('result: ' + JSON.stringify(result))
@@ -329,7 +352,7 @@ export default {
       payload.view = 0
       payload.video = null
       commit('addCourse', [payload])
-      axios.post('http://172.104.189.169:4400/api/courseupload/' + result.course_id, filesData)
+      axios.post('http://localhost:4400/api/courseupload/' + result.course_id, filesData)
       .then((res) => {
         console.log('successMsg: ')
         state.course.map(c => c.course_id == payload.course_id ? c.video = res.data.video : '')

@@ -15,9 +15,14 @@
             </v-card-title>
             <v-card-text>
                 <v-text-field v-model="lesson.title" label="ชื่อบทเรียน"></v-text-field><br>
-
-                <MultipleFileUploader @myupload="myupload"  :buttonStatus="!fromIsValid"></MultipleFileUploader>
-
+                <base64-upload class="user" style="width: 300px;"
+                  imageSrc="https://t3.ftcdn.net/jpg/00/80/37/56/240_F_80375661_O3L2isjdQdnloGOANUFe5NB99nMQMpra.jpg"
+                  @change="onChangeImage"></base64-upload>
+              </div>
+              <br>
+              <div class="text-xs-left">
+                <v-btn :disable="!fromIsValid" @click.native="AddLesson" color="primary">สร้างบทเรียน</v-btn>
+              </div>
             </v-card-text>
           </v-card>
         </v-container>
@@ -29,20 +34,22 @@
 
 import axios from 'axios'
 import Vue from 'vue'
-import MultipleFileUploader from '../lesson/MultipleFileUploader.vue'
+import Base64Upload from 'vue-base64-upload'
 const moment = require('moment')
 Vue.use(require('vue-moment'), {
     moment
 })
 export default {
   components: {
-    MultipleFileUploader
+    Base64Upload
   },
   data() {
     return {
       dialog: false,
       lesson: {
-        title: ''
+        title: '',
+        cover: '',
+        tstamp: ''
       }
     }
   },
@@ -52,19 +59,12 @@ export default {
       console.log(this.lesson)
     },
     AddLesson () {
-      console.log(this.lesson)
-      this.lesson.lesson_id = (new Date().getTime())
+      this.dialog = false
+      // console.log(this.lesson)
       this.lesson.course_id = this.$route.params.course_id
       this.lesson.admin_id = this.$store.state.adminData.admin_id
-      this.lesson.view = 0
-      this.lesson.love = 0
       this.lesson.tstamp = Vue.moment().format('YYYY-MM-DD HH:mm:ss')
-
       this.$store.dispatch('InsertLesson', this.lesson)
-      this.lesson.fname = this.$store.state.adminData.fname
-      this.lesson.lname = this.$store.state.adminData.lname
-      this.lesson.avatar = this.$store.state.adminData.avatar
-      this.$store.commit('addLesson', [this.lesson])
       // this.lesson.title = ''
       // this.lesson.description = ''
       // this.lesson.cover = ''
@@ -82,7 +82,7 @@ export default {
         // this.content.description = ''
     },
     fromIsValid () {
-      return this.lesson.title !== ''
+      return this.lesson.title !== '' && this.lesson.cover !== ''
     }
   }
 }

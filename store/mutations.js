@@ -6,7 +6,7 @@ export default {
   addLastPurchase: (state, data) => state.lastPurchase.push(data),
   addHistoryPurchase: (state, data) => state.historyPurchase.push(data),
   addCourse: (state, data) => state.course.unshift(...data),
-  addLesson: (state, data) => state.lesson.unshift(...data),
+  addLesson: (state, data) => state.lesson.push(...data),
   UpdateStoreLesson: (state, data) => state.lesson.filter(res => data.lesson_id == res.lesson_id ? [res.title = data.title,res.description = data.description, res.cover = data.cover] : ''),
   setadmin: (state, data) => state.admin.push(data),
   addChart: (state, data) => state.chart.push(data),
@@ -91,5 +91,6 @@ export default {
   addViewAmountLesson: (state, lesson_id) => stat.lesson.map(l => l.lesson_id == lesson_id ? l.view += 1 : ''),
   addFavoriteAmountLesson: (state, lesson_id) => stat.lesson.map(l => l.lesson_id == lesson_id ? l.love += 1 : ''),
   addRecommend: (state, data) => state.recommend.push(data),
-  setRecommend: (state, data) => state.recommend.map(r => r.user_id == data.user_id ? r.status = data : '')
+  setRecommend: (state, data) => state.recommend.map(r => r.user_id == data.user_id ? r.status = data : ''),
+  addvideo: (state, data) => state.lesson.map(l => l.lesson_id == data.lesson_id ? l.video.unshift(data) : '')
 }

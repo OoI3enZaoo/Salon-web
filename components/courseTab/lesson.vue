@@ -1,10 +1,11 @@
 <template>
   <div>
     <v-container grid-list-lg>
+
         <template v-if="lesson.length > 0">
               <div class="text-xs-right ">
 
-                <createLesson @mylesson="getDataLesson"></createLesson>
+                <createLesson></createLesson>
               </div>
               <v-layout row wrap>
                   <template v-for="(data, i) in $store.getters.lessonFromCourseId(this.$route.params.course_id)">
@@ -24,7 +25,7 @@
                             </v-flex>
                             <v-flex xs12 md5 text-md-left text-xs-center mt-4>
                               <h5>คุณยังไม่มีบทเรียนเลย ไม่ลองสร้างสักบทเรียนล่ะ</h5>
-                                <createLesson @mylesson="getDataLesson"></createLesson>
+                                <createLesson></createLesson>
                             </v-flex>
                           </v-layout>
                       </div>
@@ -49,16 +50,6 @@ export default {
   components: {
     createLesson,
     expansion
-  },
-  methods: {
-    getDataLesson (str) {
-      console.log('getDataLesson')
-      let data = str
-      data.course_id = this.$route.params.course_id
-      data.tstamp = Vue.moment().format('YYYY-MM-DD HH:mm:ss')
-      data.admin_id = this.$store.state.adminData.admin_id
-      this.$store.dispatch('AddNewLesson', data)
-    }
   },
   computed: {
     lesson () {

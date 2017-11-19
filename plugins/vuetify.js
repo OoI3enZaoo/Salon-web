@@ -17,7 +17,7 @@ if (process.BROWSER_BUILD) {
 
 }
 // Vue.use(VueSocketio, 'http://172.104.189.169:4000')
-Vue.use(VueSocketio, 'http://172.104.189.169:4000', store)
+Vue.use(VueSocketio, 'http://172.104.189.169:4200', store)
 import VueQuillEditor  from 'vue-quill-editor/ssr'
 Quill.register('modules/imageImport', ImageImport)
 Quill.register('modules/imageResize', ImageResize)

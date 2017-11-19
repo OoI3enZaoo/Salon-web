@@ -52,7 +52,7 @@
 // import {db} from '../util/firebase'
 
 import quil from './quill.vue'
-import FileUpload from './lesson/MultipleFileUploader.vue'
+import FileUpload from './video/MultipleFileUploader.vue'
 import Base64Upload from 'vue-base64-upload'
 import axios from 'axios'
 import Vue from 'vue'
