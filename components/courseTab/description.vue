@@ -81,6 +81,63 @@
 
               </v-card-text>
               <v-card-text>
+
+                <div class="mt-3">
+                  <p class="headline info--text">ในคอร์สจะประกอบไปด้วย</p>
+                  <template v-if="!isEdit">
+                    <ul v-for="(data, index) in courseInclude" :key="index">
+                      {{data.include_des}} <v-btn icon @click.native="$store.dispatch('removeCourseInclude', data.ci_id)"><v-icon error>delete_forever</v-icon></v-btn>
+                    </ul>
+                  <v-layout>
+                     <v-flex xs10>
+                       <v-text-field v-model="include_des"solo label="ใส่เพิ่มที่นี่"></v-text-field>
+                     </v-flex>
+                     <v-flex xs2>
+                       <v-btn color="primary"block @click.native="$store.dispatch('addCourseInclude', {course_id: $route.params.course_id, des: include_des})">เพิ่ม</v-btn>
+                     </v-flex>
+                  </v-layout>
+                  </template>
+                </div>
+
+
+
+
+            <div class="mt-3">
+              <p class="headline info--text">สิ่งที่ผู้เรียนจะได้รับ</p>
+              <template v-if="!isEdit">
+                <ul v-for="(data, index) in courseReceive" :key="index">
+                  {{data.receive_des}} <v-btn icon @click.native="$store.dispatch('removeCourseReceive', data.cr_id)"><v-icon error>delete_forever</v-icon></v-btn>
+                </ul>
+              <v-layout>
+                 <v-flex xs10>
+                   <v-text-field v-model="receive_des" solo label="ใส่เพิ่มที่นี่"></v-text-field>
+                 </v-flex>
+                 <v-flex xs2>
+                   <v-btn color="primary"block @click.native="$store.dispatch('addCourseReceive', {course_id: $route.params.course_id, des: receive_des})">เพิ่ม</v-btn>
+                 </v-flex>
+              </v-layout>
+              </template>
+            </div>
+
+            <div class="mt-3">
+              <p class="headline info--text">คอร์สนี้มีไว้สำหรับ</p>
+              <template v-if="!isEdit">
+                  <ul v-for="(data, index) in courseFor" :key="index">
+                    {{data.for_des}} <v-btn icon @click.native="$store.dispatch('removeCourseFor', data.cf_id)"><v-icon error>delete_forever</v-icon></v-btn>
+                  </ul>
+                <v-layout>
+                   <v-flex xs10>
+                     <v-text-field v-model="for_des" solo label="ใส่เพิ่มที่นี่"></v-text-field>
+                   </v-flex>
+                   <v-flex xs2>
+                     <v-btn color="primary"block @click.native="$store.dispatch('addCourseFor', {course_id: $route.params.course_id, des: for_des})">เพิ่ม</v-btn>
+                   </v-flex>
+                </v-layout>
+              </template>
+            </div>
+
+
+
                 <p class="headline info--text">เนื้อหารายละเอียด</p>
                 <template v-if="!isEdit">
                   <p v-html="course.description"></p>
@@ -136,8 +193,10 @@ export default {
             volume: 0.6,
             poster: 'http://gw2101.gtm.guildwars2.com/global/includes/images/video-poster.jpg'
         }
-      }
-      // youtube: ''
+      },
+      for_des: '',
+      receive_des: '',
+      include_des: ''
     }
   },
   methods: {
@@ -147,7 +206,7 @@ export default {
       this.data.cover = this.course.cover
       this.data.price = this.course.price
       // this.youtube = this.course.youtube
-      console.log('this.data: ' + JSON.stringify(this.data))
+      // console.log('this.data: ' + JSON.stringify(this.data))
     },
     onChangeImage(file) {
       this.data.cover = 'data:image/jpeg;base64,'+ file.base64;
@@ -165,6 +224,17 @@ export default {
       }
       this.$store.dispatch('DeleteCourse', data)
       this.$router.push('/manage')
+    }
+  },
+  computed: {
+    courseFor () {
+      return this.$store.getters.getCourseFor(this.$route.params.course_id)
+    },
+    courseInclude () {
+      return this.$store.getters.getCourseInclude(this.$route.params.course_id)
+    },
+    courseReceive () {
+      return this.$store.getters.getCourseReceive(this.$route.params.course_id)
     }
   }
 }

@@ -6,7 +6,7 @@
         <v-toolbar flat class="transparent">
         <v-list class="pa-0">
           <v-list-tile>
-            <v-list-tile-avatar> <img src="http://images.all-free-download.com/images/graphiclarge/nostalgic_blue_background_06_hd_pictures_169782.jpg"></v-list-tile-avatar>
+            <v-list-tile-avatar> <img :src="$store.state.adminData.avatar"></v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>
                 {{$store.state.adminData.fname}} {{$store.state.adminData.lname}}

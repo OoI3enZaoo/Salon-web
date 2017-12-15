@@ -52,7 +52,7 @@ import description from '../../../../components/courseTab/description.vue'
 import lesson from '../../../../components/courseTab/lesson.vue'
 export default {
   async asyncData ({store, route}) {
-    await store.dispatch('pullCourse', route.params.course_id)
+    await store.dispatch('pullCourseFromCourseId', route.params.course_id)
     await store.dispatch('pullLesson', route.params.course_id)
     await store.dispatch('pullUserPurchase', route.params.course_id)
   },

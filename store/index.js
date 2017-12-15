@@ -56,7 +56,10 @@ export default () => {
       lastChat: [],
       messageChat: [],
       userCourse: [],
-      recommend: []
+      recommend: [],
+      courseFor: [],
+      courseInclude: [],
+      courseReceive: []
     },
     plugins: [
       createPersistedState({

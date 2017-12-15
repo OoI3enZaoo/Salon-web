@@ -92,5 +92,11 @@ export default {
   addFavoriteAmountLesson: (state, lesson_id) => stat.lesson.map(l => l.lesson_id == lesson_id ? l.love += 1 : ''),
   addRecommend: (state, data) => state.recommend.push(data),
   setRecommend: (state, data) => state.recommend.map(r => r.user_id == data.user_id ? r.status = data : ''),
-  addvideo: (state, data) => state.lesson.map(l => l.lesson_id == data.lesson_id ? l.video.unshift(data) : '')
+  addvideo: (state, data) => state.lesson.map(l => l.lesson_id == data.lesson_id ? l.video.push(data) : ''),
+  addCourseFor: (state, data) => state.courseFor.push(...data),
+  addCourseInclude: (state, data) => state.courseInclude.push(...data),
+  addCourseReceive: (state, data) => state.courseReceive.push(...data),
+  removeCourseInclude: (state, id) => state.courseInclude.map((l,i) => l.ci_id == id ? state.courseInclude.splice(i,1) : ''),
+  removeCourseReceive: (state, id) => state.courseReceive.map((l,i) => l.cr_id == id ? state.courseReceive.splice(i,1) : ''),
+  removeCourseFor: (state, id) => state.courseFor.map((l,i) => l.cf_id == id ? state.courseFor.splice(i,1) : '')
 }

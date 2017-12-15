@@ -35,15 +35,49 @@ export default {
       })
     })
   },
-   pullCourse ({commit, state}) {
+   pullCourse ({commit, state, dispatch}) {
     if (state.course.length == 0) {
-      axios.get('http://172.104.189.169:4000/api/getcourse')
+      axios.get('http://172.104.189.169:4000/api/getcourse/')
+      .then(res => {
+        let result = res.data
+        commit('addCourse', result)
+        result.map(r => {
+          dispatch('courseDetail', r.course_id)
+        })
+      })
+    }
+  },
+  pullCourseFromCourseId ({commit, state, dispatch}, course_id) {
+    let isCheck = false
+    state.course.find(c => c.course_id == course_id ? isCheck = true : '')
+    if (isCheck == false) {
+      axios.get('http://172.104.189.169:4000/api/get_course_from_id/' + course_id)
       .then(res => {
         let result = res.data
         commit('addCourse', result)
       })
+      dispatch('courseDetail', course_id)
     }
-  },
+ },
+ courseDetail ({commit}, course_id) {
+   axios.get('http://172.104.189.169:4000/api/get_course_for/' + course_id)
+   .then(res => {
+     let result = res.data
+     commit('addCourseFor', result)
+   })
+
+   axios.get('http://172.104.189.169:4000/api/get_course_include/' + course_id)
+   .then(res => {
+     let result = res.data
+     commit('addCourseInclude', result)
+   })
+
+   axios.get('http://172.104.189.169:4000/api/get_course_receive/' + course_id)
+   .then(res => {
+     let result = res.data
+     commit('addCourseReceive', result)
+   })
+ },
   UpdateLesson ({state, commit}, payload) {
     const data = {
       lesson_id: payload.lesson_id,
@@ -228,7 +262,7 @@ export default {
   },
   InsertLesson ({commit, state},payload) {
     console.log('payload: ' + JSON.stringify(payload))
-    axios.post('http://localhost:4000/api/insertlesson', payload)
+    axios.post('http://172.104.189.169:4000/api/insertlesson', payload)
     .then (res => {
       payload.lesson_id = res.data.lesson_id,
       payload.fname = state.adminData.fname,
@@ -260,20 +294,17 @@ export default {
     if (isCheck == false) {
       console.log('load lesson from api')
       let lesson
-      await axios.get('http://localhost:4000/api/getlesson/' + courseId)
+      await axios.get('http://172.104.189.169:4000/api/getlesson/' + courseId)
       .then(res => {
         lesson = res.data
       })
       lesson.map(l => {
-        console.log('lesson_id: ' + l.lesson_id)
-        axios.get('http://localhost:4000/api/getvideo/' + l.lesson_id)
+        axios.get('http://172.104.189.169:4000/api/getvideo/' + l.lesson_id)
         .then (res => {
-          console.log('res.data.video: ' + JSON.stringify(res.data))
-          if (res.data[0].video == undefined) {
-            l.video = []
-          } else {
-            l.video = res.data
-          }
+          console.log('lesson_id: ' + l.lesson_id)
+          l.video = res.data
+          // console.log(l)
+
           commit('addLesson', [l])
         })
       })
@@ -284,11 +315,11 @@ export default {
     let filesData = payload.data
     delete payload["data"]
     let {lesson_id, title, tstamp} = payload
-    axios.post('http://localhost:4000/api/insertvideo', {lesson_id, title, tstamp})
+    axios.post('http://172.104.189.169:4000/api/insertvideo', {lesson_id, title, tstamp})
     .then (res => {
       let result = res.data
       payload.file_id = result.file_id
-      axios.post('http://localhost:4400/api/videoupload/' + result.file_id, filesData)
+      axios.post('http://172.104.189.169:4400/api/videoupload/' + result.file_id, filesData)
       .then((res) => {
         console.log('successMsg: ' + res.data.video)
         payload.video = res.data.video
@@ -341,7 +372,7 @@ export default {
     console.log('AddNewCourse: ' + JSON.stringify(payload))
     let filesData = payload.data
     delete payload["data"]
-    axios.post('http://localhost:4000/api/insertcourse', payload)
+    axios.post('http://172.104.189.169:4000/api/insertcourse', payload)
     .then (res => {
       let result = res.data
       console.log('result: ' + JSON.stringify(result))
@@ -352,7 +383,7 @@ export default {
       payload.view = 0
       payload.video = null
       commit('addCourse', [payload])
-      axios.post('http://localhost:4400/api/courseupload/' + result.course_id, filesData)
+      axios.post('http://172.104.189.169:4400/api/courseupload/' + result.course_id, filesData)
       .then((res) => {
         console.log('successMsg: ')
         state.course.map(c => c.course_id == payload.course_id ? c.video = res.data.video : '')
@@ -378,5 +409,53 @@ export default {
   setRecommend ({commit}, payload) {
     axios.post('http://172.104.189.169:4000/api/setrecommend', payload)
     commit('setRecommend', payload)
+  },
+  addCourseFor ({commit}, payload) {
+    axios.post('http://172.104.189.169:4000/api/add_course_for', payload)
+    .then (res => {
+      let data = {
+        cf_id: res.data.cf_id,
+        course_id: payload.course_id,
+        for_des: payload.des
+      }
+      commit('addCourseFor', [data])
+    })
+  },
+  addCourseReceive ({commit}, payload) {
+    axios.post('http://172.104.189.169:4000/api/add_course_receive', payload)
+    .then (res => {
+      let data = {
+        cr_id: res.data.cr_id,
+        course_id: payload.course_id,
+        receive_des: payload.des
+      }
+      commit('addCourseReceive', [data])
+    })
+  },
+  addCourseInclude ({commit}, payload) {
+    axios.post('http://172.104.189.169:4000/api/add_course_include', payload)
+    .then (res => {
+      let data = {
+        ci_id: res.data.ci_id,
+        course_id: payload.course_id,
+        include_des: payload.des
+      }
+      commit('addCourseInclude', [data])
+    })
+  },
+  removeCourseInclude ({commit}, id) {
+    console.log('removeCourseInclude: ' + id)
+    axios.post('http://172.104.189.169:4000/api/remove_course_include', {id: id})
+    commit('removeCourseInclude', id);
+  },
+  removeCourseReceive ({commit}, id) {
+    console.log('removeCourseReceive: ' + id)
+    axios.post('http://172.104.189.169:4000/api/remove_course_receive', {id: id})
+    commit('removeCourseReceive', id);
+  },
+  removeCourseFor ({commit}, id) {
+    console.log('removeCourseFor: ' + id)
+    axios.post('http://172.104.189.169:4000/api/remove_course_for', {id: id})
+    commit('removeCourseFor', id);
   }
 }
