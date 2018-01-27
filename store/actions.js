@@ -457,5 +457,15 @@ export default {
     console.log('removeCourseFor: ' + id)
     axios.post('http://172.104.189.169:4000/api/remove_course_for', {id: id})
     commit('removeCourseFor', id);
+  },
+  removeVideoLesson ({commit}, payload) {
+    const data = {
+      lesson_id: payload.lesson_id,
+      video_id: payload.video_id
+    }
+    axios.post('http://172.104.189.169:4000/api/remove_video', {video_id: video_id})
+    .then (() => {
+      commit('removeVideoLesson', data);
+    })
   }
 }

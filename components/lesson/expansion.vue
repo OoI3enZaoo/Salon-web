@@ -10,7 +10,7 @@
                   </v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-list-tile-title v-text="data.fname + ' ' + data.lname"> </v-list-tile-title>
-                    <v-list-tile-sub-title>{{data.tstamp | moment('from','now', true)}}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{data.tstamp | moment('from','now', true)}}ที่ผ่านมา</v-list-tile-sub-title>
                   </v-list-tile-content>
                   <v-list-tile-action>
                     <v-list-tile-action-text>
@@ -70,14 +70,16 @@
               <v-list subheader>
                 <v-subheader>วีดีโอ</v-subheader>
                 <template v-for="vid in data.video">
-                  <v-list-tile @click="" @click.native="openVideo(vid)">
+                  <v-list-tile @click="" @click="openVideo(vid)">
                     <v-list-tile-content>
                       <v-list-tile-title>
                         {{vid.title}}
                       </v-list-tile-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
-                      {{vid.tstamp | moment('from','now',true)}}
+                      {{vid.tstamp | moment('from','now',true)}}ที่ผ่านมา
+                      <!-- <v-btn icon> <v-icon>home</v-icon></v-btn> -->
+                      <!-- <v-btn icon ripple @click.native="console.log('hello')"> <v-icon>home</v-icon></v-btn> -->
                     </v-list-tile-action>
                   </v-list-tile>
                   <v-divider></v-divider>
@@ -101,10 +103,13 @@
             </v-card-text>
           </v-card>
 
-    <v-dialog v-model="dialog2" width="1000px">
-      <v-card>
+    <v-dialog v-model="dialog2" width="65%" height="100%">
+        <v-card>
            <my-video ref="myvideo"  :videoname="currentVideo.video" :options="video.options" ></my-video>
-      </v-card>
+             <v-container>
+                 <v-btn color="error" class="white--text" @click.naitve="removeVideo(currentVideo.lesson_id, currentVideo.video_id)">ลบวีดีโอนี้</v-btn>
+             </v-container>
+        </v-card>
     </v-dialog>
 
 </v-flex>
@@ -115,7 +120,14 @@ import Vue from 'vue'
 import myVideo from '../myvideo.vue'
 import Base64Upload from 'vue-base64-upload'
 import createVideo from '../video/createVideo.vue'
+const moment = require('moment')
+Vue.use(require('vue-moment'), {
+    moment
+})
 export default {
+  created () {
+    moment.lang('th-TH')
+  },
   props: ['data', 'number'],
   components: {
     Base64Upload,
@@ -192,6 +204,13 @@ export default {
     },
     checkbug () {
       console.log(this.$refs.upload)
+    },
+    removeVideo (lid, vid) {
+        const data = {
+          lesson_id: lid,
+          video_id: vid
+        }
+      this.$store.dispatch('removeVideoLesson', data)
     }
   }
 }

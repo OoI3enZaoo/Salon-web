@@ -98,5 +98,13 @@ export default {
   addCourseReceive: (state, data) => state.courseReceive.push(...data),
   removeCourseInclude: (state, id) => state.courseInclude.map((l,i) => l.ci_id == id ? state.courseInclude.splice(i,1) : ''),
   removeCourseReceive: (state, id) => state.courseReceive.map((l,i) => l.cr_id == id ? state.courseReceive.splice(i,1) : ''),
-  removeCourseFor: (state, id) => state.courseFor.map((l,i) => l.cf_id == id ? state.courseFor.splice(i,1) : '')
+  removeCourseFor: (state, id) => state.courseFor.map((l,i) => l.cf_id == id ? state.courseFor.splice(i,1) : ''),
+  removeVideoLesson: (state, payload) => {
+    const data = {
+      lesson_id: payload.lesson_id,
+      video_id: payload.video_id
+    }
+    state.lesson.map((l, li) => l.lesson_id == data.lesson_id ? l.video.map((v, vi) => v.video_id == data.video_id ? state.lesson[li].video.splice(vi, 1) : '' ) : '' )
+
+  }
 }

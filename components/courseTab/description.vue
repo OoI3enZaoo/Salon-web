@@ -82,9 +82,9 @@
               </v-card-text>
               <v-card-text>
 
+                <template v-if="!isEdit">
                 <div class="mt-3">
-                  <p class="headline info--text">ในคอร์สจะประกอบไปด้วย</p>
-                  <template v-if="!isEdit">
+                    <p class="headline info--text">ในคอร์สจะประกอบไปด้วย</p>
                     <ul v-for="(data, index) in courseInclude" :key="index">
                       {{data.include_des}} <v-btn icon @click.native="$store.dispatch('removeCourseInclude', data.ci_id)"><v-icon error>delete_forever</v-icon></v-btn>
                     </ul>
@@ -96,15 +96,15 @@
                        <v-btn color="primary"block @click.native="$store.dispatch('addCourseInclude', {course_id: $route.params.course_id, des: include_des})">เพิ่ม</v-btn>
                      </v-flex>
                   </v-layout>
-                  </template>
                 </div>
+              </template>
 
 
 
 
-            <div class="mt-3">
-              <p class="headline info--text">สิ่งที่ผู้เรียนจะได้รับ</p>
               <template v-if="!isEdit">
+            <div class="mt-3">
+                <p class="headline info--text">สิ่งที่ผู้เรียนจะได้รับ</p>
                 <ul v-for="(data, index) in courseReceive" :key="index">
                   {{data.receive_des}} <v-btn icon @click.native="$store.dispatch('removeCourseReceive', data.cr_id)"><v-icon error>delete_forever</v-icon></v-btn>
                 </ul>
@@ -116,12 +116,12 @@
                    <v-btn color="primary"block @click.native="$store.dispatch('addCourseReceive', {course_id: $route.params.course_id, des: receive_des})">เพิ่ม</v-btn>
                  </v-flex>
               </v-layout>
-              </template>
             </div>
+          </template>
 
+          <template v-if="!isEdit">
             <div class="mt-3">
-              <p class="headline info--text">คอร์สนี้มีไว้สำหรับ</p>
-              <template v-if="!isEdit">
+                <p class="headline info--text">คอร์สนี้มีไว้สำหรับ</p>
                   <ul v-for="(data, index) in courseFor" :key="index">
                     {{data.for_des}} <v-btn icon @click.native="$store.dispatch('removeCourseFor', data.cf_id)"><v-icon error>delete_forever</v-icon></v-btn>
                   </ul>
@@ -133,8 +133,8 @@
                      <v-btn color="primary"block @click.native="$store.dispatch('addCourseFor', {course_id: $route.params.course_id, des: for_des})">เพิ่ม</v-btn>
                    </v-flex>
                 </v-layout>
-              </template>
             </div>
+          </template>
 
 
 
