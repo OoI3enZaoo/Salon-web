@@ -49,13 +49,7 @@ export default {
     //   }
     // }
   },
-  addUserCourse: (state, data) => state.userCourse.push(data),
-  addUserCourse2: (state, data) => {
-    let a = state.userCourse[0]
-    let b = data
-    let c = a.concat(b)
-    state.userCourse = [c]
-  },
+  addUserCourse: (state, data) => state.userCourse.push(...data),
   changeEditCourse: (state, courseId) => {
     console.log('courseId: ' + courseId)
     state.course.map(res => res.course_id == courseId ? res.isEdit = !res.isEdit : '' )
@@ -105,6 +99,9 @@ export default {
       video_id: payload.video_id
     }
     state.lesson.map((l, li) => l.lesson_id == data.lesson_id ? l.video.map((v, vi) => v.video_id == data.video_id ? state.lesson[li].video.splice(vi, 1) : '' ) : '' )
-
+  },
+  addUserRecommend: (state, data) => {
+    state.recommendUser.find(ru => ru.user_id == data.user_id) == undefined ? state.recommendUser.push(...data) : ''
+    console.log('state.recommendUser',state.recommendUser)
   }
 }

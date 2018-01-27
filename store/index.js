@@ -56,6 +56,7 @@ export default () => {
       lastChat: [],
       messageChat: [],
       userCourse: [],
+      recommendUser: [],
       recommend: [],
       courseFor: [],
       courseInclude: [],

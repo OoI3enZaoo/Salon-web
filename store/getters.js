@@ -30,7 +30,7 @@ export default {
   },
   getUserCourseFromId: (state, userId) => {
     return userId => state.userCourse.filter(item => {
-      return userId == item[0].user_id
+      return userId == item.user_id
     })
   },
   courseFromId (state) {
@@ -71,6 +71,11 @@ export default {
   getCourseReceive (state) {
     return course_id => state.courseReceive.filter(item => {
       return course_id == item.course_id
+    })
+  },
+  getUserRecommend (state) {
+    return user_id => state.recommendUser.filter((item, i) => {
+      return user_id == item.user_id
     })
   }
 }

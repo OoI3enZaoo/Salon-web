@@ -53,7 +53,6 @@ export default {
   },
   mounted () {
     this.memberAfterSearch = this.member
-    console.log('member: ' + JSON.stringify(this.$store.state.member))
   },
   computed: {
     member () {

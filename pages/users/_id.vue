@@ -14,38 +14,60 @@
             <h5 style="display:inline"><b>{{ user[0].fname }} {{ user[0].lname }}</b></h5>
             <v-divider ></v-divider>
             <br>
-
+            <table class="table">
+              <tr>
+                <th class="table-list"><h6>อายุ</h6></th>
+                <th class="table-list"><h6>ที่อยู่</h6></th>
+                <th class="table-list"><h6>อีเมล</h6></th>
+                <th class="table-list"><h6>เบอร์โทรศัพท์</h6></th>
+                <th class="table-list"><h6>เป็นสมาชิกเมื่อ</h6></th>
+              </tr>
+              <tr>
+                <td class="table-list"><h6> {{user[0].birthday  }}</h6></td>
+                <td class="table-list"><h6>{{ user[0].address}}</h6></td>
+                <td class="table-list"><h6>{{ user[0].email}}</h6></td>
+                <td class="table-list"><h6>{{ user[0].phone}}</h6></td>
+                <td class="table-list"><h6>{{ user[0].tstamp}}</h6></td>
+              </tr>
+            </table><br><br>
               <v-layout row>
                 <v-flex xs6 sm6>
-                  <h6><b>อายุ</b></h6><br>
-                  <h6><b>ที่อยู่</b></h6><br>
-                  <h6><b>อีเมล</b></h6><br>
-                  <h6><b>เบอร์โทรศัพท์</b></h6><br>
-                  <h6><b>เป็นสมาชิกเมื่อ</b></h6><br>
-                  <h6><b>คอร์สที่ซื้อ</b></h6><br>
+                  <v-subheader><b>คอร์สที่ซื้อ</b></v-subheader>
+                  <template v-for="data in userCourse">
+                    <v-list-tile>
+                        <v-list-tile-avatar>
+                          <img :src="data.cover">
+                        </v-list-tile-avatar>
+                      <v-list-tile-content>
+                        <v-list-tile-title>
+                          {{data.title}}
+                        </v-list-tile-title>
+                        <v-list-tile-sub-title>
+                          ซื้อมาเมื่อ {{data.tstamp | moment('from','now', true)}}ที่ผ่านมา
+                        </v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </template>
                   </v-flex>
                   <v-flex xs6 sm6>
-                     <h6>{{ user[0].birthday }}</h6><br>
-                     <h6>{{ user[0].address}}</h6><br>
-                      <h6>{{ user[0].email}}</h6><br>
-                      <h6>{{ user[0].phone}}</h6><br>
-                      <h6>{{ user[0].tstamp}}</h6><br>
-                      <h6>
-                        <template v-for="data in $store.state.userCourse[0]">
-                            <ul v-if="data.user_id == $route.params.id">
-                              <li>{{data.title}}</li>
-                            </ul>
-
-                        </template>
-
-                      </h6> <br>
-
+                    <v-subheader><b>รายชื่อคนที่ผู้ใช้แนะนำ</b></v-subheader>
+                        <v-list>
+                          <template v-for="data in userRecommened">
+                            <v-list-tile @click="$router.push('/users/' + data.recommend_to)">
+                              <v-list-tile-avatar>
+                                <img :src="data.avatar" >
+                              </v-list-tile-avatar>
+                              <v-list-tile-title>
+                                {{data.fname}} {{data.lname}}
+                              </v-list-tile-title>
+                            </v-list-tile>
+                          </template>
+                        </v-list>
                           </v-flex>
               </v-layout>
               </div>
 
           </v-flex>
-
       </v-card>
 
 
@@ -210,28 +232,52 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
+const moment = require('moment')
+Vue.use(require('vue-moment'), {
+    moment
+})
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 export default {
   async asyncData ({store, route}) {
     await store.dispatch('getUserCourse', route.params.id)
+    await store.dispatch('getUserRecommend', route.params.id)
+  },
+  created() {
+    moment.lang('th-TH')
   },
   fetch({store}){
     store.commit('setPage',"นายนานา มานา (เจ้าของร้านทำผม)")
   },
    computed: {
-     ...mapGetters(['getUserFromId', 'getUserCourseFromId']),
+     ...mapGetters(['getUserFromId', 'getUserCourseFromId', 'getUserRecommend']),
      user () {
        return this.getUserFromId(this.$route.params.id)
      },
      userCourse () {
        return this.getUserCourseFromId(this.$route.params.id)
+     },
+     userRecommened () {
+       return this.getUserRecommend(this.$route.params.id)
      }
    }
 }
 </script>
-<style >
+<style>
 #chartdiv {
 width		: 100%; height		: 500px; font-size	: 11px;
+}
+.table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right:auto;
+  width: 100%;
+}
+.table-list {
+  padding: 16px;
+    border: 1px solid black;
+    border-collapse: collapse;
 }
 </style>

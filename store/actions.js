@@ -213,34 +213,6 @@ export default {
     let data = getters.getUserFromId(userId)
     commit('addNewChat', data[0])
   },
-  getUserCourse ({commit, state}, userId) {
-    if (state.userCourse.length == 0) {
-      axios.get('http://172.104.189.169:4000/api/usercourse/' + userId)
-      .then (res => {
-        let result = res.data
-        commit('addUserCourse', result)
-      })
-    } else {
-      for (let i = 0; i < state.userCourse[0].length; i++) {
-        let isCheck = false
-        if (state.userCourse[0][i].user_id == userId) {
-          isCheck = true
-          console.log('true')
-          break
-        } else {
-          isCheck = false
-          console.log('false')
-        }
-        if (i == state.userCourse[0].length - 1 && isCheck == false) {
-          axios.get('http://172.104.189.169:4000/api/usercourse/' + userId)
-          .then (res => {
-            let result = res.data
-            commit('addUserCourse2', result)
-          })
-        }
-      }
-    }
-  },
   UpdateCourse ({commit}, payload) {
     commit('updateCourse', payload)
     axios.post('http://172.104.189.169:4000/api/updatecourse/', payload)
@@ -467,5 +439,22 @@ export default {
     .then (() => {
       commit('removeVideoLesson', data);
     })
+  },
+  getUserCourse ({commit, state}, user_id) {
+    if (state.userCourse.find(ru => ru.user_id == user_id) == undefined) {
+      axios.get('http://172.104.189.169:4000/api/usercourse/' + user_id)
+      .then (res => {
+        commit('addUserCourse', res.data)
+      })
+    }
+  },
+  getUserRecommend ({commit, state}, user_id) {
+    if (state.recommendUser.find(ru => ru.user_id == user_id) == undefined) {
+      axios.get('http://172.104.189.169:4000/api/get_user_recommend_from_id/' + user_id)
+      .then (res => {
+        commit('addUserRecommend', res.data)
+      })
+    }
+
   }
 }
