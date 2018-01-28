@@ -252,7 +252,16 @@ export default {
           lesson_id: lid,
           video_id: vid
         }
+        this.videoDialog = false
       this.$store.dispatch('removeVideoLesson', data)
+    },
+    removePicture (lid, pid) {
+      const data = {
+        lesson_id: lid,
+        picture_id: pid
+      }
+      this.pictureDialog = false
+      this.$store.dispatch('removePictureLesson', data)
     }
   }
 }

@@ -435,7 +435,7 @@ export default {
       lesson_id: payload.lesson_id,
       video_id: payload.video_id
     }
-    axios.post('http://172.104.189.169:4000/api/remove_video', {video_id: video_id})
+    axios.post('http://172.104.189.169:4000/api/remove_video_lesson', {video_id: data.video_id})
     .then (() => {
       commit('removeVideoLesson', data);
     })
@@ -468,7 +468,20 @@ export default {
       const picture_id = res.data.picture_id
       const newData = Object.assign(data, {picture_id})
       commit('addLessonPicture', newData)
+      console.log('success');
     })
-
-  }
+  },
+  removePictureLesson ({commit}, payload) {
+    const data = {
+      lesson_id: payload.lesson_id,
+      picture_id: payload.picture_id
+    }
+    console.log('removePictureLesson', data)
+    axios.post('http://localhost:4000/api/remove_picture_lesson/', {picture_id: data.picture_id})
+    .then ((res) => {
+      console.log('res', res);
+      commit('removePictureLesson', data);
+      console.log('success');
+    })
+  },
 }

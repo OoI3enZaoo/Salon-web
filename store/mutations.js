@@ -108,4 +108,13 @@ export default {
     state.lesson.map((l, i) => l.lesson_id == data.lesson_id ? l.picture == undefined ? [l.picture = [], l.picture.push(data)] : l.picture.push(data) : '')
     console.log(state.lesson)
   },
+  removePictureLesson: (state, payload) => {
+    const data = {
+      lesson_id: payload.lesson_id,
+      picture_id: payload.picture_id
+    }
+    console.log('beforeRemove', state.lesson)
+    state.lesson.map((l, li) => l.lesson_id == data.lesson_id ? l.picture.map((v, vi) => v.picture_id == data.picture_id ? state.lesson[li].picture.splice(vi, 1) : '' ) : '' )
+    console.log('afterRemove', state.lesson)
+  }
 }
