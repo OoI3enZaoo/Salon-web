@@ -86,7 +86,7 @@ export default {
   addFavoriteAmountLesson: (state, lesson_id) => stat.lesson.map(l => l.lesson_id == lesson_id ? l.love += 1 : ''),
   addRecommend: (state, data) => state.recommend.push(data),
   setRecommend: (state, data) => state.recommend.map(r => r.user_id == data.user_id ? r.status = data : ''),
-  addvideo: (state, data) => state.lesson.map(l => l.lesson_id == data.lesson_id ? l.video.push(data) : ''),
+  addLessonVideo: (state, data) => state.lesson.map(l => l.lesson_id == data.lesson_id ? l.video.push(data) : ''),
   addCourseFor: (state, data) => state.courseFor.push(...data),
   addCourseInclude: (state, data) => state.courseInclude.push(...data),
   addCourseReceive: (state, data) => state.courseReceive.push(...data),
@@ -103,5 +103,9 @@ export default {
   addUserRecommend: (state, data) => {
     state.recommendUser.find(ru => ru.user_id == data.user_id) == undefined ? state.recommendUser.push(...data) : ''
     console.log('state.recommendUser',state.recommendUser)
-  }
+  },
+  addLessonPicture: (state, data) => {
+    state.lesson.map((l, i) => l.lesson_id == data.lesson_id ? l.picture == undefined ? [l.picture = [], l.picture.push(data)] : l.picture.push(data) : '')
+    console.log(state.lesson)
+  },
 }

@@ -4,7 +4,6 @@
 
         <template v-if="lesson.length > 0">
               <div class="text-xs-right ">
-
                 <createLesson></createLesson>
               </div>
               <v-layout row wrap>

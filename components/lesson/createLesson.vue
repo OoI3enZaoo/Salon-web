@@ -21,12 +21,11 @@
               </div>
               <br>
               <div class="text-xs-left">
-                <v-btn :disable="!fromIsValid" @click.native="AddLesson" color="primary">สร้างบทเรียน</v-btn>
+                <v-btn :disabled="!fromIsValid" @click.native="AddLesson" color="primary">สร้างบทเรียน</v-btn>
               </div>
             </v-card-text>
           </v-card>
         </v-container>
-
       </v-card>
     </v-dialog>
 </template>
@@ -56,17 +55,14 @@ export default {
   methods: {
     onChangeImage(file) {
       this.lesson.cover = 'data:image/jpeg;base64,'+ file.base64
-      console.log(this.lesson)
     },
     AddLesson () {
       this.dialog = false
-      // console.log(this.lesson)
       this.lesson.course_id = this.$route.params.course_id
       this.lesson.admin_id = this.$store.state.adminData.admin_id
       this.lesson.tstamp = Vue.moment().format('YYYY-MM-DD HH:mm:ss')
       this.$store.dispatch('InsertLesson', this.lesson)
       // this.lesson.title = ''
-      // this.lesson.description = ''
       // this.lesson.cover = ''
     },
     myupload (str) {

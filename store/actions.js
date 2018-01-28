@@ -232,14 +232,14 @@ export default {
     .then (res => {
     })
   },
-  InsertLesson ({commit, state},payload) {
-    console.log('payload: ' + JSON.stringify(payload))
+  InsertLesson ({commit, state}, payload) {
     axios.post('http://172.104.189.169:4000/api/insertlesson', payload)
     .then (res => {
       payload.lesson_id = res.data.lesson_id,
       payload.fname = state.adminData.fname,
       payload.lname = state.adminData.lname,
       payload.avatar = state.adminData.avatar
+      console.log(payload)
       commit('addLesson', [payload])
       // console.log(payload)
     })
@@ -304,7 +304,7 @@ export default {
           video: payload.video
         }
         // let {file_id, lesson_id, title, tstamp, video} = payload
-        commit('addvideo', videoData)
+        commit('addLessonVideo', videoData)
       })
       .catch((error) => {
         console.log('error');
@@ -455,6 +455,20 @@ export default {
         commit('addUserRecommend', res.data)
       })
     }
+  },
+  AddPicture ({commit}, payload) {
+    const data = {
+      lesson_id: payload.lesson_id,
+      title: payload.title,
+      picture: payload.picture,
+      tstamp: payload.tstamp
+    }
+    axios.post('http://localhost:4000/api/add_lesson_picture', data)
+    .then(res => {
+      const picture_id = res.data.picture_id
+      const newData = Object.assign(data, {picture_id})
+      commit('addLessonPicture', newData)
+    })
 
   }
 }

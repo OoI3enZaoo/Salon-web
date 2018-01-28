@@ -2,12 +2,11 @@
     <v-dialog app v-model="dialog" fullscreen transition="dialog-bottom-transition" overlay=false>
       <v-btn class="primary white--text" large slot="activator">เพิ่มวีดีโอ</v-btn>
       <v-card>
-        {{lessonId}}
         <v-toolbar dark class="primary">
           <v-btn icon @click.native="dialog = false" dark>
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>เพิ่มบทเรียนของคอร์ส</v-toolbar-title>
+          <v-toolbar-title>เพิ่มวีดีโอของคอร์ส</v-toolbar-title>
         </v-toolbar>
         <v-container>
           <v-card>

@@ -65,11 +65,12 @@
               </template>
               <div class="text-xs-right">
                 <createVideo @myvideo="getvideo" :lessonId = "data.lesson_id"></createVideo>
+                <createPicture @pictureFromComponent="getpicture"></createPicture>
               </div>
               <br>
               <v-list subheader>
-                <v-subheader>วีดีโอ</v-subheader>
-                <template v-for="vid in data.video">
+                <template v-for="(vid, i) in data.video">
+                  <v-subheader v-if="i === 0">วีดีโอ</v-subheader>
                   <v-list-tile @click="" @click="openVideo(vid)">
                     <v-list-tile-content>
                       <v-list-tile-title>
@@ -78,12 +79,25 @@
                     </v-list-tile-content>
                     <v-list-tile-action>
                       {{vid.tstamp | moment('from','now',true)}}ที่ผ่านมา
-                      <!-- <v-btn icon> <v-icon>home</v-icon></v-btn> -->
-                      <!-- <v-btn icon ripple @click.native="console.log('hello')"> <v-icon>home</v-icon></v-btn> -->
                     </v-list-tile-action>
                   </v-list-tile>
                   <v-divider></v-divider>
                 </template>
+                  <template v-for="(pic, i) in data.picture">
+                <v-subheader v-if="i === 0">ภาพ</v-subheader>
+                  <v-list-tile @click="" @click="openPicture(pic)">
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{pic.title}}
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action>
+                      {{pic.tstamp | moment('from','now',true)}}ที่ผ่านมา
+                    </v-list-tile-action>
+                  </v-list-tile>
+                  <v-divider></v-divider>
+                </template>
+
               </v-list>
             </v-card-text>
           </v-card>
@@ -103,14 +117,25 @@
             </v-card-text>
           </v-card>
 
-    <v-dialog v-model="dialog2" width="65%" height="100%">
+    <v-dialog v-model="videoDialog" width="65%" height="100%">
         <v-card>
-           <my-video ref="myvideo"  :videoname="currentVideo.video" :options="video.options" ></my-video>
+           <my-video ref="myvideo"  :videoname="dataSelected.video" :options="video.options" ></my-video>
              <v-container>
-                 <v-btn color="error" class="white--text" @click.naitve="removeVideo(currentVideo.lesson_id, currentVideo.video_id)">ลบวีดีโอนี้</v-btn>
+                 <v-btn color="error" class="white--text" @click.naitve="removeVideo(dataSelected.lesson_id, dataSelected.video_id)">ลบวีดีโอนี้</v-btn>
              </v-container>
         </v-card>
     </v-dialog>
+    <v-dialog v-model="pictureDialog" width="65%" height="100%">
+        <v-card>
+          <div class="text-xs-center">
+            <img :src="dataSelected.picture" height="300px;">
+          </div>
+             <v-container>
+                 <v-btn color="error" class="white--text" @click.naitve="removePicture(dataSelected.lesson_id, dataSelected.picture_id)">ลบภาพนี้</v-btn>
+             </v-container>
+        </v-card>
+    </v-dialog>
+
 
 </v-flex>
 
@@ -120,6 +145,7 @@ import Vue from 'vue'
 import myVideo from '../myvideo.vue'
 import Base64Upload from 'vue-base64-upload'
 import createVideo from '../video/createVideo.vue'
+import createPicture from './addon/createPicture.vue'
 const moment = require('moment')
 Vue.use(require('vue-moment'), {
     moment
@@ -132,18 +158,20 @@ export default {
   components: {
     Base64Upload,
     createVideo,
-    myVideo
+    myVideo,
+    createPicture
   },
   data () {
     return {
       dialog: false,
-      dialog2: false,
+      videoDialog: false,
+      pictureDialog: false,
       isEdit: false,
       edit: {
         title: '',
         cover: ''
       },
-      currentVideo: '',
+      dataSelected: '',
       workIcon: require('../../static/work.png'),
       video: {
         options: {
@@ -156,8 +184,12 @@ export default {
   },
   methods: {
     openVideo (video) {
-      this.dialog2 = true
-      this.currentVideo = video
+      this.videoDialog = true
+      this.dataSelected = video
+    },
+    openPicture (picture) {
+      this.pictureDialog = true
+      this.dataSelected = picture
     },
     getvideo (str) {
       console.log('getDataLesson')
@@ -165,6 +197,16 @@ export default {
       data.tstamp = Vue.moment().format('YYYY-MM-DD HH:mm:ss')
       data.admin_id = this.$store.state.adminData.admin_id
       this.$store.dispatch('AddNewVideo', data)
+    },
+    getpicture (str) {
+      console.log('getpicture', str)
+      const data = {
+        lesson_id: this.data.lesson_id,
+        title: str.title,
+        picture: str.picture,
+        tstamp: Vue.moment().format('YYYY-MM-DD HH:mm:ss')
+      }
+      this.$store.dispatch('AddPicture', data)
     },
     onChangeImage(file) {
       this.edit.cover = 'data:image/jpeg;base64,'+ file.base64
